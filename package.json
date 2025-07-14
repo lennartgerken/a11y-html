@@ -4,6 +4,13 @@
   "license": "MIT",
   "author": "Lennart Gerken",
   "description": "Takes axe-core results and creates html reports.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lennartgerken/a11y-html.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lennartgerken/a11y-html/issues"
+  },
   "type": "module",
   "main": "createReport/dist/index.js",
   "types": "createReport/dist/index.d.ts",
