@@ -1,11 +1,11 @@
 <script setup lang="ts">
-
 import Tag from '@/components/Tag.vue'
-import { RuleType, TagType } from '@/enums'
 import { computed } from 'vue'
 import ImpactTag from './ImpactTag.vue'
 import Tooltip from '@/components/Tag.vue'
 import type { CheckResult } from 'axe-core'
+import { TagType } from '@/components/tagType'
+import { RuleType } from '@/result'
 
 const props = defineProps<{
     showImpact: boolean,
@@ -25,7 +25,6 @@ const ruleTypeTooltip = computed(() => {
     }
 
 })
-
 </script>
 
 <template>

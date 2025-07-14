@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import Tag from '@/components/Tag.vue'
-import { ResultType, TagType } from '@/enums';
-import { computed } from 'vue';
+import { computed } from 'vue'
+import { TagType } from './tagType'
+import { ResultType } from '@/result'
 
 const props = defineProps<{
     resultType: ResultType
@@ -21,7 +22,6 @@ const tagType = computed(() => {
     }
 
 })
-
 </script>
 
 <template>

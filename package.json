@@ -24,6 +24,7 @@
     "dev": "vite",
     "build-vue": "vue-tsc --build && vite build",
     "preview-vue": "vite preview",
+    "watch-vue": "vue-tsc --watch",
     "build-create-html": "tsc -p ./createReport/"
   },
   "devDependencies": {

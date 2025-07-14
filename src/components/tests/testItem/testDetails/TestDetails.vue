@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import ResultTag from '@/components/ResultTag.vue'
 import Tag from '@/components/Tag.vue'
-import { ResultType, TagType } from '@/enums';
-import HTMLElement from '@/components/tests/testItem/testDetails/HTMLElement.vue';
-import type { ModResultEntry } from '@/result';
+import HTMLElement from '@/components/tests/testItem/testDetails/HTMLElement.vue'
+import type { ModResultEntry } from '@/result'
+import { TagType } from '@/components/tagType'
+import { ResultType } from '@/result'
 
 const props = defineProps<{ test: ModResultEntry }>()
-
 </script>
 
 <template>

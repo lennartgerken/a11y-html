@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ResultType } from '@/enums'
+import { ResultType } from '@/result'
 import { ref } from 'vue'
 
 const props = defineProps<{ url: string, timestamp: string }>()
@@ -8,7 +8,7 @@ const emit = defineEmits<{
     (e: 'search', value: { searchValue: string, filterValue: ResultType | undefined }): void,
 }>()
 
-const search = ref("")
+const search = ref('')
 const filter = ref<ResultType | undefined>()
 
 const emitSearch = () => {

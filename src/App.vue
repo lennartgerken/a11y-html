@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { ResultType } from './enums'
 import Tests from './components/tests/Tests.vue'
 import type { AxeResults, Result } from 'axe-core'
-import type { ModResults } from './result'
+import { ResultType, type ModResult } from './result'
 
 declare global {
   interface Window { axeResult: AxeResults }
 }
 
-const result = ref<ModResults>()
+const result = ref<ModResult>()
 const resultFile = ref<File>()
 
-const modifyResult = (result: AxeResults): ModResults => {
+const modifyResult = (result: AxeResults): ModResult => {
 
   const setResultType = (tests: Result[], resultType: ResultType) => {
 
@@ -47,7 +46,6 @@ watch(resultFile, async () => {
 })
 
 if (window.axeResult) result.value = modifyResult(window.axeResult)
-
 </script>
 
 <template>

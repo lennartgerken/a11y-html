@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import NavBar from '@/components/tests/NavBar.vue'
 import TestItem from '@/components/tests/testItem/TestItem.vue'
-import { ResultType } from '@/enums'
-import type { ModResultEntry, ModResults } from '@/result';
+import type { ModResultEntry, ModResult, ResultType } from '@/result'
 import { ref } from 'vue'
 
-const props = defineProps<{ result: ModResults }>()
+const props = defineProps<{ result: ModResult }>()
 
 const filteredTests = ref<ModResultEntry[]>(props.result.tests)
 const testToShow = ref<ModResultEntry>()
@@ -19,7 +18,6 @@ const search = ({ searchValue, filterValue }: { searchValue: string, filterValue
   })
 
 }
-
 </script>
 
 <template>

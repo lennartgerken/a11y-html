@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import ResultTag from '@/components/ResultTag.vue'
-import TestDetails from './testDetails/TestDetails.vue';
-import { ref } from 'vue';
-import type { ModResultEntry } from '@/result';
+import TestDetails from './testDetails/TestDetails.vue'
+import { ref } from 'vue'
+import type { ModResultEntry } from '@/result'
 
 const props = defineProps<{
     test: ModResultEntry
 }>()
 
-const isOpen = ref(false);
-
+const isOpen = ref(false)
 </script>
 
 <template>

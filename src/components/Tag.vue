@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TagType } from '@/enums'
+import type { TagType } from './tagType'
 
 const props = defineProps<{
     text: string,

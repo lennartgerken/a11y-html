@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { RuleType } from '@/enums';
-import Rules from './Rules.vue';
-import type { CheckResult } from 'axe-core';
+import { RuleType } from '@/result'
+import Rules from './Rules.vue'
+import type { CheckResult } from 'axe-core'
 
 const props = defineProps<{
     showImpact: boolean,

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { Impact, TagType } from '@/enums'
 import { computed } from 'vue'
 import Tag from '@/components/Tag.vue'
+import { TagType } from '@/components/tagType'
+import { Impact } from '@/result'
 
-const props = defineProps<{ impact: string }>();
+const props = defineProps<{ impact: string }>()
 
 const tagType = computed(() => {
 
@@ -16,7 +17,6 @@ const tagType = computed(() => {
     }
 
 })
-
 </script>
 
 <template>
