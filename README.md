@@ -1,5 +1,5 @@
 # a11y-html
-Takes axe-core result and creates html report:
+Takes axe-core results and creates html report:
 ```
 import type { Page } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
@@ -12,7 +12,7 @@ const analyze = async (page: Page) => {
 
     const report = createReport(results)
     
-    test.info().attach(`a11y-html`, { body: report, contentType: "text/html" })
+    test.info().attach('a11y-html', { body: report, contentType: 'text/html' })
 
 }
 ```

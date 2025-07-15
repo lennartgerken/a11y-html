@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "author": "Lennart Gerken",
-  "description": "Takes axe-core result and creates html report.",
+  "description": "Takes axe-core results and creates html report.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lennartgerken/a11y-html.git"
