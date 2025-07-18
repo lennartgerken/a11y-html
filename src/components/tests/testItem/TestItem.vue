@@ -23,7 +23,7 @@ const isOpen = ref(false)
             <div class="line"></div>
             <div class="flex flex-col">
                 <button class="text-lg" @click="isOpen = !isOpen">{{ props.test.id }}</button>
-                <div class=" text-sm text-gray-500">{{ props.test.description }}</div>
+                <div class=" text-sm text-dark-gray">{{ props.test.description }}</div>
             </div>
         </div>
         <div v-if="isOpen" class="pt-5 pl-5">

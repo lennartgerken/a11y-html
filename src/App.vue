@@ -54,7 +54,7 @@ if (window.axeResult) result.value = modifyResult(window.axeResult)
       <Tests :result="result" />
     </main>
     <div class="w-fit m-auto" v-else>
-      <input type="file" @change="onUpload($event)" />
+      <input title="Upload results" type="file" @change="onUpload($event)" />
     </div>
   </div>
 </template>

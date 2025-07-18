@@ -18,30 +18,23 @@ const props = defineProps<{
 </template>
 
 <style scoped>
-.cirlce {
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
 .error {
-    background-color: red;
+    background-color: var(--color-red);
 }
 
 .success {
-    background-color: green;
+    background-color: var(--color-green);
 }
 
 .warn {
-    background-color: orange;
+    background-color: var(--color-orange);
 }
 
 .info {
-    background-color: blue;
+    background-color: var(--color-blue);
 }
 
 .inactive {
-    background-color: gray;
+    background-color: var(--color-gray);
 }
 </style>
