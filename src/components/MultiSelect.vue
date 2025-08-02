@@ -98,15 +98,17 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
 </script>
 
 <template>
-    <div class="w-fit">
+    <div data-testid="multi-select" class="w-fit">
         <div class="relative border-b border-light-gray p-1.5 box-border h-10">
-            <button type="button" @click="toggleDropdown">
+            <button data-testid="open" type="button" @click="toggleDropdown">
                 <span :class="['cirlce', circleColor]"></span>
                 <span class="pl-1 text-base">{{ name }}</span>
             </button>
-            <div ref="dropdown" v-if="isOpen" v-click-other="closeDropdown"
+            <div data-testid="dropdown" ref="dropdown" v-if="isOpen" v-click-other="closeDropdown"
                 :class="['whitespace-nowrap p-2 absolute max-h-80 overflow-y-scroll bg-white border border-light-gray', dropdownPosition]">
-                <button @click="activateAllOptions">{{ allActive() ? 'Deselect all' : 'Select all' }}</button>
+                <button type="button" @click="activateAllOptions">
+                    {{ allActive() ? 'Deselect all' : 'Select all' }}
+                </button>
                 <label class="flex gap-1" v-for="[key, value] in optionValues">
                     <input :name="key" @change="setOption(key)" :checked="value" type="checkbox" />
                     <div class="flex flex-col justify-center"><span class="w-fit h-fit">{{ key }}</span></div>

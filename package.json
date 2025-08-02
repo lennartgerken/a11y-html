@@ -22,12 +22,15 @@
   "scripts": {
     "build": "npm run build-vue && npm run build-create-html",
     "dev": "vite",
+    "test": "npx playwright test",
     "build-vue": "vue-tsc --build && vite build",
     "preview-vue": "vite preview",
     "watch-vue": "vue-tsc --watch",
     "build-create-html": "tsc -p ./createReport/"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.54.1",
     "@tailwindcss/vite": "^4.1.11",
     "@types/node": "^24.0.13",
     "@vitejs/plugin-vue": "^6.0.0",

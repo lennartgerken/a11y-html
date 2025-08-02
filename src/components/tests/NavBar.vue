@@ -35,9 +35,10 @@ const emitSearch = () => {
 <template>
     <nav class="flex gap-1.5 flex-col lg:gap-0">
         <div>
-            <div :title="props.url" class="text-2xl whitespace-nowrap overflow-hidden text-ellipsis">{{ props.url }}
+            <div data-testid="url" :title="props.url" class="text-2xl whitespace-nowrap overflow-hidden text-ellipsis">
+                {{ props.url }}
             </div>
-            <div class="text-base text-dark-gray"> {{ timestamp }}</div>
+            <div data-testid="timestamp" class="text-base text-dark-gray"> {{ timestamp }}</div>
         </div>
         <div class="flex gap-1.5 flex-col md:flex-row lg:justify-end">
             <div class="md:flex md:flex-col md:justify-center">

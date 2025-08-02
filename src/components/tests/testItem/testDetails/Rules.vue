@@ -28,13 +28,17 @@ const ruleTypeTooltip = computed(() => {
 </script>
 
 <template>
-    <div v-for="rule in props.rules">
+    <div :data-testid="'rule-' + rule.id" v-for="rule in props.rules">
         <div class="flex gap-1.5">
-            <div class="text-xl">{{ rule.id }}</div>
-            <Tag :tag-type="TagType.INFO" :text="props.ruleType" :tooltip="ruleTypeTooltip" />
-            <ImpactTag v-if="showImpact" :impact="rule.impact" />
-            <Tooltip v-if="!showImpact" :tag-type="TagType.INACTIVE" :text="rule.impact" />
+            <div data-testid="rule-header" class="text-xl">{{ rule.id }}</div>
+            <div data-testid="rule-type">
+                <Tag :tag-type="TagType.INFO" :text="props.ruleType" :tooltip="ruleTypeTooltip" />
+            </div>
+            <div data-testid="rule-impact">
+                <ImpactTag v-if="showImpact" :impact="rule.impact" />
+                <Tooltip v-if="!showImpact" :tag-type="TagType.INACTIVE" :text="rule.impact" />
+            </div>
         </div>
-        <div>{{ rule.message }}</div>
+        <div data-testid="rule-description">{{ rule.message }}</div>
     </div>
 </template>

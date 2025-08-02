@@ -12,18 +12,19 @@ const isOpen = ref(false)
 </script>
 
 <template>
-    <div>
+    <div :data-testid="'test-item-' + props.test.id">
         <div class="flex gap-2">
-            <button
+            <button title="open" type="button"
                 :class="['flex justify-center items-center font-bold pr-1 transition duration-300', { 'rotate-90': isOpen }]"
                 @click="isOpen = !isOpen">&#11208;</button>
-            <div class="flex justify-center items-center">
+            <div data-testid="item-result" class="flex justify-center items-center">
                 <ResultTag :result-type="props.test.resultType" />
             </div>
             <div class="line"></div>
             <div class="flex flex-col">
-                <button class="text-lg" @click="isOpen = !isOpen">{{ props.test.id }}</button>
-                <div class=" text-sm text-dark-gray">{{ props.test.description }}</div>
+                <button data-testid="item-header" type="button" class="text-lg" @click="isOpen = !isOpen">{{
+                    props.test.id }}</button>
+                <div data-testid="item-description" class="text-sm text-dark-gray">{{ props.test.description }}</div>
             </div>
         </div>
         <div v-if="isOpen" class="pt-5 pl-5">

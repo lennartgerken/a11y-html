@@ -13,9 +13,9 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div>
+    <div data-testid="html-element">
         <div class="bg-gray-200 p-2 wrap-anywhere">
-            <code>{{ html }}</code>
+            <code data-testid="html">{{ html }}</code>
         </div>
         <div class="flex flex-col mt-1.5 gap-1.5">
             <Rules :show-impact="props.showImpact" :rules="props.any" :rule-type="RuleType.ANY" />
