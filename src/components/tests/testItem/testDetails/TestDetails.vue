@@ -10,18 +10,18 @@ const props = defineProps<{ test: ModResultEntry }>()
 </script>
 
 <template>
-    <div>
+    <div data-testid="details">
         <div class="flex flex-col gap-1.5">
-            <div class="flex gap-1.5 flex-wrap">
+            <div data-testid="details-tags" class="flex gap-1.5 flex-wrap">
                 <Tag v-for="tag in props.test.tags" :tag-type="TagType.INFO" :text="tag" />
             </div>
             <div class="flex gap-1.5">
-                <div class="text-3xl">{{ props.test.id }}</div>
-                <div class="flex flex-col justify-around">
+                <div data-testid="details-header" class="text-3xl">{{ props.test.id }}</div>
+                <div data-testid="details-result" class="flex flex-col justify-around">
                     <ResultTag :result-type="props.test.resultType" />
                 </div>
             </div>
-            <div>{{ props.test.description }}</div>
+            <div data-testid="details-description">{{ props.test.description }}</div>
         </div>
         <div class="flex flex-col gap-4 mt-5">
             <HTMLElement :show-impact="props.test.resultType !== ResultType.PASSED" v-for="node in props.test.nodes"

@@ -12,7 +12,7 @@ const analyze = async (page: Page) => {
 
     const report = createReport(results)
     
-    test.info().attach('a11y-html', { body: report, contentType: 'text/html' })
+    await test.info().attach('a11y-html', { body: report, contentType: 'text/html' })
 
 }
 ```

@@ -2,6 +2,7 @@
     "compilerOptions": {
         "outDir": "dist",
         "declaration": true,
-        "module": "NodeNext"
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext"
     }
 }

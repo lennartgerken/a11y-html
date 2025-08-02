@@ -9,11 +9,11 @@ const props = defineProps<{
 </script>
 
 <template>
-    <span class="flex gap-0.5 h-fit w-fit p-1 text-xs" :title="props.tooltip">
+    <span :data-testid="'tag-' + tagType" class="flex gap-0.5 h-fit w-fit p-1 text-xs" :title="tooltip">
         <div>
-            <div :class="[props.tagType, 'cirlce']"></div>
+            <div :class="[tagType, 'cirlce']"></div>
         </div>
-        <div>{{ props.text }}</div>
+        <div>{{ text }}</div>
     </span>
 </template>
 
