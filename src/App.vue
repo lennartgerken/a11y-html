@@ -50,11 +50,16 @@ if (window.axeResult) result.value = modifyResult(window.axeResult)
 
 <template>
   <div class="m-auto max-w-7xl">
-    <main class="mt-5" v-if="result">
-      <Tests :result="result" />
+    <header>
+      <h1 class="text-4xl">Accessibility Report</h1>
+    </header>
+    <main class="mt-5">
+      <div v-if="result">
+        <Tests :result="result" />
+      </div>
+      <div v-else>
+        <input title="Upload results" type="file" @change="onUpload($event)" />
+      </div>
     </main>
-    <div class="w-fit m-auto" v-else>
-      <input title="Upload results" type="file" @change="onUpload($event)" />
-    </div>
   </div>
 </template>
