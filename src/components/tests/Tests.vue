@@ -33,7 +33,7 @@ const search = ({ searchValue, resultFilterValue, tagFilterValue }: Search) => {
     <div v-show="!testToShow">
       <NavBar @search="(value: any) => search(value)" :url="result.url" :timestamp="result.timestamp" :tags="tags" />
       <div class="flex flex-col gap-3 pt-7">
-        <TestItem v-for="test in filteredTests" :test="test" />
+        <TestItem v-for="test in filteredTests" :test="test" :key="test.index" />
         <div v-if="filteredTests.length === 0" class="text-dark-gray text-center">No entries found</div>
       </div>
     </div>
