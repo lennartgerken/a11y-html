@@ -5,7 +5,7 @@ import type { AxeResults, Result } from 'axe-core'
 import { ResultType, type ModResult } from './result'
 
 declare global {
-  interface Window { axeResult: AxeResults }
+  interface Window { axeResults: AxeResults }
 }
 
 const result = ref<ModResult>()
@@ -45,7 +45,7 @@ watch(resultFile, async () => {
 
 })
 
-if (window.axeResult) result.value = modifyResult(window.axeResult)
+if (window.axeResults) result.value = modifyResult(window.axeResults)
 </script>
 
 <template>

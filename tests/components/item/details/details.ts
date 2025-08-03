@@ -6,7 +6,9 @@ export class Details extends BaseComponent {
 
     readonly headerDiv: Locator
     readonly resultDiv: Locator
-    readonly descriptionDiv: Locator
+    readonly descriptionSpan: Locator
+    readonly helpSpan: Locator
+    readonly urlA: Locator
     readonly allTagDivs: Locator
     readonly allElementDivs: Locator
 
@@ -16,7 +18,9 @@ export class Details extends BaseComponent {
 
         this.headerDiv = locator.getByTestId('details-header')
         this.resultDiv = locator.getByTestId('details-result')
-        this.descriptionDiv = locator.getByTestId('details-description')
+        this.descriptionSpan = locator.getByTestId('details-description')
+        this.helpSpan = locator.getByTestId('details-help')
+        this.urlA = locator.getByTestId('details-url')
         this.allTagDivs = locator.getByTestId('details-tags').getByTestId('tag-info')
         this.allElementDivs = locator.getByTestId('html-element')
 
