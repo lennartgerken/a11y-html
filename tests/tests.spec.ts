@@ -74,7 +74,9 @@ test.describe(() => {
 
       await expect(details.headerDiv).toHaveText(labelResults.id)
       await expect(details.resultDiv.getByTestId('tag-error')).toBeVisible()
-      await expect(details.descriptionDiv).toHaveText(labelResults.description)
+      await expect(details.descriptionSpan).toHaveText(labelResults.description)
+      await expect(details.helpSpan).toHaveText(labelResults.help)
+      await expect(details.urlA).toHaveText(labelResults.helpUrl)
 
       await test.step('tags', async () => {
 
