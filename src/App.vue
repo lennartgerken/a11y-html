@@ -53,9 +53,11 @@ if (window.axeResults) result.value = modifyResult(JSON.parse(atob(window.axeRes
 <template>
   <div class="m-auto max-w-7xl">
     <header>
-      <button @click="showDependencies = !showDependencies" class="float-right">
-        {{ showDependencies ? "Back" : "Dependencies" }}
-      </button>
+      <div class="flex justify-end">
+        <button @click="showDependencies = !showDependencies" class="">
+          {{ showDependencies ? "Back" : "Dependencies" }}
+        </button>
+      </div>
       <h1 class="text-4xl">Accessibility Report</h1>
     </header>
     <main class="mt-5">
