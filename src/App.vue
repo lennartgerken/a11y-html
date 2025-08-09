@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import Tests from './components/tests/Tests.vue'
 import type { AxeResults, Result } from 'axe-core'
 import { ResultType, type ModResult } from './result'
+import Dependencies from './components/dependencies/Dependencies.vue'
 
 declare global {
   interface Window { axeResults: AxeResults }
@@ -10,6 +11,7 @@ declare global {
 
 const result = ref<ModResult>()
 const resultFile = ref<File>()
+const showDependencies = ref(false)
 
 const modifyResult = (result: AxeResults): ModResult => {
 
@@ -51,14 +53,20 @@ if (window.axeResults) result.value = modifyResult(window.axeResults)
 <template>
   <div class="m-auto max-w-7xl">
     <header>
+      <button @click="showDependencies = !showDependencies" class="float-right">
+        {{ showDependencies ? "Back" : "Dependencies" }}
+      </button>
       <h1 class="text-4xl">Accessibility Report</h1>
     </header>
     <main class="mt-5">
-      <div v-if="result">
-        <Tests :result="result" />
-      </div>
-      <div v-else>
-        <input title="Upload results" type="file" @change="onUpload($event)" />
+      <Dependencies v-show="showDependencies" />
+      <div v-show="!showDependencies">
+        <div v-if="result">
+          <Tests :result="result" />
+        </div>
+        <div v-else>
+          <input title="Upload results" type="file" @change="onUpload($event)" />
+        </div>
       </div>
     </main>
   </div>
