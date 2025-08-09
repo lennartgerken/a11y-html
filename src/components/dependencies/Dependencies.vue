@@ -9,8 +9,6 @@ import Dependency from './Dependency.vue';
             <Dependency title="a11y-html" copyright="Copyright (c) 2025 Lennart Gerken"
                 repo="https://github.com/lennartgerken/a11y-html" license="MIT"
                 licenceUrl="https://opensource.org/license/mit" />
-            <Dependency title="axe-core" details="Used for type imports." repo="https://github.com/dequelabs/axe-core"
-                license="MPL-2.0" licenceUrl="https://www.mozilla.org/en-US/MPL/2.0/" />
             <Dependency title="tailwindcss" copyright="Copyright (c) Tailwind Labs, Inc."
                 repo="https://github.com/tailwindlabs/tailwindcss" license="MIT"
                 licenceUrl="https://opensource.org/license/mit" />

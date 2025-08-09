@@ -2,7 +2,7 @@
 const props = defineProps<{
     title: string,
     copyright?: string,
-    details?: string,
+    usage?: string,
     repo: string,
     license: string,
     licenceUrl: string
@@ -13,7 +13,8 @@ const props = defineProps<{
     <div>
         <div class="text-2xl">{{ title }}</div>
         <div v-if="copyright">{{ copyright }}</div>
-        <div v-if="details">({{ details }})</div>
+        <div class="font-bold" v-if="usage">Usage:</div>
+        <div v-if="usage">{{ usage }}</div>
         <div class="font-bold">Repository:</div>
         <a :href="repo" target="_blank">{{ repo }}</a>
         <div class="font-bold">License:</div>
