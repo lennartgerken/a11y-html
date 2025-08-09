@@ -1,5 +1,5 @@
 # a11y-html
-Takes axe-core results and creates html report:
+Takes axe-core results and creates an html report:
 ```
 import type { Page } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
