@@ -5,6 +5,6 @@ import { fileURLToPath } from 'url'
 export function createReport(result: any) {
 
     const report = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '..', "..", 'dist', 'index.html'), 'utf-8')
-    return `${report}<script>window.axeResults=${JSON.stringify(result)}</script>`
+    return `${report}<script>window.axeResults="${Buffer.from(JSON.stringify(result)).toString("base64")}"</script>`
 
 }
