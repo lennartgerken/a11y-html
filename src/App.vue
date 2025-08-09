@@ -6,7 +6,7 @@ import { ResultType, type ModResult } from './result'
 import Dependencies from './components/dependencies/Dependencies.vue'
 
 declare global {
-  interface Window { axeResults: AxeResults }
+  interface Window { axeResults: string }
 }
 
 const result = ref<ModResult>()
@@ -47,7 +47,7 @@ watch(resultFile, async () => {
 
 })
 
-if (window.axeResults) result.value = modifyResult(window.axeResults)
+if (window.axeResults) result.value = modifyResult(JSON.parse(atob(window.axeResults)))
 </script>
 
 <template>
