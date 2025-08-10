@@ -1,6 +1,8 @@
 -----------------------------------------------------------------------
 
-axe-core (https://github.com/dequelabs/axe-core):
+axe-core (https://github.com/dequelabs/axe-core) 
+License: Mozilla Public License 2.0
+Usage: TypeScript type-only imports (not included in runtime code).
 
 Mozilla Public License, version 2.0
 
@@ -367,7 +369,8 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
 
 -----------------------------------------------------------------------
 
-tailwindcss (https://github.com/tailwindlabs/tailwindcss):
+tailwindcss (https://github.com/tailwindlabs/tailwindcss)
+License: MIT
 
 MIT License
 
@@ -393,7 +396,8 @@ SOFTWARE.
 
 -----------------------------------------------------------------------
 
-vue (https://github.com/vuejs/core):
+vue (https://github.com/vuejs/core)
+License: MIT
 
 The MIT License (MIT)
 
