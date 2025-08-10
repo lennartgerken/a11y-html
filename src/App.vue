@@ -54,7 +54,7 @@ if (window.axeResults) result.value = modifyResult(JSON.parse(atob(window.axeRes
   <div class="m-auto max-w-7xl">
     <header>
       <div class="flex justify-end">
-        <button @click="showDependencies = !showDependencies" class="">
+        <button @click="showDependencies = !showDependencies" class="text-lg">
           {{ showDependencies ? "Back" : "Dependencies" }}
         </button>
       </div>
