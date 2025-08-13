@@ -3,7 +3,6 @@ import { BaseComponent } from '@/components/baseComponent.js'
 import { MultiSelect } from '@/components/multiSelect/multiSelect.js'
 
 export class NavBar extends BaseComponent {
-
     readonly urlDiv: Locator
     readonly timestampDiv: Locator
     readonly searchInput: Locator
@@ -11,7 +10,6 @@ export class NavBar extends BaseComponent {
     readonly tags: MultiSelect
 
     constructor(locator: Locator) {
-
         super(locator)
 
         this.urlDiv = locator.getByTestId('url')
@@ -19,11 +17,9 @@ export class NavBar extends BaseComponent {
         this.searchInput = locator.getByPlaceholder('search')
         this.filterSelect = locator.getByTitle('filter')
         this.tags = new MultiSelect(
-            locator.getByTestId('multi-select').filter({ has: locator.page().getByRole('button', { name: 'Tags' }) })
+            locator.getByTestId('multi-select').filter({
+                has: locator.page().getByRole('button', { name: 'Tags' })
+            })
         )
-
     }
-
-
-
 }

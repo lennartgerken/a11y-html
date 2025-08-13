@@ -3,7 +3,6 @@ import { BaseComponent } from '../baseComponent.js'
 import { Details } from './details/details.js'
 
 export class Item extends BaseComponent {
-
     readonly headerDiv: Locator
     readonly resultDiv: Locator
     readonly descriptionDiv: Locator
@@ -11,7 +10,6 @@ export class Item extends BaseComponent {
     readonly details: Details
 
     constructor(locator: Locator) {
-
         super(locator)
 
         this.headerDiv = locator.getByTestId('item-header')
@@ -19,7 +17,5 @@ export class Item extends BaseComponent {
         this.descriptionDiv = locator.getByTestId('item-description')
         this.openButton = locator.getByTitle('open')
         this.details = new Details(locator.getByTestId('details'))
-
     }
-
 }

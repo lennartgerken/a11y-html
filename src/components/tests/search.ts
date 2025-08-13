@@ -1,7 +1,7 @@
-import type { ResultType } from "@/result"
+import type { ResultType } from '@/result'
 
 export type Search = {
-    searchValue: string,
-    resultFilterValue: ResultType | undefined,
+    searchValue: string
+    resultFilterValue: ResultType | undefined
     tagFilterValue: string[]
 }

@@ -7,7 +7,6 @@ import { Impact } from '@/result'
 const props = defineProps<{ impact: string }>()
 
 const tagType = computed(() => {
-
     switch (props.impact) {
         case Impact.MINOR:
         case Impact.MODERATE:
@@ -15,7 +14,6 @@ const tagType = computed(() => {
         default:
             return TagType.ERROR
     }
-
 })
 </script>
 

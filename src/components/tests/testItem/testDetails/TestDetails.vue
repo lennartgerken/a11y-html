@@ -13,24 +13,45 @@ const props = defineProps<{ test: ModResultEntry }>()
     <div data-testid="details">
         <div class="flex flex-col gap-1.5">
             <div data-testid="details-tags" class="flex gap-1.5 flex-wrap">
-                <Tag v-for="tag in props.test.tags" :tag-type="TagType.INFO" :text="tag" />
+                <Tag
+                    v-for="tag in props.test.tags"
+                    :key="tag"
+                    :tag-type="TagType.INFO"
+                    :text="tag"
+                />
             </div>
             <div class="flex gap-1.5">
-                <div data-testid="details-header" class="text-3xl">{{ props.test.id }}</div>
-                <div data-testid="details-result" class="flex flex-col justify-around">
+                <div data-testid="details-header" class="text-3xl">
+                    {{ props.test.id }}
+                </div>
+                <div
+                    data-testid="details-result"
+                    class="flex flex-col justify-around"
+                >
                     <ResultTag :result-type="props.test.resultType" />
                 </div>
             </div>
             <div>
-                <span data-testid="details-description">{{ props.test.description }}</span>
+                <span data-testid="details-description">{{
+                    props.test.description
+                }}</span>
                 <br />
                 <span data-testid="details-help">{{ props.test.help }}</span>
             </div>
-            <a data-testid="details-url" :href="test.helpUrl" target="_blank">{{ test.helpUrl }}</a>
+            <a data-testid="details-url" :href="test.helpUrl" target="_blank">{{
+                test.helpUrl
+            }}</a>
         </div>
         <div class="flex flex-col gap-4 mt-5">
-            <HTMLElement :show-impact="props.test.resultType !== ResultType.PASSED" v-for="node in props.test.nodes"
-                :html="node.html" :any="node.any" :all="node.all" :none="node.none" />
+            <HTMLElement
+                v-for="node in props.test.nodes"
+                :key="node.target.join('')"
+                :show-impact="props.test.resultType !== ResultType.PASSED"
+                :html="node.html"
+                :any="node.any"
+                :all="node.all"
+                :none="node.none"
+            />
         </div>
     </div>
 </template>

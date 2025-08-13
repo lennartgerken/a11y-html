@@ -7,18 +7,13 @@ import tailwindcss from '@tailwindcss/vite'
 import { viteSingleFile } from 'vite-plugin-singlefile'
 
 export default defineConfig({
-  build: {
-    modulePreload: false
-  },
-  plugins: [
-    vue(),
-    vueDevTools(),
-    tailwindcss(),
-    viteSingleFile()
-  ],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+    build: {
+        modulePreload: false
     },
-  }
+    plugins: [vue(), vueDevTools(), tailwindcss(), viteSingleFile()],
+    resolve: {
+        alias: {
+            '@': fileURLToPath(new URL('./src', import.meta.url))
+        }
+    }
 })
