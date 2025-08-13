@@ -1,47 +1,56 @@
 {
-  "name": "a11y-html",
-  "version": "1.0.0",
-  "license": "MIT",
-  "author": "Lennart Gerken",
-  "description": "Takes axe-core results and creates an html report.",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lennartgerken/a11y-html.git"
-  },
-  "bugs": {
-    "url": "https://github.com/lennartgerken/a11y-html/issues"
-  },
-  "type": "module",
-  "types": "./createReport/dist/index.d.ts",
-  "exports": "./createReport/dist/index.js",
-  "files": [
-    "dist",
-    "createReport/dist",
-    "LICENSES-THIRD-PARTY.txt"
-  ],
-  "scripts": {
-    "build": "npm run build-vue && npm run build-create-report",
-    "dev": "vite",
-    "test": "npx playwright test",
-    "build-vue": "vue-tsc --build && vite build",
-    "preview-vue": "vite preview",
-    "watch-vue": "vue-tsc --watch",
-    "build-create-report": "tsc -p ./createReport/"
-  },
-  "devDependencies": {
-    "@axe-core/playwright": "^4.10.2",
-    "@playwright/test": "^1.54.2",
-    "@tailwindcss/vite": "^4.1.11",
-    "@types/node": "^24.2.1",
-    "@vitejs/plugin-vue": "^6.0.1",
-    "@vue/tsconfig": "^0.7.0",
-    "axe-core": "^4.10.3",
-    "tailwindcss": "^4.1.11",
-    "typescript": "^5.9.2",
-    "vite": "^7.1.1",
-    "vite-plugin-singlefile": "^2.3.0",
-    "vite-plugin-vue-devtools": "^8.0.0",
-    "vue": "^3.5.18",
-    "vue-tsc": "^3.0.5"
-  }
+    "name": "a11y-html",
+    "version": "1.0.0",
+    "license": "MIT",
+    "author": "Lennart Gerken",
+    "description": "Takes axe-core results and creates an html report.",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lennartgerken/a11y-html.git"
+    },
+    "bugs": {
+        "url": "https://github.com/lennartgerken/a11y-html/issues"
+    },
+    "type": "module",
+    "types": "./createReport/dist/index.d.ts",
+    "exports": "./createReport/dist/index.js",
+    "files": [
+        "dist",
+        "createReport/dist",
+        "LICENSES-THIRD-PARTY.txt"
+    ],
+    "scripts": {
+        "build": "npm run build-vue && npm run build-create-report",
+        "dev": "vite",
+        "test": "playwright test",
+        "pretty": "prettier . --write",
+        "pretty-check": "prettier . --check",
+        "lint": "eslint",
+        "build-vue": "vue-tsc --build && vite build",
+        "preview-vue": "vite preview",
+        "watch-vue": "vue-tsc --watch",
+        "build-create-report": "tsc -p ./createReport/"
+    },
+    "devDependencies": {
+        "@axe-core/playwright": "^4.10.2",
+        "@playwright/test": "^1.54.2",
+        "@tailwindcss/vite": "^4.1.11",
+        "@types/node": "^24.2.1",
+        "@vitejs/plugin-vue": "^6.0.1",
+        "@vue/tsconfig": "^0.7.0",
+        "axe-core": "^4.10.3",
+        "eslint": "^9.33.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-vue": "^10.4.0",
+        "globals": "^16.3.0",
+        "prettier": "3.6.2",
+        "tailwindcss": "^4.1.11",
+        "typescript": "^5.9.2",
+        "typescript-eslint": "^8.39.1",
+        "vite": "^7.1.1",
+        "vite-plugin-singlefile": "^2.3.0",
+        "vite-plugin-vue-devtools": "^8.0.0",
+        "vue": "^3.5.18",
+        "vue-tsc": "^3.0.5"
+    }
 }

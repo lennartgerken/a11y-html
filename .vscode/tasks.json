@@ -1,16 +1,16 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"label": "npm: watch-vue",
-			"type": "npm",
-			"script": "watch-vue",
-			"group": "build",
-			"isBackground": true,
-			"problemMatcher": {
-				"base": "$tsc-watch",
-				"applyTo": "allDocuments"
-			}
-		}
-	]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "npm: watch-vue",
+            "type": "npm",
+            "script": "watch-vue",
+            "group": "build",
+            "isBackground": true,
+            "problemMatcher": {
+                "base": "$tsc-watch",
+                "applyTo": "allDocuments"
+            }
+        }
+    ]
 }

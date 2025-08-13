@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import type { TagType } from './tagType'
 
-const props = defineProps<{
-    text: string,
-    tagType: TagType,
+defineProps<{
+    text: string
+    tagType: TagType
     tooltip?: string
 }>()
 </script>
 
 <template>
-    <span :data-testid="'tag-' + tagType" class="flex gap-0.5 h-fit w-fit p-1 text-xs" :title="tooltip">
+    <span
+        :data-testid="'tag-' + tagType"
+        class="flex gap-0.5 h-fit w-fit p-1 text-xs"
+        :title="tooltip"
+    >
         <div>
             <div :class="[tagType, 'cirlce']"></div>
         </div>

@@ -11,189 +11,201 @@ let currentPath: string
 let results: axe.AxeResults
 
 test.beforeAll(async ({ browser }) => {
+    currentPath = dirname(fileURLToPath(import.meta.url))
 
-  currentPath = dirname(fileURLToPath(import.meta.url))
+    const context = await browser.newContext()
+    const page = await context.newPage()
 
-  const context = await browser.newContext()
-  const page = await context.newPage()
+    await page.goto('file:///' + join(currentPath, 'index.html'))
+    results = await new AxeBuilder({ page }).analyze()
 
-  await page.goto('file:///' + join(currentPath, 'index.html'))
-  results = await new AxeBuilder({ page }).analyze()
-
-  await context.close()
-
+    await context.close()
 })
 
 let a11yPage: A11yPage
 
-test.beforeEach(({ page }) => a11yPage = new A11yPage(page))
+test.beforeEach(({ page }) => (a11yPage = new A11yPage(page)))
 
 test.describe(() => {
+    let outputPath: string
 
-  let outputPath: string
-
-  test.beforeAll(async ({ }, testInfo) => {
-
-    outputPath = testInfo.outputPath('a11y-html.html')
-    writeFileSync(outputPath, createReport(results))
-
-  })
-
-  test.beforeEach(async ({ page }) => {
-
-    await page.goto('file:///' + outputPath)
-
-  })
-
-  test('has meta', async () => {
-
-    await expect(a11yPage.navBar.urlDiv).toHaveText(results.url)
-    await expect(a11yPage.navBar.timestampDiv).toHaveText(results.timestamp)
-
-  })
-
-  test('show details', async () => {
-
-    const labelResultID = 'label'
-    const labelResults = results.violations.find(({ id }) => id === labelResultID)
-    const labelItem = a11yPage.getItem(labelResultID)
-
-    await test.step('row', async () => {
-
-      await expect(labelItem.headerDiv).toHaveText(labelResults.id)
-      await expect(labelItem.resultDiv.getByTestId('tag-error')).toBeVisible()
-      await expect(labelItem.descriptionDiv).toHaveText(labelResults.description)
-
+    // eslint-disable-next-line no-empty-pattern
+    test.beforeAll(async ({}, testInfo) => {
+        outputPath = testInfo.outputPath('a11y-html.html')
+        writeFileSync(outputPath, createReport(results))
     })
 
-    await test.step('details', async () => {
-
-      const details = labelItem.details
-
-      await labelItem.openButton.click()
-
-      await expect(details.headerDiv).toHaveText(labelResults.id)
-      await expect(details.resultDiv.getByTestId('tag-error')).toBeVisible()
-      await expect(details.descriptionSpan).toHaveText(labelResults.description)
-      await expect(details.helpSpan).toHaveText(labelResults.help)
-      await expect(details.urlA).toHaveText(labelResults.helpUrl)
-
-      await test.step('tags', async () => {
-
-        for (const currentTagResult of labelResults.tags)
-          await expect(details.allTagDivs.getByText(currentTagResult, { exact: true })).toBeVisible()
-
-        await expect(details.allTagDivs).toHaveCount(labelResults.tags.length)
-
-      })
-
-      await test.step('nodes', async () => {
-
-        for (const currentNodeResult of labelResults.nodes) {
-
-          const currentElement = details.getElement(currentNodeResult.html)
-
-          await test.step('rules', async () => {
-
-            for (const currentRuleResult of currentNodeResult.any) {
-
-              const currentRule = currentElement.getRule(currentRuleResult.id)
-
-              await expect(currentRule.headerDiv).toHaveText(currentRuleResult.id)
-              await expect(currentRule.typeDiv).toHaveText('any')
-              await expect(currentRule.impactDiv).toHaveText(currentRuleResult.impact)
-              await expect(currentRule.descriptionDiv).toHaveText(currentRuleResult.message)
-
-            }
-
-            await expect(currentElement.allAnyRuleDivs).toHaveCount(currentNodeResult.any.length)
-
-          })
-
-        }
-
-        await expect(details.allElementDivs).toHaveCount(labelResults.nodes.length)
-
-      });
-
+    test.beforeEach(async ({ page }) => {
+        await page.goto('file:///' + outputPath)
     })
 
-  })
-
-  test.describe('filter', () => {
-
-    //Violations
-    const hasLangResultID = 'html-has-lang'
-    const regionResultID = 'region'
-    //Passed
-    const documentTiltleResultID = 'document-title'
-    //Incomplete
-    const ariaValidResultID = 'aria-valid-attr-value'
-    //Inapplicable
-    const ariaHiddenResultID = 'aria-hidden-focus'
-
-    test('search', async () => {
-
-      await a11yPage.navBar.searchInput.fill(hasLangResultID)
-      await expect(a11yPage.getItem(hasLangResultID).locator).toBeVisible()
-      await expect(a11yPage.allItemDivs).toHaveCount(1)
-
+    test('has meta', async () => {
+        await expect(a11yPage.navBar.urlDiv).toHaveText(results.url)
+        await expect(a11yPage.navBar.timestampDiv).toHaveText(results.timestamp)
     })
 
-    test('filter result', async () => {
+    test('show details', async () => {
+        const labelResultID = 'label'
+        const labelResults = results.violations.find(
+            ({ id }) => id === labelResultID
+        )
+        const labelItem = a11yPage.getItem(labelResultID)
 
-      await a11yPage.navBar.filterSelect.selectOption('violations')
-      await expect(a11yPage.getItem(hasLangResultID).locator).toBeVisible()
-      await expect(a11yPage.getItem(regionResultID).locator).toBeVisible()
-      await expect(a11yPage.getItem(documentTiltleResultID).locator).toBeHidden()
-      await expect(a11yPage.getItem(ariaValidResultID).locator).toBeHidden()
-      await expect(a11yPage.getItem(ariaHiddenResultID).locator).toBeHidden()
+        await test.step('row', async () => {
+            await expect(labelItem.headerDiv).toHaveText(labelResults.id)
+            await expect(
+                labelItem.resultDiv.getByTestId('tag-error')
+            ).toBeVisible()
+            await expect(labelItem.descriptionDiv).toHaveText(
+                labelResults.description
+            )
+        })
 
+        await test.step('details', async () => {
+            const details = labelItem.details
+
+            await labelItem.openButton.click()
+
+            await expect(details.headerDiv).toHaveText(labelResults.id)
+            await expect(
+                details.resultDiv.getByTestId('tag-error')
+            ).toBeVisible()
+            await expect(details.descriptionSpan).toHaveText(
+                labelResults.description
+            )
+            await expect(details.helpSpan).toHaveText(labelResults.help)
+            await expect(details.urlA).toHaveText(labelResults.helpUrl)
+
+            await test.step('tags', async () => {
+                for (const currentTagResult of labelResults.tags)
+                    await expect(
+                        details.allTagDivs.getByText(currentTagResult, {
+                            exact: true
+                        })
+                    ).toBeVisible()
+
+                await expect(details.allTagDivs).toHaveCount(
+                    labelResults.tags.length
+                )
+            })
+
+            await test.step('nodes', async () => {
+                for (const currentNodeResult of labelResults.nodes) {
+                    const currentElement = details.getElement(
+                        currentNodeResult.html
+                    )
+
+                    await test.step('rules', async () => {
+                        for (const currentRuleResult of currentNodeResult.any) {
+                            const currentRule = currentElement.getRule(
+                                currentRuleResult.id
+                            )
+
+                            await expect(currentRule.headerDiv).toHaveText(
+                                currentRuleResult.id
+                            )
+                            await expect(currentRule.typeDiv).toHaveText('any')
+                            await expect(currentRule.impactDiv).toHaveText(
+                                currentRuleResult.impact
+                            )
+                            await expect(currentRule.descriptionDiv).toHaveText(
+                                currentRuleResult.message
+                            )
+                        }
+
+                        await expect(currentElement.allAnyRuleDivs).toHaveCount(
+                            currentNodeResult.any.length
+                        )
+                    })
+                }
+
+                await expect(details.allElementDivs).toHaveCount(
+                    labelResults.nodes.length
+                )
+            })
+        })
     })
 
-    test('filter tags', async () => {
+    test.describe('filter', () => {
+        //Violations
+        const hasLangResultID = 'html-has-lang'
+        const regionResultID = 'region'
+        //Passed
+        const documentTiltleResultID = 'document-title'
+        //Incomplete
+        const ariaValidResultID = 'aria-valid-attr-value'
+        //Inapplicable
+        const ariaHiddenResultID = 'aria-hidden-focus'
 
-      const tagsComponent = a11yPage.navBar.tags
+        test('search', async () => {
+            await a11yPage.navBar.searchInput.fill(hasLangResultID)
+            await expect(
+                a11yPage.getItem(hasLangResultID).locator
+            ).toBeVisible()
+            await expect(a11yPage.allItemDivs).toHaveCount(1)
+        })
 
-      await tagsComponent.openButton.click()
-      await tagsComponent.dropdown.allButton.click()
-      await expect(a11yPage.allItemDivs).toBeHidden()
-      await tagsComponent.dropdown.checkEntry('cat.language')
-      await expect(a11yPage.getItem(hasLangResultID).locator).toBeVisible()
-      await expect(a11yPage.getItem(regionResultID).locator).toBeHidden()
+        test('filter result', async () => {
+            await a11yPage.navBar.filterSelect.selectOption('violations')
+            await expect(
+                a11yPage.getItem(hasLangResultID).locator
+            ).toBeVisible()
+            await expect(a11yPage.getItem(regionResultID).locator).toBeVisible()
+            await expect(
+                a11yPage.getItem(documentTiltleResultID).locator
+            ).toBeHidden()
+            await expect(
+                a11yPage.getItem(ariaValidResultID).locator
+            ).toBeHidden()
+            await expect(
+                a11yPage.getItem(ariaHiddenResultID).locator
+            ).toBeHidden()
+        })
 
+        test('filter tags', async () => {
+            const tagsComponent = a11yPage.navBar.tags
+
+            await tagsComponent.openButton.click()
+            await tagsComponent.dropdown.allButton.click()
+            await expect(a11yPage.allItemDivs).toBeHidden()
+            await tagsComponent.dropdown.checkEntry('cat.language')
+            await expect(
+                a11yPage.getItem(hasLangResultID).locator
+            ).toBeVisible()
+            await expect(a11yPage.getItem(regionResultID).locator).toBeHidden()
+        })
     })
 
-  })
+    test('a11y', async ({ page }, testInfo) => {
+        const labelResultID = 'label'
 
-  test('a11y', async ({ page }, testInfo) => {
+        await a11yPage.getItem(labelResultID).openButton.click()
+        await a11yPage.navBar.tags.openButton.click()
 
-    const labelResultID = 'label'
+        const results = await new AxeBuilder({ page })
+            .disableRules('label-title-only')
+            .analyze()
 
-    await a11yPage.getItem(labelResultID).openButton.click()
-    await a11yPage.navBar.tags.openButton.click()
-
-    const results = await new AxeBuilder({ page }).disableRules('label-title-only').analyze()
-
-    await testInfo.attach('a11y-html', { body: createReport(results), contentType: 'text/html' })
-    expect(results.violations).toStrictEqual([])
-
-  })
-
+        await testInfo.attach('a11y-html', {
+            body: createReport(results),
+            contentType: 'text/html'
+        })
+        expect(results.violations).toStrictEqual([])
+    })
 })
 
 test('open by upload', async ({ page }) => {
+    await page.goto('file:///' + join(currentPath, '..', 'dist', 'index.html'))
 
-  await page.goto('file:///' + join(currentPath, '..', 'dist', 'index.html'))
+    const fileChooserPromise = page.waitForEvent('filechooser')
+    await page.getByTitle('Upload results').click()
+    await (
+        await fileChooserPromise
+    ).setFiles({
+        name: 'results.json',
+        buffer: Buffer.from(JSON.stringify(results)),
+        mimeType: 'text/json'
+    })
 
-  const fileChooserPromise = page.waitForEvent('filechooser')
-  await page.getByTitle('Upload results').click()
-  await (await fileChooserPromise).setFiles({
-    name: 'results.json',
-    buffer: Buffer.from(JSON.stringify(results)),
-    mimeType: 'text/json'
-  })
-
-  await expect(page.locator('nav')).toBeVisible()
-
+    await expect(page.locator('nav')).toBeVisible()
 })

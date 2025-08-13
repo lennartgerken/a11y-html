@@ -9,7 +9,6 @@ const props = defineProps<{
 }>()
 
 const tagType = computed(() => {
-
     switch (props.resultType) {
         case ResultType.PASSED:
             return TagType.SUCCESS
@@ -20,7 +19,6 @@ const tagType = computed(() => {
         default:
             return TagType.INACTIVE
     }
-
 })
 </script>
 
