@@ -13,9 +13,14 @@
     },
     "type": "module",
     "types": "./createReport/dist/index.d.ts",
-    "exports": "./createReport/dist/index.js",
+    "exports": {
+        "types": "./createReport/dist/index.d.ts",
+        "import": "./createReport/dist/a11y-html.js",
+        "require": "./createReport/dist/a11y-html.cjs"
+    },
+    "module": "./createReport/dist/a11y-html.js",
+    "main": "./createReport/dist/a11y-html.cjs",
     "files": [
-        "dist",
         "createReport/dist",
         "LICENSES-THIRD-PARTY.txt"
     ],
@@ -29,7 +34,7 @@
         "build-vue": "vue-tsc --build && vite build",
         "preview-vue": "vite preview",
         "watch-vue": "vue-tsc --watch",
-        "build-create-report": "tsc -p ./createReport/"
+        "build-create-report": "vite build ./createReport"
     },
     "peerDependencies": {
         "axe-core": "^4.10.3"
@@ -50,6 +55,7 @@
         "typescript": "^5.9.2",
         "typescript-eslint": "^8.39.1",
         "vite": "^7.1.1",
+        "vite-plugin-dts": "^4.5.4",
         "vite-plugin-singlefile": "^2.3.0",
         "vite-plugin-vue-devtools": "^8.0.0",
         "vue": "^3.5.18",

@@ -8,7 +8,8 @@ import { viteSingleFile } from 'vite-plugin-singlefile'
 
 export default defineConfig({
     build: {
-        modulePreload: false
+        modulePreload: false,
+        outDir: './createReport/html'
     },
     plugins: [vue(), vueDevTools(), tailwindcss(), viteSingleFile()],
     resolve: {
