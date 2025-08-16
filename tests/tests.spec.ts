@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { createReport } from '../createReport/dist/index.js'
+import createReport from '../createReport/dist/a11y-html.js'
 import { writeFileSync } from 'fs'
 import AxeBuilder from '@axe-core/playwright'
 import type axe from 'axe-core'
@@ -195,7 +195,10 @@ test.describe(() => {
 })
 
 test('open by upload', async ({ page }) => {
-    await page.goto('file:///' + join(currentPath, '..', 'dist', 'index.html'))
+    await page.goto(
+        'file:///' +
+            join(currentPath, '..', 'createReport', 'html', 'index.html')
+    )
 
     const fileChooserPromise = page.waitForEvent('filechooser')
     await page.getByTitle('Upload results').click()
