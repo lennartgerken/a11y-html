@@ -22,7 +22,18 @@ export default typescriptEslint.config(
             }
         },
         rules: {
-            'vue/multi-word-component-names': 'off'
+            'vue/multi-word-component-names': 'off',
+            '@typescript-eslint/no-restricted-imports': [
+                'error',
+                {
+                    paths: [
+                        {
+                            name: 'axe-core',
+                            allowTypeImports: true
+                        }
+                    ]
+                }
+            ]
         }
     },
     eslintConfigPrettier
