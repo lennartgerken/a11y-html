@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { createReport } from '../createReport/dist/a11y-html.js'
+import createReport from '../createReport/dist/a11y-html.js'
 import { writeFileSync } from 'fs'
 import AxeBuilder from '@axe-core/playwright'
 import type axe from 'axe-core'
