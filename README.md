@@ -18,3 +18,11 @@ const analyze = async (page: Page) => {
 
 }
 ```
+
+## License
+
+This package is licensed under the [MIT License](./LICENSE).
+
+It also includes third-party dependencies that are either used for type imports or bundled into the generated HTML report. These dependencies are subject to their own licenses.
+
+For a full list of third-party licenses, see [LICENSES-THIRD-PARTY.txt](./LICENSES-THIRD-PARTY.txt).
