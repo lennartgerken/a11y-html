@@ -31,6 +31,9 @@
         "watch-vue": "vue-tsc --watch",
         "build-create-report": "tsc -p ./createReport/"
     },
+    "peerDependencies": {
+        "axe-core": "^4.10.3"
+    },
     "devDependencies": {
         "@axe-core/playwright": "^4.10.2",
         "@playwright/test": "^1.54.2",
@@ -38,7 +41,6 @@
         "@types/node": "^24.2.1",
         "@vitejs/plugin-vue": "^6.0.1",
         "@vue/tsconfig": "^0.7.0",
-        "axe-core": "^4.10.3",
         "eslint": "^9.33.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-vue": "^10.4.0",

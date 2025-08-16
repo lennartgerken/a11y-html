@@ -2,7 +2,7 @@
 
 axe-core (https://github.com/dequelabs/axe-core) 
 License: Mozilla Public License 2.0
-Usage: TypeScript type-only imports (not included in runtime code).
+Usage: TypeScript type-only imports (not bundled in HTML report).
 
 Mozilla Public License, version 2.0
 
