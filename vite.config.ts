@@ -9,7 +9,10 @@ import { viteSingleFile } from 'vite-plugin-singlefile'
 export default defineConfig({
     build: {
         modulePreload: false,
-        outDir: './createReport/html'
+        outDir: './createReport/html',
+        rollupOptions: {
+            external: ['axe-core']
+        }
     },
     plugins: [vue(), vueDevTools(), tailwindcss(), viteSingleFile()],
     resolve: {

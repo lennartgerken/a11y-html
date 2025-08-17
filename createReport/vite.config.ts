@@ -7,7 +7,10 @@ export default defineConfig({
             entry: './index.ts',
             formats: ['es', 'cjs']
         },
-        minify: false
+        minify: false,
+        rollupOptions: {
+            external: ['axe-core']
+        }
     },
     plugins: [dts({ tsconfigPath: './tsconfig.json' })]
 })
