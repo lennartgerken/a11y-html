@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ResultType } from '@/result'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import MultiSelect from '../MultiSelect.vue'
 import type { Search } from './search'
 
@@ -9,6 +9,13 @@ const props = defineProps<{
     timestamp: string
     tags: string[]
 }>()
+
+const timestampFormated = computed(() => {
+    return new Intl.DateTimeFormat('default', {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+    }).format(new Date(props.timestamp))
+})
 
 const emit = defineEmits<{
     (e: 'search', value: Search): void
@@ -49,7 +56,7 @@ const emitSearch = () => {
                 {{ url }}
             </div>
             <div data-testid="timestamp" class="text-base text-dark-gray">
-                {{ timestamp }}
+                {{ timestampFormated }}
             </div>
         </div>
         <div class="flex gap-1.5 flex-col md:flex-row lg:justify-end">
