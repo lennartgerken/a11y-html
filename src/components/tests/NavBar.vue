@@ -10,6 +10,11 @@ const props = defineProps<{
     tags: string[]
 }>()
 
+const timestampFormated = new Intl.DateTimeFormat('default', {
+    dateStyle: 'medium',
+    timeStyle: 'short'
+}).format(new Date(props.timestamp))
+
 const emit = defineEmits<{
     (e: 'search', value: Search): void
 }>()
@@ -49,7 +54,7 @@ const emitSearch = () => {
                 {{ url }}
             </div>
             <div data-testid="timestamp" class="text-base text-dark-gray">
-                {{ timestamp }}
+                {{ timestampFormated }}
             </div>
         </div>
         <div class="flex gap-1.5 flex-col md:flex-row lg:justify-end">
