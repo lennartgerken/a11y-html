@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import Tests from './components/tests/Tests.vue'
 import type { AxeResults, Result } from 'axe-core'
 import { ResultType, type ModResult } from './result'
@@ -12,7 +12,6 @@ declare global {
 }
 
 const result = ref<ModResult>()
-const resultFile = ref<File>()
 const showDependencies = ref(false)
 
 const modifyResult = (result: AxeResults): ModResult => {
@@ -31,16 +30,11 @@ const modifyResult = (result: AxeResults): ModResult => {
     }
 }
 
-const onUpload = (event: Event) => {
+const onUpload = async (event: Event) => {
     const target = event.target as HTMLInputElement
     if (target && target.files && target.files.length > 0)
-        resultFile.value = target.files[0]
+        result.value = modifyResult(JSON.parse(await target.files[0].text()))
 }
-
-watch(resultFile, async () => {
-    if (resultFile.value)
-        result.value = modifyResult(JSON.parse(await resultFile.value.text()))
-})
 
 if (window.axeResults)
     result.value = modifyResult(JSON.parse(atob(window.axeResults)))
