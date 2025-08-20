@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ResultType } from '@/result'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import MultiSelect from '../MultiSelect.vue'
 import type { Search } from './search'
 
@@ -10,10 +10,12 @@ const props = defineProps<{
     tags: string[]
 }>()
 
-const timestampFormated = new Intl.DateTimeFormat('default', {
-    dateStyle: 'medium',
-    timeStyle: 'short'
-}).format(new Date(props.timestamp))
+const timestampFormated = computed(() => {
+    return new Intl.DateTimeFormat('default', {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+    }).format(new Date(props.timestamp))
+})
 
 const emit = defineEmits<{
     (e: 'search', value: Search): void
