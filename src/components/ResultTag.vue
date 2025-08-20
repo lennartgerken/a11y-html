@@ -23,5 +23,5 @@ const tagType = computed(() => {
 </script>
 
 <template>
-    <Tag :tag-type="tagType" :text="props.resultType" />
+    <Tag :tag-type="tagType" :text="resultType" />
 </template>

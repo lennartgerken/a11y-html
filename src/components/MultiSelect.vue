@@ -6,7 +6,8 @@ import {
     onMounted,
     reactive,
     ref,
-    useTemplateRef
+    useTemplateRef,
+    watch
 } from 'vue'
 
 const emit = defineEmits<{
@@ -19,10 +20,17 @@ const isOpen = ref(false)
 const dropdown = useTemplateRef('dropdown')
 const dropdownPosition = ref('left-0')
 
-const sortedOptions = [...props.options].sort((a, b) =>
-    a.toLocaleLowerCase().localeCompare(b.toLocaleLowerCase())
+watch(
+    () => props.options,
+    (options) => {
+        optionValues.clear()
+        const sortedOptions = [...options].sort((a, b) =>
+            a.toLocaleLowerCase().localeCompare(b.toLocaleLowerCase())
+        )
+        sortedOptions.forEach((option) => optionValues.set(option, true))
+    },
+    { immediate: true }
 )
-sortedOptions.forEach((option) => optionValues.set(option, true))
 
 const allActive = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

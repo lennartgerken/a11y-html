@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ResultType } from '@/result'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import MultiSelect from '../MultiSelect.vue'
 import type { Search } from './search'
 
@@ -16,7 +16,13 @@ const emit = defineEmits<{
 
 const search = ref('')
 const resultFilter = ref<ResultType | undefined>()
-const tagFilter = ref<string[]>(props.tags)
+const tagFilter = ref<string[]>([])
+
+watch(
+    () => props.tags,
+    (tags) => (tagFilter.value = tags),
+    { immediate: true }
+)
 
 const setTagFilter = (options: string[]) => {
     tagFilter.value = options
@@ -37,10 +43,10 @@ const emitSearch = () => {
         <div>
             <div
                 data-testid="url"
-                :title="props.url"
+                :title="url"
                 class="text-2xl whitespace-nowrap overflow-hidden text-ellipsis"
             >
-                {{ props.url }}
+                {{ url }}
             </div>
             <div data-testid="timestamp" class="text-base text-dark-gray">
                 {{ timestamp }}

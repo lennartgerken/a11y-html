@@ -26,17 +26,13 @@ const ruleTypeTooltip = computed(() => {
 </script>
 
 <template>
-    <div
-        v-for="rule in props.rules"
-        :key="rule.id"
-        :data-testid="'rule-' + rule.id"
-    >
+    <div v-for="rule in rules" :key="rule.id" :data-testid="'rule-' + rule.id">
         <div class="flex gap-1.5">
             <div data-testid="rule-header" class="text-xl">{{ rule.id }}</div>
             <div data-testid="rule-type">
                 <Tag
                     :tag-type="TagType.INFO"
-                    :text="props.ruleType"
+                    :text="ruleType"
                     :tooltip="ruleTypeTooltip"
                 />
             </div>
