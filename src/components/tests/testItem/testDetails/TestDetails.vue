@@ -6,7 +6,7 @@ import type { ModResultEntry } from '@/result'
 import { TagType } from '@/components/tagType'
 import { ResultType } from '@/result'
 
-const props = defineProps<{ test: ModResultEntry }>()
+defineProps<{ test: ModResultEntry }>()
 </script>
 
 <template>
@@ -14,7 +14,7 @@ const props = defineProps<{ test: ModResultEntry }>()
         <div class="flex flex-col gap-1.5">
             <div data-testid="details-tags" class="flex gap-1.5 flex-wrap">
                 <Tag
-                    v-for="tag in props.test.tags"
+                    v-for="tag in test.tags"
                     :key="tag"
                     :tag-type="TagType.INFO"
                     :text="tag"
@@ -22,21 +22,21 @@ const props = defineProps<{ test: ModResultEntry }>()
             </div>
             <div class="flex gap-1.5">
                 <div data-testid="details-header" class="text-3xl">
-                    {{ props.test.id }}
+                    {{ test.id }}
                 </div>
                 <div
                     data-testid="details-result"
                     class="flex flex-col justify-around"
                 >
-                    <ResultTag :result-type="props.test.resultType" />
+                    <ResultTag :result-type="test.resultType" />
                 </div>
             </div>
             <div>
                 <span data-testid="details-description">{{
-                    props.test.description
+                    test.description
                 }}</span>
                 <br />
-                <span data-testid="details-help">{{ props.test.help }}</span>
+                <span data-testid="details-help">{{ test.help }}</span>
             </div>
             <a data-testid="details-url" :href="test.helpUrl" target="_blank">{{
                 test.helpUrl
@@ -44,9 +44,9 @@ const props = defineProps<{ test: ModResultEntry }>()
         </div>
         <div class="flex flex-col gap-4 mt-5">
             <HTMLElement
-                v-for="node in props.test.nodes"
+                v-for="node in test.nodes"
                 :key="node.target.join('')"
-                :show-impact="props.test.resultType !== ResultType.PASSED"
+                :show-impact="test.resultType !== ResultType.PASSED"
                 :html="node.html"
                 :any="node.any"
                 :all="node.all"

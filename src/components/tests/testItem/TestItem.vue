@@ -4,15 +4,13 @@ import TestDetails from './testDetails/TestDetails.vue'
 import { ref } from 'vue'
 import type { ModResultEntry } from '@/result'
 
-const props = defineProps<{
-    test: ModResultEntry
-}>()
+defineProps<{ test: ModResultEntry }>()
 
 const isOpen = ref(false)
 </script>
 
 <template>
-    <div :data-testid="'test-item-' + props.test.id">
+    <div :data-testid="'test-item-' + test.id">
         <div class="flex gap-2">
             <button
                 title="open"
@@ -29,7 +27,7 @@ const isOpen = ref(false)
                 data-testid="item-result"
                 class="flex justify-center items-center"
             >
-                <ResultTag :result-type="props.test.resultType" />
+                <ResultTag :result-type="test.resultType" />
             </div>
             <div class="line"></div>
             <div class="flex flex-col">
@@ -39,18 +37,18 @@ const isOpen = ref(false)
                     class="text-lg"
                     @click="isOpen = !isOpen"
                 >
-                    {{ props.test.id }}
+                    {{ test.id }}
                 </button>
                 <div
                     data-testid="item-description"
                     class="text-sm text-dark-gray"
                 >
-                    {{ props.test.description }}
+                    {{ test.description }}
                 </div>
             </div>
         </div>
         <div v-if="isOpen" class="pt-5 pl-5">
-            <TestDetails :test="props.test" />
+            <TestDetails :test="test" />
         </div>
     </div>
     <div class="line-h"></div>

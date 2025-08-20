@@ -18,5 +18,5 @@ const tagType = computed(() => {
 </script>
 
 <template>
-    <Tag :tag-type="tagType" :text="props.impact" />
+    <Tag :tag-type="tagType" :text="impact" />
 </template>

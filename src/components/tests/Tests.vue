@@ -2,13 +2,19 @@
 import NavBar from '@/components/tests/NavBar.vue'
 import TestItem from '@/components/tests/testItem/TestItem.vue'
 import type { ModResultEntry, ModResult } from '@/result'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { Search } from './search'
 
 const props = defineProps<{ result: ModResult }>()
 
-const filteredTests = ref<ModResultEntry[]>(props.result.tests)
+const filteredTests = ref<ModResultEntry[]>([])
 const testToShow = ref<ModResultEntry>()
+
+watch(
+    () => props.result,
+    (result) => (filteredTests.value = result.tests),
+    { immediate: true }
+)
 
 const tags: string[] = []
 props.result.tests.forEach((entry) =>

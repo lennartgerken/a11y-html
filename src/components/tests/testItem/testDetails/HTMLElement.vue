@@ -3,7 +3,7 @@ import { RuleType } from '@/result'
 import Rules from './Rules.vue'
 import type { CheckResult } from 'axe-core'
 
-const props = defineProps<{
+defineProps<{
     showImpact: boolean
     html: string
     any: CheckResult[]
@@ -19,18 +19,18 @@ const props = defineProps<{
         </div>
         <div class="flex flex-col mt-1.5 gap-1.5">
             <Rules
-                :show-impact="props.showImpact"
-                :rules="props.any"
+                :show-impact="showImpact"
+                :rules="any"
                 :rule-type="RuleType.ANY"
             />
             <Rules
-                :show-impact="props.showImpact"
-                :rules="props.all"
+                :show-impact="showImpact"
+                :rules="all"
                 :rule-type="RuleType.ALL"
             />
             <Rules
-                :show-impact="props.showImpact"
-                :rules="props.none"
+                :show-impact="showImpact"
+                :rules="none"
                 :rule-type="RuleType.NONE"
             />
         </div>
