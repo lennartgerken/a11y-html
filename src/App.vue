@@ -4,6 +4,7 @@ import Tests from './components/tests/Tests.vue'
 import type { AxeResults, Result } from 'axe-core'
 import { ResultType, type ModResult } from './result'
 import Dependencies from './components/dependencies/Dependencies.vue'
+import type { Options } from '@options'
 
 const decode = (base64: string) => {
     const bytes = Uint8Array.from(atob(base64), (char) => char.charCodeAt(0))
@@ -13,10 +14,12 @@ const decode = (base64: string) => {
 declare global {
     interface Window {
         axeResults: string
+        a11yOptions: string
     }
 }
 
 const result = ref<ModResult>()
+const options = ref<Options>({})
 const showDependencies = ref(false)
 
 const modifyResult = (result: AxeResults): ModResult => {
@@ -43,6 +46,8 @@ const onUpload = async (event: Event) => {
 
 if (window.axeResults)
     result.value = modifyResult(JSON.parse(decode(window.axeResults)))
+
+if (window.a11yOptions) options.value = JSON.parse(decode(window.a11yOptions))
 </script>
 
 <template>
