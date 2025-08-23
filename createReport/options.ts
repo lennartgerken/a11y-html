@@ -1,6 +1,6 @@
 export type Options = {
-    heading?: string
-    subheading?: string
     title?: string
+    heading?: string
+    info?: string
     hideInapplicable?: boolean
 }

@@ -5,7 +5,7 @@ import type { ModResultEntry, ModResult } from '@/result'
 import { ref, watch } from 'vue'
 import type { Search } from './search'
 
-const props = defineProps<{ result: ModResult }>()
+const props = defineProps<{ result: ModResult; info?: string }>()
 
 const filteredTests = ref<ModResultEntry[]>([])
 const testToShow = ref<ModResultEntry>()
@@ -39,6 +39,7 @@ const search = ({ searchValue, resultFilterValue, tagFilterValue }: Search) => {
         <div v-show="!testToShow">
             <NavBar
                 :url="result.url"
+                :info="info"
                 :timestamp="result.timestamp"
                 :tags="tags"
                 @search="(value: any) => search(value)"

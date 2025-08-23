@@ -6,6 +6,7 @@ import type { Search } from './search'
 
 const props = defineProps<{
     url: string
+    info?: string
     timestamp: string
     tags: string[]
 }>()
@@ -55,7 +56,8 @@ const emitSearch = () => {
             >
                 {{ url }}
             </div>
-            <div data-testid="timestamp" class="text-base text-dark-gray">
+            <div v-if="info" class="text-lg text-dark-gray">{{ info }}</div>
+            <div data-testid="timestamp" class="text-lg text-dark-gray">
                 {{ timestampFormated }}
             </div>
         </div>

@@ -63,13 +63,15 @@ if (options.title) document.title = options.title
                     {{ showDependencies ? 'Back' : 'Dependencies' }}
                 </button>
             </div>
-            <h1 class="text-4xl">Accessibility Report</h1>
+            <h1 class="text-4xl">
+                {{ options.heading || 'Accessibility Report' }}
+            </h1>
         </header>
         <main class="mt-5">
             <Dependencies v-show="showDependencies" />
             <div v-show="!showDependencies">
                 <div v-if="result">
-                    <Tests :result="result" />
+                    <Tests :result="result" :info="options.info" />
                 </div>
                 <div v-else>
                     <input
