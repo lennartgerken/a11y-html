@@ -4,6 +4,13 @@
     "license": "MIT",
     "author": "Lennart Gerken",
     "description": "Takes axe-core results and creates an html report.",
+    "keywords": [
+        "a11y",
+        "accessibility",
+        "axe",
+        "html",
+        "report"
+    ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/lennartgerken/a11y-html.git"
