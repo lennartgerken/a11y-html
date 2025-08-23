@@ -197,9 +197,9 @@ test.describe(() => {
             .disableRules('label-title-only')
             .analyze()
 
-        await testInfo.attach('a11y-html', {
+        await testInfo.attach('a11y-html.html', {
             body: createReport(results),
-            contentType: 'text/html'
+            contentType: 'application/octet-stream'
         })
         expect(results.violations).toStrictEqual([])
     })

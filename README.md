@@ -14,7 +14,7 @@ const analyze = async (page: Page) => {
 
     const report = createReport(results)
 
-    await test.info().attach('a11y-html', { body: report, contentType: 'text/html' })
+    await test.info().attach('a11y-html.html', { body: report, contentType: 'application/octet-stream' })
 
 }
 ```
