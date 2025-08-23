@@ -32,7 +32,7 @@ const modifyResult = (result: AxeResults): ModResult => {
 
 const onUpload = async (event: Event) => {
     const target = event.target as HTMLInputElement
-    if (target && target.files && target.files.length > 0)
+    if (target && target.files && target.files[0])
         result.value = modifyResult(JSON.parse(await target.files[0].text()))
 }
 
