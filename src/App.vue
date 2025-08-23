@@ -19,7 +19,6 @@ declare global {
 }
 
 const result = ref<ModResult>()
-const options = ref<Options>({})
 const showDependencies = ref(false)
 
 const modifyResult = (result: AxeResults): ModResult => {
@@ -47,7 +46,10 @@ const onUpload = async (event: Event) => {
 if (window.axeResults)
     result.value = modifyResult(JSON.parse(decode(window.axeResults)))
 
-if (window.a11yOptions) options.value = JSON.parse(decode(window.a11yOptions))
+const options: Options = window.a11yOptions
+    ? JSON.parse(decode(window.a11yOptions))
+    : {}
+if (options.title) document.title = options.title
 </script>
 
 <template>
