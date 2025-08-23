@@ -5,6 +5,11 @@ import type { AxeResults, Result } from 'axe-core'
 import { ResultType, type ModResult } from './result'
 import Dependencies from './components/dependencies/Dependencies.vue'
 
+const decode = (base64: string) => {
+    const bytes = Uint8Array.from(atob(base64), (char) => char.charCodeAt(0))
+    return new TextDecoder('utf-8').decode(bytes)
+}
+
 declare global {
     interface Window {
         axeResults: string
@@ -37,7 +42,7 @@ const onUpload = async (event: Event) => {
 }
 
 if (window.axeResults)
-    result.value = modifyResult(JSON.parse(atob(window.axeResults)))
+    result.value = modifyResult(JSON.parse(decode(window.axeResults)))
 </script>
 
 <template>
