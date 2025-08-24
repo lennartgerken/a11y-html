@@ -5,7 +5,7 @@ import { Options } from './options'
 /**
  * Takes axe-core results and creates an html report.
  * @param results axe-core results.
- * @param options Additional options to customize the presentation of the html report.
+ * @param options Additional options to customize the html report.
  * @returns html report as a string.
  */
 export default function createReport(

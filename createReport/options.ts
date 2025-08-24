@@ -3,8 +3,8 @@ export type Options = {
     title?: string
     /** Sets the heading of the report.  */
     heading?: string
-    /** Sets an aditional info under the url. */
+    /** Sets an additional info under the url. */
     info?: string
-    /** Hide all results of type inapplicable. */
+    /** Hides all results of type "inapplicable". */
     hideInapplicable?: boolean
 }
