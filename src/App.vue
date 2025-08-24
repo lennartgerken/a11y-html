@@ -69,7 +69,7 @@ if (window.axeResults) result.value = JSON.parse(decode(window.axeResults))
                 {{ options.heading || 'Accessibility Report' }}
             </h1>
             <InfoBar
-                v-if="result"
+                v-if="result && !showDependencies"
                 :url="result.url"
                 :info="options.info"
                 :timestamp="result.timestamp"
