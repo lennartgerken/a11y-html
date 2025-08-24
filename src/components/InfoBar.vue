@@ -24,7 +24,9 @@ const timestampFormated = computed(() => {
         >
             {{ url }}
         </div>
-        <div v-if="info" class="text-lg text-dark-gray">{{ info }}</div>
+        <div v-if="info" data-testid="info" class="text-lg text-dark-gray">
+            {{ info }}
+        </div>
         <div data-testid="timestamp" class="text-lg text-dark-gray">
             {{ timestampFormated }}
         </div>

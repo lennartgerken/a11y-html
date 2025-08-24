@@ -3,12 +3,14 @@ import { BaseComponent } from '@/components/baseComponent.js'
 
 export class InfoBar extends BaseComponent {
     readonly urlDiv: Locator
+    readonly infoDiv: Locator
     readonly timestampDiv: Locator
 
     constructor(locator: Locator) {
         super(locator)
 
         this.urlDiv = locator.getByTestId('url')
+        this.infoDiv = locator.getByTestId('info')
         this.timestampDiv = locator.getByTestId('timestamp')
     }
 }
