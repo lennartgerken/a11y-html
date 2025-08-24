@@ -1,23 +1,45 @@
 # a11y-html
 
-Takes axe-core results and creates an html report:
+Takes axe-core results and creates an html report.
+
+## Installation
 
 ```
-import type { Page } from '@playwright/test'
+npm i -D a11y-html
+```
+
+## Example Usage in Playwright
+
+```
 import AxeBuilder from '@axe-core/playwright'
-import { createReport } from 'a11y-html'
+import test from '@playwright/test'
+import createReport from 'a11y-html'
 
-const analyze = async (page: Page) => {
-
+test('analyze accessibility', async ({ page }, testInfo) => {
     const axeBuilder = new AxeBuilder({ page })
+
+    await page.goto('[SOME URL]')
     const results = await axeBuilder.analyze()
 
     const report = createReport(results)
 
-    await test.info().attach('a11y-html.html', { body: report, contentType: 'application/octet-stream' })
-
-}
+    await testInfo.attach('a11y-html.html', {
+        body: report,
+        contentType: 'application/octet-stream'
+    })
+})
 ```
+
+## Options
+
+You can pass additional options to customize the presentation of the HTML report:
+
+| Option           | Usage                                  |
+| ---------------- | -------------------------------------- |
+| title            | Sets the html title.                   |
+| heading          | Sets the heading of the Report.        |
+| info             | Sets an aditional info under the url.  |
+| hideInapplicable | Hide all results of type inapplicable. |
 
 ## License
 
