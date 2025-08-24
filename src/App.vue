@@ -7,17 +7,22 @@ import Dependencies from './components/dependencies/Dependencies.vue'
 import type { Options } from '@options'
 import InfoBar from '@/components/InfoBar.vue'
 
-const decode = (base64: string) => {
-    const bytes = Uint8Array.from(atob(base64), (char) => char.charCodeAt(0))
-    return new TextDecoder('utf-8').decode(bytes)
-}
-
 declare global {
     interface Window {
         axeResults: string
         a11yOptions: string
     }
 }
+
+const decode = (base64: string) => {
+    const bytes = Uint8Array.from(atob(base64), (char) => char.charCodeAt(0))
+    return new TextDecoder('utf-8').decode(bytes)
+}
+
+const options: Options = window.a11yOptions
+    ? JSON.parse(decode(window.a11yOptions))
+    : {}
+if (options.title) document.title = options.title
 
 const result = ref<AxeResults>()
 const showDependencies = ref(false)
@@ -32,9 +37,12 @@ const tests = computed<ModResultEntry[] | undefined>(() => {
     return [
         ...setResultType(result.value.violations, ResultType.VIOLATION),
         ...setResultType(result.value.incomplete, ResultType.INCOMPLETE),
-        ...setResultType(result.value.passes, ResultType.PASSED),
-        ...setResultType(result.value.inapplicable, ResultType.INAPPLICABLE)
-    ]
+        ...setResultType(result.value.passes, ResultType.PASSED)
+    ].concat(
+        options.hideInapplicable
+            ? []
+            : setResultType(result.value.inapplicable, ResultType.INAPPLICABLE)
+    )
 })
 
 const onUpload = async (event: Event) => {
@@ -44,11 +52,6 @@ const onUpload = async (event: Event) => {
 }
 
 if (window.axeResults) result.value = JSON.parse(decode(window.axeResults))
-
-const options: Options = window.a11yOptions
-    ? JSON.parse(decode(window.a11yOptions))
-    : {}
-if (options.title) document.title = options.title
 </script>
 
 <template>
