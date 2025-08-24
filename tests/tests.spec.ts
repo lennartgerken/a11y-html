@@ -1,7 +1,8 @@
-import { expect, test } from '@playwright/test'
+import { expect, type Page, test } from '@playwright/test'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import createReport from '../createReport/dist/a11y-html.js'
+import createReport from '@createReport'
+import type { Options } from '@options'
 import { writeFileSync } from 'fs'
 import AxeBuilder from '@axe-core/playwright'
 import type axe from 'axe-core'
@@ -43,13 +44,13 @@ test.describe(() => {
         test.use({ locale: 'de-DE' })
 
         test('has meta', async () => {
-            await expect(a11yPage.navBar.urlDiv).toHaveText(results.url)
+            await expect(a11yPage.infoBar.urlDiv).toHaveText(results.url)
 
             const timestampFormated = new Intl.DateTimeFormat('de-DE', {
                 dateStyle: 'medium',
                 timeStyle: 'short'
             }).format(new Date(results.timestamp))
-            await expect(a11yPage.navBar.timestampDiv).toHaveText(
+            await expect(a11yPage.infoBar.timestampDiv).toHaveText(
                 timestampFormated
             )
         })
@@ -202,6 +203,52 @@ test.describe(() => {
             contentType: 'application/octet-stream'
         })
         expect(results.violations).toStrictEqual([])
+    })
+})
+
+test.describe('options', async () => {
+    const imageAltResultID = 'image-alt'
+
+    const openReportWithOptions = async (page: Page, options?: Options) => {
+        const outputPath = test.info().outputPath('a11y-html.html')
+
+        writeFileSync(outputPath, createReport(results, options))
+        await page.goto('file:///' + outputPath)
+    }
+
+    test('disable all', async ({ page }) => {
+        await openReportWithOptions(page)
+
+        await expect(page).toHaveTitle('a11y-html')
+        await expect(a11yPage.headingH1).toHaveText('Accessibility Report')
+        await expect(a11yPage.infoBar.infoDiv).toBeHidden()
+        await expect(a11yPage.getItem(imageAltResultID).locator).toBeVisible()
+    })
+
+    test('title', async ({ page }) => {
+        const title = 'Test Title'
+
+        await openReportWithOptions(page, { title })
+        await expect(page).toHaveTitle(title)
+    })
+
+    test('heading', async ({ page }) => {
+        const heading = 'Test Heading'
+
+        await openReportWithOptions(page, { heading })
+        await expect(a11yPage.headingH1).toHaveText(heading)
+    })
+
+    test('info', async ({ page }) => {
+        const info = 'Test Info'
+
+        await openReportWithOptions(page, { info })
+        await expect(a11yPage.infoBar.infoDiv).toHaveText(info)
+    })
+
+    test('hide inapplicable', async ({ page }) => {
+        await openReportWithOptions(page, { hideInapplicable: true })
+        await expect(a11yPage.getItem(imageAltResultID).locator).toBeHidden()
     })
 })
 

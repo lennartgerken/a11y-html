@@ -3,8 +3,6 @@ import { BaseComponent } from '@/components/baseComponent.js'
 import { MultiSelect } from '@/components/multiSelect/multiSelect.js'
 
 export class NavBar extends BaseComponent {
-    readonly urlDiv: Locator
-    readonly timestampDiv: Locator
     readonly searchInput: Locator
     readonly filterSelect: Locator
     readonly tags: MultiSelect
@@ -12,8 +10,6 @@ export class NavBar extends BaseComponent {
     constructor(locator: Locator) {
         super(locator)
 
-        this.urlDiv = locator.getByTestId('url')
-        this.timestampDiv = locator.getByTestId('timestamp')
         this.searchInput = locator.getByPlaceholder('search')
         this.filterSelect = locator.getByTitle('filter')
         this.tags = new MultiSelect(

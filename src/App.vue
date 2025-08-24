@@ -1,48 +1,57 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import Tests from './components/tests/Tests.vue'
 import type { AxeResults, Result } from 'axe-core'
-import { ResultType, type ModResult } from './result'
+import { ResultType, type ModResultEntry } from './result'
 import Dependencies from './components/dependencies/Dependencies.vue'
+import type { Options } from '@options'
+import InfoBar from '@/components/InfoBar.vue'
+
+declare global {
+    interface Window {
+        axeResults: string
+        a11yOptions: string
+    }
+}
 
 const decode = (base64: string) => {
     const bytes = Uint8Array.from(atob(base64), (char) => char.charCodeAt(0))
     return new TextDecoder('utf-8').decode(bytes)
 }
 
-declare global {
-    interface Window {
-        axeResults: string
-    }
-}
+const options: Options = window.a11yOptions
+    ? JSON.parse(decode(window.a11yOptions))
+    : {}
+if (options.title) document.title = options.title
 
-const result = ref<ModResult>()
+const result = ref<AxeResults>()
 const showDependencies = ref(false)
 
-const modifyResult = (result: AxeResults): ModResult => {
+const tests = computed<ModResultEntry[] | undefined>(() => {
     const setResultType = (tests: Result[], resultType: ResultType) => {
         return tests.map((test) => ({ ...test, resultType }))
     }
 
-    return {
-        ...result,
-        tests: [
-            ...setResultType(result.violations, ResultType.VIOLATION),
-            ...setResultType(result.incomplete, ResultType.INCOMPLETE),
-            ...setResultType(result.passes, ResultType.PASSED),
-            ...setResultType(result.inapplicable, ResultType.INAPPLICABLE)
-        ]
-    }
-}
+    if (!result.value) return undefined
+
+    return [
+        ...setResultType(result.value.violations, ResultType.VIOLATION),
+        ...setResultType(result.value.incomplete, ResultType.INCOMPLETE),
+        ...setResultType(result.value.passes, ResultType.PASSED)
+    ].concat(
+        options.hideInapplicable
+            ? []
+            : setResultType(result.value.inapplicable, ResultType.INAPPLICABLE)
+    )
+})
 
 const onUpload = async (event: Event) => {
     const target = event.target as HTMLInputElement
     if (target && target.files && target.files[0])
-        result.value = modifyResult(JSON.parse(await target.files[0].text()))
+        result.value = JSON.parse(await target.files[0].text())
 }
 
-if (window.axeResults)
-    result.value = modifyResult(JSON.parse(decode(window.axeResults)))
+if (window.axeResults) result.value = JSON.parse(decode(window.axeResults))
 </script>
 
 <template>
@@ -56,14 +65,20 @@ if (window.axeResults)
                     {{ showDependencies ? 'Back' : 'Dependencies' }}
                 </button>
             </div>
-            <h1 class="text-4xl">Accessibility Report</h1>
+            <h1 class="text-4xl mb-2">
+                {{ options.heading || 'Accessibility Report' }}
+            </h1>
+            <InfoBar
+                v-if="result && !showDependencies"
+                :url="result.url"
+                :info="options.info"
+                :timestamp="result.timestamp"
+            />
         </header>
         <main class="mt-5">
             <Dependencies v-show="showDependencies" />
             <div v-show="!showDependencies">
-                <div v-if="result">
-                    <Tests :result="result" />
-                </div>
+                <Tests v-if="tests" :tests="tests" />
                 <div v-else>
                     <input
                         title="Upload results"

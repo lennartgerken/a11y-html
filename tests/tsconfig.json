@@ -5,7 +5,9 @@
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "paths": {
-            "@/*": ["./*"]
+            "@/*": ["./*"],
+            "@options": ["../createReport/options.js"],
+            "@createReport": ["../createReport/dist/a11y-html.js"]
         }
     }
 }
