@@ -1,30 +1,30 @@
 <script setup lang="ts">
 import NavBar from '@/components/tests/NavBar.vue'
 import TestItem from '@/components/tests/testItem/TestItem.vue'
-import type { ModResultEntry, ModResult } from '@/result'
+import type { ModResultEntry } from '@/result'
 import { ref, watch } from 'vue'
 import type { Search } from './search'
 
-const props = defineProps<{ result: ModResult; info?: string }>()
+const props = defineProps<{ tests: ModResultEntry[] }>()
 
 const filteredTests = ref<ModResultEntry[]>([])
 const testToShow = ref<ModResultEntry>()
 
 watch(
-    () => props.result,
-    (result) => (filteredTests.value = result.tests),
+    () => props.tests,
+    (tests) => (filteredTests.value = tests),
     { immediate: true }
 )
 
 const tags: string[] = []
-props.result.tests.forEach((entry) =>
+props.tests.forEach((entry) =>
     entry.tags.forEach((value) => {
         if (!tags.includes(value)) tags.push(value)
     })
 )
 
 const search = ({ searchValue, resultFilterValue, tagFilterValue }: Search) => {
-    filteredTests.value = props.result.tests.filter((test: ModResultEntry) => {
+    filteredTests.value = props.tests.filter((test: ModResultEntry) => {
         return (
             (!resultFilterValue || resultFilterValue === test.resultType) &&
             test.id.includes(searchValue) &&
@@ -37,13 +37,7 @@ const search = ({ searchValue, resultFilterValue, tagFilterValue }: Search) => {
 <template>
     <div>
         <div v-show="!testToShow">
-            <NavBar
-                :url="result.url"
-                :info="info"
-                :timestamp="result.timestamp"
-                :tags="tags"
-                @search="(value: any) => search(value)"
-            />
+            <NavBar :tags="tags" @search="(value: any) => search(value)" />
             <div class="flex flex-col gap-3 pt-7">
                 <TestItem
                     v-for="test in filteredTests"

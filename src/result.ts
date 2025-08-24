@@ -1,4 +1,4 @@
-import type { AxeResults, Result } from 'axe-core'
+import type { Result } from 'axe-core'
 
 export enum ResultType {
     PASSED = 'passed',
@@ -20,5 +20,4 @@ export enum Impact {
     CRITICAL = 'critical'
 }
 
-export type ModResult = AxeResults & { tests: ModResultEntry[] }
 export type ModResultEntry = Result & { resultType: ResultType }

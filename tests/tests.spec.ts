@@ -43,13 +43,13 @@ test.describe(() => {
         test.use({ locale: 'de-DE' })
 
         test('has meta', async () => {
-            await expect(a11yPage.navBar.urlDiv).toHaveText(results.url)
+            await expect(a11yPage.infoBar.urlDiv).toHaveText(results.url)
 
             const timestampFormated = new Intl.DateTimeFormat('de-DE', {
                 dateStyle: 'medium',
                 timeStyle: 'short'
             }).format(new Date(results.timestamp))
-            await expect(a11yPage.navBar.timestampDiv).toHaveText(
+            await expect(a11yPage.infoBar.timestampDiv).toHaveText(
                 timestampFormated
             )
         })
