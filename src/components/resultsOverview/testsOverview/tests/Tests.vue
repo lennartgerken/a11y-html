@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import NavBar from '@/components/resultsOverview/testsOverview/tests/NavBar.vue'
+import NavBar from '@/components/resultsOverview/NavBar.vue'
 import TestItem from '@/components/resultsOverview/testsOverview/tests/testItem/TestItem.vue'
 import type { ModResultEntry } from '@/result'
 import { ref, watch } from 'vue'
-import type { Search } from './search'
+import type { Search } from '@/components/resultsOverview/search'
 
 const props = defineProps<{ tests: ModResultEntry[] }>()
 
@@ -27,7 +27,7 @@ const search = ({ searchValue, resultFilterValue, tagFilterValue }: Search) => {
     filteredTests.value = props.tests.filter((test: ModResultEntry) => {
         return (
             (!resultFilterValue || resultFilterValue === test.resultType) &&
-            test.id.includes(searchValue) &&
+            test.id.toLowerCase().includes(searchValue.toLocaleLowerCase()) &&
             test.tags.some((tag) => tagFilterValue.includes(tag))
         )
     })
@@ -38,6 +38,7 @@ const search = ({ searchValue, resultFilterValue, tagFilterValue }: Search) => {
     <div>
         <div v-show="!testToShow">
             <NavBar
+                data-testid="tests-nav"
                 class="mb-5"
                 :tags="tags"
                 @search="(value: any) => search(value)"

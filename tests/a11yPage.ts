@@ -16,7 +16,7 @@ export class A11yPage {
 
         this.headingH1 = page.locator('h1')
         this.infoBar = new InfoBar(page.getByTestId('info-bar'))
-        this.navBar = new NavBar(page.locator('nav'))
+        this.navBar = new NavBar(page.getByTestId('tests-nav'))
         this.allItemDivs = page.getByTestId(/test-item/)
     }
 

@@ -60,11 +60,21 @@ const setA11yResult = (axeResults: ResultsEntry[]) => {
                   )
         )
 
+        let resultType = ResultType.PASSED
+
+        if (tests.find(({ resultType }) => resultType === ResultType.VIOLATION))
+            resultType = ResultType.VIOLATION
+        else if (
+            tests.find(({ resultType }) => resultType === ResultType.INCOMPLETE)
+        )
+            resultType = ResultType.INCOMPLETE
+
         return {
             tests,
             url: currentAxeResults.url,
             timestamp: currentAxeResults.timestamp,
             info,
+            resultType,
             id: index
         }
     })

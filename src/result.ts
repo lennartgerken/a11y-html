@@ -26,5 +26,6 @@ export type A11yResult = {
     url: string
     timestamp: string
     info?: string
+    resultType: ResultType
     id: number
 }

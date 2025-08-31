@@ -4,7 +4,7 @@ import { ref, watch } from 'vue'
 import MultiSelect from '@/components/MultiSelect.vue'
 import type { Search } from './search'
 
-const props = defineProps<{ tags: string[] }>()
+const props = defineProps<{ tags?: string[] }>()
 
 const emit = defineEmits<{
     (e: 'search', value: Search): void
@@ -16,7 +16,9 @@ const tagFilter = ref<string[]>([])
 
 watch(
     () => props.tags,
-    (tags) => (tagFilter.value = tags),
+    (tags) => {
+        if (tags) tagFilter.value = tags
+    },
     { immediate: true }
 )
 
@@ -58,7 +60,7 @@ const emitSearch = () => {
                 <option :value="ResultType.INAPPLICABLE">inapplicable</option>
             </select>
         </div>
-        <div class="md:flex md:flex-col md:justify-center">
+        <div v-if="tags" class="md:flex md:flex-col md:justify-center">
             <MultiSelect
                 name="Tags"
                 :options="tags"

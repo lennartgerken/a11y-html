@@ -271,5 +271,5 @@ test('open by upload', async ({ page }) => {
         mimeType: 'text/json'
     })
 
-    await expect(page.locator('nav')).toBeVisible()
+    await expect(a11yPage.navBar.locator).toBeVisible()
 })
