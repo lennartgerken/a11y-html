@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import type { AxeResults, Result } from 'axe-core'
 import { ResultType, type A11yResult } from './result'
 import Dependencies from './components/dependencies/Dependencies.vue'
-import ResultsOverview from '@/components/ResultsOverview.vue'
+import ResultsOverview from '@/components/resultsOverview/ResultsOverview.vue'
 import type { BaseOptions, ResultsEntry } from '@options'
 
 declare global {

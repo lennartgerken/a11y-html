@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ResultTag from '@/components/ResultTag.vue'
 import Tag from '@/components/Tag.vue'
-import HTMLElement from '@/components/tests/testItem/testDetails/HTMLElement.vue'
+import HTMLElement from '@/components/resultsOverview/testsOverview/tests/testItem/testDetails/HTMLElement.vue'
 import type { ModResultEntry } from '@/result'
 import { TagType } from '@/components/tagType'
 import { ResultType } from '@/result'
@@ -11,7 +11,7 @@ defineProps<{ test: ModResultEntry }>()
 
 <template>
     <div data-testid="details">
-        <div class="flex flex-col gap-1.5">
+        <div class="flex flex-col gap-1.5 mb-5">
             <div data-testid="details-tags" class="flex gap-1.5 flex-wrap">
                 <Tag
                     v-for="tag in test.tags"
@@ -42,7 +42,7 @@ defineProps<{ test: ModResultEntry }>()
                 test.helpUrl
             }}</a>
         </div>
-        <div class="flex flex-col gap-4 mt-5">
+        <div class="flex flex-col gap-4">
             <HTMLElement
                 v-for="node in test.nodes"
                 :key="node.target.join('')"

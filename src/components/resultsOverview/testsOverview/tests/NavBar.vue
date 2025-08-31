@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ResultType } from '@/result'
 import { ref, watch } from 'vue'
-import MultiSelect from '../MultiSelect.vue'
+import MultiSelect from '@/components/MultiSelect.vue'
 import type { Search } from './search'
 
 const props = defineProps<{ tags: string[] }>()

@@ -5,9 +5,9 @@ import Dependency from './Dependency.vue'
 <template>
     <div>
         <div class="text-3xl mb-2">Dependencies</div>
-        <div>
-            <div class="text-2xl">MIT License</div>
-            <div class="mt-2 flex flex-col gap-5">
+        <div class="mb-7">
+            <div class="text-2xl mb-2">MIT License</div>
+            <div class="flex flex-col gap-5">
                 <Dependency
                     title="a11y-html"
                     copyright="Copyright (c) 2025 Lennart Gerken"
@@ -25,7 +25,7 @@ import Dependency from './Dependency.vue'
                 />
             </div>
         </div>
-        <div class="mt-5">
+        <div>
             <p>
                 Permission is hereby granted, free of charge, to any person
                 obtaining a copy of this software and associated documentation
@@ -36,12 +36,10 @@ import Dependency from './Dependency.vue'
                 Software is furnished to do so, subject to the following
                 conditions:
             </p>
-            <br />
             <p>
                 The above copyright notice and this permission notice shall be
                 included in all copies or substantial portions of the Software.
             </p>
-            <br />
             <p>
                 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
                 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
@@ -55,3 +53,9 @@ import Dependency from './Dependency.vue'
         </div>
     </div>
 </template>
+
+<style scoped>
+p {
+    margin-bottom: 1rem;
+}
+</style>

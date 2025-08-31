@@ -14,10 +14,10 @@ defineProps<{
 
 <template>
     <div data-testid="html-element">
-        <div class="bg-gray-200 p-2 wrap-anywhere">
+        <div class="bg-gray-200 p-2 wrap-anywhere mb-1.5">
             <code data-testid="html">{{ html }}</code>
         </div>
-        <div class="flex flex-col mt-1.5 gap-1.5">
+        <div class="flex flex-col gap-1.5">
             <Rules
                 :show-impact="showImpact"
                 :rules="any"
