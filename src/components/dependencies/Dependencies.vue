@@ -4,8 +4,8 @@ import Dependency from './Dependency.vue'
 
 <template>
     <div>
-        <div class="text-3xl">Dependencies</div>
-        <div class="mt-2">
+        <div class="text-3xl mb-2">Dependencies</div>
+        <div>
             <div class="text-2xl">MIT License</div>
             <div class="mt-2 flex flex-col gap-5">
                 <Dependency

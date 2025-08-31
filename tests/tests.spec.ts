@@ -1,12 +1,12 @@
 import { expect, type Page, test } from '@playwright/test'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import createReport from '@createReport'
-import type { Options } from '@options'
+import { createReport } from '@createReport'
 import { writeFileSync } from 'fs'
 import AxeBuilder from '@axe-core/playwright'
 import type axe from 'axe-core'
 import { A11yPage } from '@/a11yPage.js'
+import { CreateReportOptions } from '@options'
 
 let currentPath: string
 let results: axe.AxeResults
@@ -209,7 +209,10 @@ test.describe(() => {
 test.describe('options', async () => {
     const imageAltResultID = 'image-alt'
 
-    const openReportWithOptions = async (page: Page, options?: Options) => {
+    const openReportWithOptions = async (
+        page: Page,
+        options?: CreateReportOptions
+    ) => {
         const outputPath = test.info().outputPath('a11y-html.html')
 
         writeFileSync(outputPath, createReport(results, options))

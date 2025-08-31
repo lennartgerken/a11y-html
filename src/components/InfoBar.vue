@@ -6,7 +6,7 @@ const props = defineProps<{
     info?: string
     timestamp: string
 }>()
-
+console.log(props.info)
 const timestampFormated = computed(() => {
     return new Intl.DateTimeFormat('default', {
         dateStyle: 'medium',

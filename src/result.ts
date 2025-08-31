@@ -21,3 +21,10 @@ export enum Impact {
 }
 
 export type ModResultEntry = Result & { resultType: ResultType }
+export type A11yResult = {
+    tests: ModResultEntry[]
+    url: string
+    timestamp: string
+    info?: string
+    id: number
+}
