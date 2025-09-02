@@ -43,7 +43,7 @@ const search = ({ searchValue, resultFilterValue, tagFilterValue }: Search) => {
                 :tags="tags"
                 @search="(value: any) => search(value)"
             />
-            <div class="flex flex-col gap-3">
+            <div>
                 <TestItem
                     v-for="test in filteredTests"
                     :key="test.id + test.resultType"

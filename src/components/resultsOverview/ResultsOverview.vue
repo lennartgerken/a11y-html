@@ -3,8 +3,9 @@ import NavBar from '@/components/resultsOverview/NavBar.vue'
 import ResultItem from '@/components/resultsOverview/ResultItem.vue'
 import type { Search } from '@/components/resultsOverview/search'
 import TestsOverview from '@/components/resultsOverview/testsOverview/TestsOverview.vue'
+import Timestamp from '@/components/resultsOverview/Timestamp.vue'
 import type { A11yResult } from '@/result'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps<{
     results: A11yResult[]
@@ -27,6 +28,15 @@ watch(
     { immediate: true }
 )
 
+const firstTimestamp = computed(() => {
+    return props.results.reduce((min, current) => {
+        return new Date(current.timestamp).getTime() <
+            new Date(min.timestamp).getTime()
+            ? current
+            : min
+    }).timestamp
+})
+
 const search = ({ searchValue, resultFilterValue }: Search) => {
     filteredResults.value = props.results.filter((result: A11yResult) => {
         return (
@@ -43,6 +53,7 @@ const search = ({ searchValue, resultFilterValue }: Search) => {
 
 <template>
     <div v-show="!openResult">
+        <Timestamp :timestamp="firstTimestamp" />
         <NavBar class="mb-5" @search="search" />
         <ResultItem
             v-for="result in filteredResults"
@@ -50,6 +61,12 @@ const search = ({ searchValue, resultFilterValue }: Search) => {
             :result="result"
             @open="(id) => (openResult = props.results[id])"
         />
+        <div
+            v-if="filteredResults.length === 0"
+            class="text-dark-gray text-center"
+        >
+            No entries found
+        </div>
     </div>
     <div v-if="openResult">
         <button @click="openResult = undefined">Back to Overview</button>

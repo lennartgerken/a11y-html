@@ -1,17 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-
-const props = defineProps<{
+import Timestamp from '@/components/resultsOverview/Timestamp.vue'
+defineProps<{
     url: string
     info?: string
     timestamp: string
 }>()
-const timestampFormated = computed(() => {
-    return new Intl.DateTimeFormat('default', {
-        dateStyle: 'medium',
-        timeStyle: 'short'
-    }).format(new Date(props.timestamp))
-})
 </script>
 
 <template>
@@ -26,8 +19,6 @@ const timestampFormated = computed(() => {
         <div v-if="info" data-testid="info" class="text-lg text-dark-gray">
             {{ info }}
         </div>
-        <div data-testid="timestamp" class="text-lg text-dark-gray">
-            {{ timestampFormated }}
-        </div>
+        <timestamp :timestamp="timestamp" />
     </div>
 </template>
