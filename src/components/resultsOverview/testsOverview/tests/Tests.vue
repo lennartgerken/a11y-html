@@ -1,47 +1,63 @@
 <script setup lang="ts">
 import NavBar from '@/components/resultsOverview/NavBar.vue'
 import TestItem from '@/components/resultsOverview/testsOverview/tests/testItem/TestItem.vue'
-import type { ModResultEntry } from '@/result'
+import { ResultType, type ModResultEntry } from '@/result'
 import { ref, watch } from 'vue'
-import type { Search } from '@/components/resultsOverview/search'
 
 const props = defineProps<{ tests: ModResultEntry[] }>()
 
 const filteredTests = ref<ModResultEntry[]>([])
 const testToShow = ref<ModResultEntry>()
 
+const tags = ref<string[]>([])
+
+const search = ref('')
+const resultFilter = ref<ResultType | undefined>(undefined)
+const selectedTags = ref<string[]>([])
+
 watch(
     () => props.tests,
-    (tests) => (filteredTests.value = tests),
+    (tests) => {
+        filteredTests.value = tests
+        tags.value = []
+        tests.forEach((entry) =>
+            entry.tags.forEach((value) => {
+                if (!tags.value.includes(value)) tags.value.push(value)
+            })
+        )
+
+        search.value = ''
+        resultFilter.value = undefined
+        selectedTags.value = tags.value
+    },
     { immediate: true }
 )
 
-const tags: string[] = []
-props.tests.forEach((entry) =>
-    entry.tags.forEach((value) => {
-        if (!tags.includes(value)) tags.push(value)
-    })
-)
-
-const search = ({ searchValue, resultFilterValue, tagFilterValue }: Search) => {
+const filter = () => {
     filteredTests.value = props.tests.filter((test: ModResultEntry) => {
         return (
-            (!resultFilterValue || resultFilterValue === test.resultType) &&
-            test.id.toLowerCase().includes(searchValue.toLocaleLowerCase()) &&
-            test.tags.some((tag) => tagFilterValue.includes(tag))
+            (!resultFilter.value || resultFilter.value === test.resultType) &&
+            test.id.toLowerCase().includes(search.value.toLocaleLowerCase()) &&
+            test.tags.some((tag) => selectedTags.value.includes(tag))
         )
     })
 }
+
+watch(search, filter)
+watch(resultFilter, filter)
+watch(selectedTags, filter)
 </script>
 
 <template>
     <div>
         <div v-show="!testToShow">
             <NavBar
+                v-model:search="search"
+                v-model:result-filter="resultFilter"
+                v-model:selected-tags="selectedTags"
                 data-testid="tests-nav"
                 class="mb-5"
                 :tags="tags"
-                @search="(value: any) => search(value)"
             />
             <div>
                 <TestItem

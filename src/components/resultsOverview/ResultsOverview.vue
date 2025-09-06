@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import NavBar from '@/components/resultsOverview/NavBar.vue'
 import ResultItem from '@/components/resultsOverview/ResultItem.vue'
-import type { Search } from '@/components/resultsOverview/search'
 import TestsOverview from '@/components/resultsOverview/testsOverview/TestsOverview.vue'
 import Timestamp from '@/components/resultsOverview/Timestamp.vue'
-import type { A11yResult } from '@/result'
+import type { A11yResult, ResultType } from '@/result'
 import { computed, ref, watch } from 'vue'
 
 const props = defineProps<{
@@ -14,16 +13,16 @@ const props = defineProps<{
 const filteredResults = ref<A11yResult[]>([])
 const openResult = ref<A11yResult>()
 
-watch(
-    () => props.results,
-    (results) => (filteredResults.value = results),
-    { immediate: true }
-)
+const search = ref('')
+const resultFilter = ref<ResultType | undefined>(undefined)
 
 watch(
     () => props.results,
-    () => {
-        if (props.results.length === 1) openResult.value = props.results[0]
+    (results) => {
+        if (props.results.length === 1) openResult.value = results[0]
+        filteredResults.value = results
+        search.value = ''
+        resultFilter.value = undefined
     },
     { immediate: true }
 )
@@ -37,24 +36,31 @@ const firstTimestamp = computed(() => {
     }).timestamp
 })
 
-const search = ({ searchValue, resultFilterValue }: Search) => {
+const filter = () => {
     filteredResults.value = props.results.filter((result: A11yResult) => {
         return (
-            (!resultFilterValue || resultFilterValue === result.resultType) &&
-            (result.url.toLowerCase().includes(searchValue.toLowerCase()) ||
+            (!resultFilter.value || resultFilter.value === result.resultType) &&
+            (result.url.toLowerCase().includes(search.value.toLowerCase()) ||
                 (result.info &&
                     result.info
                         .toLowerCase()
-                        .includes(searchValue.toLowerCase())))
+                        .includes(search.value.toLowerCase())))
         )
     })
 }
+
+watch(search, filter)
+watch(resultFilter, filter)
 </script>
 
 <template>
     <div v-show="!openResult">
         <Timestamp :timestamp="firstTimestamp" />
-        <NavBar class="mb-5" @search="search" />
+        <NavBar
+            v-model:result-filter="resultFilter"
+            v-model:search="search"
+            class="mb-5"
+        />
         <ResultItem
             v-for="result in filteredResults"
             :key="result.id"
