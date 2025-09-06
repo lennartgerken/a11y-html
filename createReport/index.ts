@@ -1,6 +1,6 @@
 import type { AxeResults } from 'axe-core'
 import report from './html/index.html?raw'
-import { Options } from './options'
+import type { BaseOptions, CreateReportOptions, ResultsEntry } from './options'
 
 /**
  * Takes axe-core results and creates an html report.
@@ -8,14 +8,34 @@ import { Options } from './options'
  * @param options Additional options to customize the html report.
  * @returns html report as a string.
  */
-export default function createReport(
+export function createReport(
     results: AxeResults,
-    options: Options = {}
+    options: CreateReportOptions = {}
+) {
+    return createMergedReport(
+        [options.info ? { results, info: options.info } : results],
+        options
+    )
+}
+
+/**
+ * Takes multiple axe-core results and creates an html report.
+ * @param results List of axe-core results.
+ * @param options Additional options to customize the html report.
+ * @returns html report as a string.
+ */
+export function createMergedReport(
+    results: ResultsEntry[],
+    options: BaseOptions = {}
 ) {
     return `
     ${report}
     <script>
-    window.axeResults="${Buffer.from(JSON.stringify(results)).toString('base64')}"
-    window.a11yOptions="${Buffer.from(JSON.stringify(options)).toString('base64')}"
+    ${getWindowString('axeResults', results)}
+    ${getWindowString('a11yOptions', options)}
     </script>`
+}
+
+function getWindowString(name: string, obj: object) {
+    return `window.${name}="${Buffer.from(JSON.stringify(obj)).toString('base64')}"`
 }

@@ -1,14 +1,16 @@
 import { Locator } from '@playwright/test'
-import { BaseComponent } from '../../baseComponent.js'
 import { Rule } from './rule.js'
+import { BaseComponent } from '@/components/baseComponent.js'
 
-export class Element extends BaseComponent {
+export class HTMLElement extends BaseComponent {
+    readonly openButton: Locator
     readonly htmlCode: Locator
     readonly allAnyRuleDivs: Locator
 
     constructor(locator: Locator) {
         super(locator)
 
+        this.openButton = locator.getByTestId('html-open')
         this.htmlCode = locator.getByTestId('html')
         this.allAnyRuleDivs = locator.getByTestId(/rule/).filter({
             has: this.locator.page().getByTestId('rule-type').getByText('any')

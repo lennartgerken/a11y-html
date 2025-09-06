@@ -41,6 +41,18 @@ You can pass additional options to customize the html report:
 | info             | Sets an additional info under the url.    |
 | hideInapplicable | Hides all results of type "inapplicable". |
 
+## Merged Report
+
+Multiple results can be merged into one report using `createMergedReport`. Each result can be passed with an info string that is displayed on the overview page:
+
+```
+createMergedReport([
+    { results: results1, info: 'Info 1' },
+    { results: results2, info: 'Info 2' },
+    results3
+])
+```
+
 ## License
 
 This package is licensed under the [MIT License](./LICENSE).

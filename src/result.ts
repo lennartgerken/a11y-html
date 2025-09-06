@@ -6,6 +6,12 @@ export enum ResultType {
     INCOMPLETE = 'incomplete',
     INAPPLICABLE = 'inapplicable'
 }
+export const resultTypeOrder = [
+    ResultType.VIOLATION,
+    ResultType.INCOMPLETE,
+    ResultType.PASSED,
+    ResultType.INAPPLICABLE
+]
 
 export enum RuleType {
     ANY = 'any',
@@ -21,3 +27,11 @@ export enum Impact {
 }
 
 export type ModResultEntry = Result & { resultType: ResultType }
+export type A11yResult = {
+    tests: ModResultEntry[]
+    url: string
+    timestamp: string
+    info?: string
+    resultType: ResultType
+    id: number
+}

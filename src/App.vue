@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import Tests from './components/tests/Tests.vue'
+import { ref } from 'vue'
 import type { AxeResults, Result } from 'axe-core'
-import { ResultType, type ModResultEntry } from './result'
+import { ResultType, type A11yResult } from './result'
 import Dependencies from './components/dependencies/Dependencies.vue'
-import type { Options } from '@options'
-import InfoBar from '@/components/InfoBar.vue'
+import ResultsOverview from '@/components/resultsOverview/ResultsOverview.vue'
+import type { BaseOptions, ResultsEntry } from '@options'
 
 declare global {
     interface Window {
@@ -19,44 +18,87 @@ const decode = (base64: string) => {
     return new TextDecoder('utf-8').decode(bytes)
 }
 
-const options: Options = window.a11yOptions
+const options: BaseOptions = window.a11yOptions
     ? JSON.parse(decode(window.a11yOptions))
     : {}
 if (options.title) document.title = options.title
 
-const result = ref<AxeResults>()
+const a11yResults = ref<A11yResult[] | undefined>()
 const showDependencies = ref(false)
 
-const tests = computed<ModResultEntry[] | undefined>(() => {
+const setA11yResult = (axeResults: ResultsEntry[]) => {
     const setResultType = (tests: Result[], resultType: ResultType) => {
         return tests.map((test) => ({ ...test, resultType }))
     }
 
-    if (!result.value) return undefined
+    a11yResults.value = axeResults.map((entry, index) => {
+        function isAxeResults(
+            results: AxeResults | { results: AxeResults; info: string }
+        ): results is AxeResults {
+            return (results as AxeResults).violations !== undefined
+        }
 
-    return [
-        ...setResultType(result.value.violations, ResultType.VIOLATION),
-        ...setResultType(result.value.incomplete, ResultType.INCOMPLETE),
-        ...setResultType(result.value.passes, ResultType.PASSED)
-    ].concat(
-        options.hideInapplicable
-            ? []
-            : setResultType(result.value.inapplicable, ResultType.INAPPLICABLE)
-    )
-})
+        const currentAxeResults = isAxeResults(entry) ? entry : entry.results
+        const info = isAxeResults(entry) ? undefined : entry.info
+
+        const tests = [
+            ...setResultType(
+                currentAxeResults.violations,
+                ResultType.VIOLATION
+            ),
+            ...setResultType(
+                currentAxeResults.incomplete,
+                ResultType.INCOMPLETE
+            ),
+            ...setResultType(currentAxeResults.passes, ResultType.PASSED)
+        ].concat(
+            options.hideInapplicable
+                ? []
+                : setResultType(
+                      currentAxeResults.inapplicable,
+                      ResultType.INAPPLICABLE
+                  )
+        )
+
+        let resultType = ResultType.PASSED
+
+        if (tests.find(({ resultType }) => resultType === ResultType.VIOLATION))
+            resultType = ResultType.VIOLATION
+        else if (
+            tests.find(({ resultType }) => resultType === ResultType.INCOMPLETE)
+        )
+            resultType = ResultType.INCOMPLETE
+
+        return {
+            tests,
+            url: currentAxeResults.url,
+            timestamp: currentAxeResults.timestamp,
+            info,
+            resultType,
+            id: index
+        }
+    })
+}
 
 const onUpload = async (event: Event) => {
     const target = event.target as HTMLInputElement
-    if (target && target.files && target.files[0])
-        result.value = JSON.parse(await target.files[0].text())
+    if (target && target.files) {
+        const results: AxeResults[] = []
+
+        for (const file of target.files) {
+            results.push(JSON.parse(await file.text()))
+        }
+
+        setA11yResult(results)
+    }
 }
 
-if (window.axeResults) result.value = JSON.parse(decode(window.axeResults))
+if (window.axeResults) setA11yResult(JSON.parse(decode(window.axeResults)))
 </script>
 
 <template>
     <div class="m-auto max-w-7xl">
-        <header>
+        <header class="mb-2">
             <div class="flex justify-end">
                 <button
                     class="text-lg"
@@ -65,24 +107,19 @@ if (window.axeResults) result.value = JSON.parse(decode(window.axeResults))
                     {{ showDependencies ? 'Back' : 'Dependencies' }}
                 </button>
             </div>
-            <h1 class="text-4xl mb-2">
+            <h1 class="text-4xl">
                 {{ options.heading || 'Accessibility Report' }}
             </h1>
-            <InfoBar
-                v-if="result && !showDependencies"
-                :url="result.url"
-                :info="options.info"
-                :timestamp="result.timestamp"
-            />
         </header>
-        <main class="mt-5">
+        <main>
             <Dependencies v-show="showDependencies" />
             <div v-show="!showDependencies">
-                <Tests v-if="tests" :tests="tests" />
+                <ResultsOverview v-if="a11yResults" :results="a11yResults" />
                 <div v-else>
                     <input
                         title="Upload results"
                         type="file"
+                        multiple
                         @change="onUpload($event)"
                     />
                 </div>

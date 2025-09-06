@@ -1,13 +1,13 @@
 import { Locator } from '@playwright/test'
-import { BaseComponent } from '../baseComponent.js'
-import { Details } from './details/details.js'
+import { TestDetails } from './testDetails/testDetails.js'
+import { BaseComponent } from '@/components/baseComponent.js'
 
-export class Item extends BaseComponent {
+export class TestItem extends BaseComponent {
     readonly headerDiv: Locator
     readonly resultDiv: Locator
     readonly descriptionDiv: Locator
     readonly openButton: Locator
-    readonly details: Details
+    readonly details: TestDetails
 
     constructor(locator: Locator) {
         super(locator)
@@ -15,7 +15,7 @@ export class Item extends BaseComponent {
         this.headerDiv = locator.getByTestId('item-header')
         this.resultDiv = locator.getByTestId('item-result')
         this.descriptionDiv = locator.getByTestId('item-description')
-        this.openButton = locator.getByTitle('open')
-        this.details = new Details(locator.getByTestId('details'))
+        this.openButton = locator.getByTestId('item-open')
+        this.details = new TestDetails(locator.getByTestId('details'))
     }
 }

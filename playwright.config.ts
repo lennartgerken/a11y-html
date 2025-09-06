@@ -3,9 +3,12 @@ import { defineConfig, devices } from '@playwright/test'
 export default defineConfig({
     testDir: './tests',
     forbidOnly: !!process.env.CI,
-    retries: process.env.CI ? 2 : 0,
+    retries: 1,
     workers: process.env.CI ? 1 : undefined,
     reporter: [['html', { open: 'never' }]],
+    expect: {
+        timeout: 5000
+    },
     use: {
         trace: 'on-first-retry'
     },

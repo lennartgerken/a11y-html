@@ -4,18 +4,15 @@ import {
     nextTick,
     onBeforeUnmount,
     onMounted,
-    reactive,
     ref,
     useTemplateRef,
     watch
 } from 'vue'
 
-const emit = defineEmits<{
-    filter: [options: string[]]
-}>()
-
 const props = defineProps<{ name: string; options: string[] }>()
-const optionValues = reactive(new Map<string, boolean>())
+const sortedOptions = ref<string[]>([])
+const selectedOptions = defineModel<string[]>({ required: true })
+
 const isOpen = ref(false)
 const dropdown = useTemplateRef('dropdown')
 const dropdownPosition = ref('left-0')
@@ -23,41 +20,31 @@ const dropdownPosition = ref('left-0')
 watch(
     () => props.options,
     (options) => {
-        optionValues.clear()
-        const sortedOptions = [...options].sort((a, b) =>
+        sortedOptions.value = options
+        sortedOptions.value.sort((a, b) =>
             a.toLocaleLowerCase().localeCompare(b.toLocaleLowerCase())
         )
-        sortedOptions.forEach((option) => optionValues.set(option, true))
     },
     { immediate: true }
 )
 
 const allActive = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return !Array.from(optionValues).find(([_key, value]) => value === false)
-}
-
-const emitOptions = () => {
-    emit(
-        'filter',
-        Array.from(optionValues)
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            .filter(([_key, value]) => value === true)
-            .map(([key]) => key)
+    return !sortedOptions.value.find(
+        (value) => !selectedOptions.value.includes(value)
     )
 }
 
 const setOption = (option: string) => {
-    optionValues.set(option, !optionValues.get(option))
-    emitOptions()
+    if (selectedOptions.value.includes(option))
+        selectedOptions.value = selectedOptions.value.filter(
+            (current) => current !== option
+        )
+    else selectedOptions.value = [...selectedOptions.value, option]
 }
 
 const activateAllOptions = () => {
-    const setStatus = !allActive()
-    Array.from(optionValues.keys()).forEach((key) =>
-        optionValues.set(key, setStatus)
-    )
-    emitOptions()
+    if (allActive()) selectedOptions.value = []
+    else selectedOptions.value = sortedOptions.value
 }
 
 const circleColor = computed(() => {
@@ -118,18 +105,18 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
                     {{ allActive() ? 'Deselect all' : 'Select all' }}
                 </button>
                 <label
-                    v-for="[key, value] in optionValues"
-                    :key="key"
+                    v-for="option in sortedOptions"
+                    :key="option"
                     class="flex gap-1"
                 >
                     <input
-                        :name="key"
+                        :name="option"
                         type="checkbox"
-                        :checked="value"
-                        @change="setOption(key)"
+                        :checked="selectedOptions?.includes(option)"
+                        @change="setOption(option)"
                     />
                     <div class="flex flex-col justify-center">
-                        <span class="w-fit h-fit">{{ key }}</span>
+                        <span class="w-fit h-fit">{{ option }}</span>
                     </div>
                 </label>
             </div>

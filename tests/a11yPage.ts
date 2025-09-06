@@ -1,26 +1,14 @@
 import { Locator, Page } from '@playwright/test'
-import { NavBar } from '@/components/navBar.js'
-import { Item } from '@/components/item/item.js'
-import { InfoBar } from './components/info-bar.js'
+import { ResultsOverview } from './components/resultsOverview/resultsOverview.js'
 
 export class A11yPage {
-    private page: Page
-
     readonly headingH1: Locator
-    readonly infoBar: InfoBar
-    readonly navBar: NavBar
-    readonly allItemDivs: Locator
+    readonly resultsOverview: ResultsOverview
 
     constructor(page: Page) {
-        this.page = page
-
         this.headingH1 = page.locator('h1')
-        this.infoBar = new InfoBar(page.getByTestId('info-bar'))
-        this.navBar = new NavBar(page.locator('nav'))
-        this.allItemDivs = page.getByTestId(/test-item/)
-    }
-
-    getItem(id: string) {
-        return new Item(this.page.getByTestId('test-item-' + id))
+        this.resultsOverview = new ResultsOverview(
+            page.getByTestId('results-overview')
+        )
     }
 }
