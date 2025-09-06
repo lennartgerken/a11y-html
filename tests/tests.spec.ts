@@ -102,12 +102,17 @@ test.describe(() => {
             })
 
             await test.step('nodes', async () => {
-                for (const currentNodeResult of labelResults.nodes) {
+                for (const [
+                    index,
+                    currentNodeResult
+                ] of labelResults.nodes.entries()) {
                     const currentElement = details.getElement(
                         currentNodeResult.html
                     )
 
                     await test.step('rules', async () => {
+                        if (index > 0) currentElement.openButton.click()
+
                         for (const currentRuleResult of currentNodeResult.any) {
                             const currentRule = currentElement.getRule(
                                 currentRuleResult.id

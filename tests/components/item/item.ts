@@ -15,7 +15,7 @@ export class Item extends BaseComponent {
         this.headerDiv = locator.getByTestId('item-header')
         this.resultDiv = locator.getByTestId('item-result')
         this.descriptionDiv = locator.getByTestId('item-description')
-        this.openButton = locator.getByTitle('open')
+        this.openButton = locator.getByTestId('item-open')
         this.details = new Details(locator.getByTestId('details'))
     }
 }

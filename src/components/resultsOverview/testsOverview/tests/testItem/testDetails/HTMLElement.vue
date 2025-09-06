@@ -21,7 +21,8 @@ const isOpen = ref(props.defaultOpen)
         <div class="grid grid-cols-[max-content_1fr] gap-2">
             <div class="flex justify-center items-center font-bold pr-1">
                 <button
-                    title="open"
+                    data-testid="html-open"
+                    :title="'open ' + html"
                     type="button"
                     :class="[
                         'transition duration-300',
@@ -34,7 +35,7 @@ const isOpen = ref(props.defaultOpen)
             </div>
             <div class="bg-gray-200 p-2 wrap-anywhere mb-1.5 grow">
                 <code data-testid="html"
-                    ><button title="open" @click="isOpen = !isOpen">
+                    ><button @click="isOpen = !isOpen">
                         {{ html }}
                     </button></code
                 >

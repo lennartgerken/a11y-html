@@ -15,7 +15,8 @@ const isOpen = ref(false)
             <div class="grid grid-cols-[max-content_1fr] gap-2">
                 <div class="flex justify-center items-center font-bold pr-1">
                     <button
-                        title="open"
+                        data-testid="item-open"
+                        :title="'open ' + test.id"
                         type="button"
                         :class="[
                             'transition duration-300',
