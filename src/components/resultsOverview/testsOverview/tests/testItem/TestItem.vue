@@ -12,44 +12,48 @@ const isOpen = ref(false)
 <template>
     <div :data-testid="'test-item-' + test.id" class="mt-5">
         <div class="mb-5">
-            <div class="flex gap-2">
-                <button
-                    title="open"
-                    type="button"
-                    :class="[
-                        'flex justify-center items-center font-bold pr-1 transition duration-300',
-                        { 'rotate-90': isOpen }
-                    ]"
-                    @click="isOpen = !isOpen"
-                >
-                    &#11208;
-                </button>
-                <div
-                    data-testid="item-result"
-                    class="flex justify-center items-center"
-                >
-                    <ResultTag :result-type="test.resultType" />
-                </div>
-                <div class="line"></div>
-                <div class="flex flex-col">
+            <div class="grid grid-cols-[max-content_1fr] gap-2">
+                <div class="flex justify-center items-center font-bold pr-1">
                     <button
-                        data-testid="item-header"
+                        title="open"
                         type="button"
-                        class="text-lg"
+                        :class="[
+                            'transition duration-300',
+                            { 'rotate-90': isOpen }
+                        ]"
                         @click="isOpen = !isOpen"
                     >
-                        {{ test.id }}
+                        &#11208;
                     </button>
+                </div>
+                <div class="flex gap-2">
                     <div
-                        data-testid="item-description"
-                        class="text-sm text-dark-gray"
+                        data-testid="item-result"
+                        class="flex justify-center items-center"
                     >
-                        {{ test.description }}
+                        <ResultTag :result-type="test.resultType" />
+                    </div>
+                    <div class="line"></div>
+                    <div class="flex flex-col">
+                        <button
+                            data-testid="item-header"
+                            type="button"
+                            class="text-lg"
+                            @click="isOpen = !isOpen"
+                        >
+                            {{ test.id }}
+                        </button>
+                        <div
+                            data-testid="item-description"
+                            class="text-sm text-dark-gray"
+                        >
+                            {{ test.description }}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div v-if="isOpen" class="pt-5 pl-5">
-                <TestDetails :test="test" />
+                <div v-if="isOpen" class="col-2 pt-5">
+                    <TestDetails :test="test" />
+                </div>
             </div>
         </div>
         <div class="line-h"></div>

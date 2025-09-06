@@ -44,13 +44,14 @@ defineProps<{ test: ModResultEntry }>()
         </div>
         <div class="flex flex-col gap-4">
             <HTMLElement
-                v-for="node in test.nodes"
+                v-for="(node, index) in test.nodes"
                 :key="node.target.join('')"
                 :show-impact="test.resultType !== ResultType.PASSED"
                 :html="node.html"
                 :any="node.any"
                 :all="node.all"
                 :none="node.none"
+                :default-open="index === 0"
             />
         </div>
     </div>

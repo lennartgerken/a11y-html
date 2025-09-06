@@ -75,7 +75,9 @@ watch(resultFilter, filter)
         </div>
     </div>
     <div v-if="openResult">
-        <button @click="openResult = undefined">Back to Overview</button>
+        <button v-if="results.length > 1" @click="openResult = undefined">
+            Back to Overview
+        </button>
         <TestsOverview
             :tests="openResult.tests"
             :url="openResult.url"
