@@ -10,7 +10,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-    <div class="mt-5">
+    <div class="mt-5" data-testid="result-item">
         <div class="mb-5">
             <div class="flex gap-2">
                 <div class="flex justify-center items-center">
@@ -19,13 +19,14 @@ const emit = defineEmits<{
                 <div class="line"></div>
                 <div class="flex flex-col overflow-hidden">
                     <button
+                        data-testid="url"
                         type="button"
                         class="text-lg whitespace-nowrap overflow-hidden text-ellipsis"
                         @click="emit('open', result.id)"
                     >
                         {{ result.url }}
                     </button>
-                    <div class="text-sm text-dark-gray">
+                    <div class="text-sm text-dark-gray" data-testid="info">
                         {{ result.info }}
                     </div>
                 </div>

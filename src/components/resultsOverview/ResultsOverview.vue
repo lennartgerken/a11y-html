@@ -69,35 +69,41 @@ watch(resultFilter, filter)
 </script>
 
 <template>
-    <div v-show="!openResult">
-        <Timestamp :timestamp="firstTimestamp" />
-        <NavBar
-            v-model:result-filter="resultFilter"
-            v-model:search="search"
-            class="mb-5"
-        />
-        <ResultItem
-            v-for="result in filteredResults"
-            :key="result.id"
-            :result="result"
-            @open="(id) => (openResult = props.results[id])"
-        />
-        <div
-            v-if="filteredResults.length === 0"
-            class="text-dark-gray text-center"
-        >
-            No entries found
+    <div data-testid="results-overview">
+        <div v-show="!openResult">
+            <Timestamp
+                data-testid="results-timestamp"
+                :timestamp="firstTimestamp"
+            />
+            <NavBar
+                v-model:search="search"
+                v-model:result-filter="resultFilter"
+                data-testid="results-nav"
+                class="mb-5"
+            />
+            <ResultItem
+                v-for="result in filteredResults"
+                :key="result.id"
+                :result="result"
+                @open="(id) => (openResult = props.results[id])"
+            />
+            <div
+                v-if="filteredResults.length === 0"
+                class="text-dark-gray text-center"
+            >
+                No entries found
+            </div>
         </div>
-    </div>
-    <div v-if="openResult">
-        <button v-if="results.length > 1" @click="openResult = undefined">
-            Back to Overview
-        </button>
-        <TestsOverview
-            :tests="openResult.tests"
-            :url="openResult.url"
-            :timestamp="openResult.timestamp"
-            :info="openResult.info"
-        />
+        <div v-if="openResult">
+            <button v-if="results.length > 1" @click="openResult = undefined">
+                Back to Overview
+            </button>
+            <TestsOverview
+                :tests="openResult.tests"
+                :url="openResult.url"
+                :timestamp="openResult.timestamp"
+                :info="openResult.info"
+            />
+        </div>
     </div>
 </template>

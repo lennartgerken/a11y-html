@@ -19,6 +19,6 @@ defineProps<{
         <div v-if="info" data-testid="info" class="text-lg text-dark-gray">
             {{ info }}
         </div>
-        <timestamp :timestamp="timestamp" />
+        <timestamp data-testid="timestamp" :timestamp="timestamp" />
     </div>
 </template>

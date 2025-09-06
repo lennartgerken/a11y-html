@@ -12,7 +12,7 @@ defineProps<{
 </script>
 
 <template>
-    <div>
+    <div data-testid="tests-overview">
         <InfoBar :url="url" :info="info" :timestamp="timestamp" />
         <Tests :tests="tests" />
     </div>

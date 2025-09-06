@@ -1,8 +1,8 @@
 import { Locator } from '@playwright/test'
 import { BaseComponent } from '@/components/baseComponent.js'
-import { Element } from './element.js'
+import { HTMLElement } from './htmlElement.js'
 
-export class Details extends BaseComponent {
+export class TestDetails extends BaseComponent {
     readonly headerDiv: Locator
     readonly resultDiv: Locator
     readonly descriptionSpan: Locator
@@ -25,8 +25,8 @@ export class Details extends BaseComponent {
         this.allElementDivs = locator.getByTestId('html-element')
     }
 
-    getElement(html: string) {
-        return new Element(
+    getHTMLElement(html: string) {
+        return new HTMLElement(
             this.allElementDivs.filter({
                 has: this.locator.page().getByText(html, { exact: true })
             })

@@ -12,7 +12,7 @@ const timestampFormated = computed(() => {
 </script>
 
 <template>
-    <div data-testid="timestamp" class="text-lg text-dark-gray">
+    <div class="text-lg text-dark-gray">
         {{ timestampFormated }}
     </div>
 </template>

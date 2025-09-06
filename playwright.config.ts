@@ -6,6 +6,9 @@ export default defineConfig({
     retries: 1,
     workers: process.env.CI ? 1 : undefined,
     reporter: [['html', { open: 'never' }]],
+    expect: {
+        timeout: 5000
+    },
     use: {
         trace: 'on-first-retry'
     },
