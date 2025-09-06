@@ -3,7 +3,7 @@ import NavBar from '@/components/resultsOverview/NavBar.vue'
 import ResultItem from '@/components/resultsOverview/ResultItem.vue'
 import TestsOverview from '@/components/resultsOverview/testsOverview/TestsOverview.vue'
 import Timestamp from '@/components/resultsOverview/Timestamp.vue'
-import type { A11yResult, ResultType } from '@/result'
+import { ResultType, resultTypeOrder, type A11yResult } from '@/result'
 import { computed, ref, watch } from 'vue'
 
 const props = defineProps<{
@@ -16,13 +16,41 @@ const openResult = ref<A11yResult>()
 const search = ref('')
 const resultFilter = ref<ResultType | undefined>(undefined)
 
+const filter = () => {
+    filteredResults.value = props.results.filter((result: A11yResult) => {
+        return (
+            (!resultFilter.value || resultFilter.value === result.resultType) &&
+            (result.url.toLowerCase().includes(search.value.toLowerCase()) ||
+                (result.info &&
+                    result.info
+                        .toLowerCase()
+                        .includes(search.value.toLowerCase())))
+        )
+    })
+    filteredResults.value.sort((a, b) => {
+        const resultTypeCompare =
+            resultTypeOrder.indexOf(a.resultType) -
+            resultTypeOrder.indexOf(b.resultType)
+
+        if (resultTypeCompare === 0) {
+            const urlCompare = a.url.localeCompare(b.url)
+
+            if (urlCompare === 0)
+                if (a.info && b.info) return a.info.localeCompare(b.info)
+            return urlCompare
+        }
+
+        return resultTypeCompare
+    })
+}
+
 watch(
     () => props.results,
     (results) => {
         if (props.results.length === 1) openResult.value = results[0]
-        filteredResults.value = results
         search.value = ''
         resultFilter.value = undefined
+        filter()
     },
     { immediate: true }
 )
@@ -35,19 +63,6 @@ const firstTimestamp = computed(() => {
             : min
     }).timestamp
 })
-
-const filter = () => {
-    filteredResults.value = props.results.filter((result: A11yResult) => {
-        return (
-            (!resultFilter.value || resultFilter.value === result.resultType) &&
-            (result.url.toLowerCase().includes(search.value.toLowerCase()) ||
-                (result.info &&
-                    result.info
-                        .toLowerCase()
-                        .includes(search.value.toLowerCase())))
-        )
-    })
-}
 
 watch(search, filter)
 watch(resultFilter, filter)

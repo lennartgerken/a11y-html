@@ -6,6 +6,12 @@ export enum ResultType {
     INCOMPLETE = 'incomplete',
     INAPPLICABLE = 'inapplicable'
 }
+export const resultTypeOrder = [
+    ResultType.VIOLATION,
+    ResultType.INCOMPLETE,
+    ResultType.PASSED,
+    ResultType.INAPPLICABLE
+]
 
 export enum RuleType {
     ANY = 'any',

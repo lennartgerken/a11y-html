@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import NavBar from '@/components/resultsOverview/NavBar.vue'
 import TestItem from '@/components/resultsOverview/testsOverview/tests/testItem/TestItem.vue'
-import { ResultType, type ModResultEntry } from '@/result'
+import { ResultType, resultTypeOrder, type ModResultEntry } from '@/result'
 import { ref, watch } from 'vue'
 
 const props = defineProps<{ tests: ModResultEntry[] }>()
@@ -15,24 +15,6 @@ const search = ref('')
 const resultFilter = ref<ResultType | undefined>(undefined)
 const selectedTags = ref<string[]>([])
 
-watch(
-    () => props.tests,
-    (tests) => {
-        filteredTests.value = tests
-        tags.value = []
-        tests.forEach((entry) =>
-            entry.tags.forEach((value) => {
-                if (!tags.value.includes(value)) tags.value.push(value)
-            })
-        )
-
-        search.value = ''
-        resultFilter.value = undefined
-        selectedTags.value = tags.value
-    },
-    { immediate: true }
-)
-
 const filter = () => {
     filteredTests.value = props.tests.filter((test: ModResultEntry) => {
         return (
@@ -41,7 +23,36 @@ const filter = () => {
             test.tags.some((tag) => selectedTags.value.includes(tag))
         )
     })
+    filteredTests.value.sort((a, b) => {
+        const resultTypeCompare =
+            resultTypeOrder.indexOf(a.resultType) -
+            resultTypeOrder.indexOf(b.resultType)
+
+        if (resultTypeCompare === 0) return a.id.localeCompare(b.id)
+
+        return resultTypeCompare
+    })
 }
+
+watch(
+    () => props.tests,
+    (tests) => {
+        filteredTests.value = tests
+        const tagsToSet: string[] = []
+        tests.forEach((entry) =>
+            entry.tags.forEach((value) => {
+                if (!tagsToSet.includes(value)) tagsToSet.push(value)
+            })
+        )
+        tags.value = tagsToSet
+
+        search.value = ''
+        resultFilter.value = undefined
+        selectedTags.value = tags.value
+        filter()
+    },
+    { immediate: true }
+)
 
 watch(search, filter)
 watch(resultFilter, filter)
