@@ -13,7 +13,7 @@ npm i -D a11y-html
 ```
 import AxeBuilder from '@axe-core/playwright'
 import test from '@playwright/test'
-import createReport from 'a11y-html'
+import { createReport } from 'a11y-html'
 
 test('analyze accessibility', async ({ page }, testInfo) => {
     const axeBuilder = new AxeBuilder({ page })

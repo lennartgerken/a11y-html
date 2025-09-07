@@ -55,6 +55,8 @@ watch(
     { immediate: true }
 )
 
+watch(openResult, () => window.scrollTo(0, 0))
+
 const firstTimestamp = computed(() => {
     return props.results.reduce((min, current) => {
         return new Date(current.timestamp).getTime() <
