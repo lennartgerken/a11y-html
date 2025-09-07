@@ -97,7 +97,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
                 v-click-other="closeDropdown"
                 data-testid="dropdown"
                 :class="[
-                    'whitespace-nowrap p-2 absolute max-h-80 overflow-y-scroll bg-white border border-light-gray',
+                    'whitespace-nowrap p-2 absolute max-h-80 overflow-y-scroll bg-white border border-light-gray z-10',
                     dropdownPosition
                 ]"
             >
