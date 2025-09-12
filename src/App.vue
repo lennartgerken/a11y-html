@@ -4,7 +4,8 @@ import type { AxeResults, Result } from 'axe-core'
 import { ResultType, type A11yResult } from './result'
 import Dependencies from './components/dependencies/Dependencies.vue'
 import ResultsOverview from '@/components/resultsOverview/ResultsOverview.vue'
-import type { BaseOptions, ResultsEntry } from '@options'
+import type { BaseOptions, ReportResultsEntry } from '@options'
+import { isAxeResults } from '@options'
 
 declare global {
     interface Window {
@@ -26,20 +27,15 @@ if (options.title) document.title = options.title
 const a11yResults = ref<A11yResult[] | undefined>()
 const showDependencies = ref(false)
 
-const setA11yResult = (axeResults: ResultsEntry[]) => {
+const setA11yResult = (axeResults: ReportResultsEntry[]) => {
     const setResultType = (tests: Result[], resultType: ResultType) => {
         return tests.map((test) => ({ ...test, resultType }))
     }
 
     a11yResults.value = axeResults.map((entry, index) => {
-        function isAxeResults(
-            results: AxeResults | { results: AxeResults; info: string }
-        ): results is AxeResults {
-            return (results as AxeResults).violations !== undefined
-        }
-
         const currentAxeResults = isAxeResults(entry) ? entry : entry.results
         const info = isAxeResults(entry) ? undefined : entry.info
+        const screenshot = isAxeResults(entry) ? undefined : entry.screenshot
 
         const tests = [
             ...setResultType(
@@ -73,9 +69,10 @@ const setA11yResult = (axeResults: ResultsEntry[]) => {
             tests,
             url: currentAxeResults.url,
             timestamp: currentAxeResults.timestamp,
-            info,
             resultType,
-            id: index
+            id: index,
+            info,
+            screenshot
         }
     })
 }

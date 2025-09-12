@@ -105,6 +105,7 @@ watch(resultFilter, filter)
                 :url="openResult.url"
                 :timestamp="openResult.timestamp"
                 :info="openResult.info"
+                :screenshot="openResult.screenshot"
             />
         </div>
     </div>

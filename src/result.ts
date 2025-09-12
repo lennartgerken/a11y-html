@@ -1,3 +1,4 @@
+import type { ReportSingleOptions } from '@options'
 import type { Result } from 'axe-core'
 
 export enum ResultType {
@@ -31,7 +32,6 @@ export type A11yResult = {
     tests: ModResultEntry[]
     url: string
     timestamp: string
-    info?: string
     resultType: ResultType
     id: number
-}
+} & ReportSingleOptions

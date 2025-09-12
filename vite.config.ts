@@ -17,7 +17,10 @@ export default defineConfig({
     plugins: [vue(), vueDevTools(), tailwindcss(), viteSingleFile()],
     resolve: {
         alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url))
+            '@': fileURLToPath(new URL('./src', import.meta.url)),
+            '@options': fileURLToPath(
+                new URL('./createReport/reportOptions.ts', import.meta.url)
+            )
         }
     }
 })

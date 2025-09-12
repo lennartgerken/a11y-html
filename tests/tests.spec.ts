@@ -6,20 +6,16 @@ import { writeFileSync } from 'fs'
 import AxeBuilder from '@axe-core/playwright'
 import type axe from 'axe-core'
 import { A11yPage } from '@/a11yPage.js'
-import { CreateReportOptions } from '@options'
 import { TestsOverview } from './components/resultsOverview/testsOverview/testsOverview.js'
 import { ResultsOverview } from './components/resultsOverview/resultsOverview.js'
 import { ResultItem } from './components/resultsOverview/resultItem.js'
 
-let currentPath: string
+const currentPath = dirname(fileURLToPath(import.meta.url))
+const sourcePath = 'file:///' + join(currentPath, 'index1.html')
 let results: axe.AxeResults
 
 test.beforeAll(async ({ browser }) => {
-    currentPath = dirname(fileURLToPath(import.meta.url))
-    results = await getAxeResults(
-        browser,
-        'file:///' + join(currentPath, 'index1.html')
-    )
+    results = await getAxeResults(browser, sourcePath)
 })
 
 let a11yPage: A11yPage
@@ -228,10 +224,7 @@ test.describe('single report', () => {
     test.describe('options', async () => {
         const imageAltResultID = 'image-alt'
 
-        const openReportWithOptions = async (
-            page: Page,
-            options?: CreateReportOptions
-        ) => {
+        const openReportWithOptions = async (page: Page, options = {}) => {
             const outputPath = test.info().outputPath('a11y-html.html')
 
             writeFileSync(outputPath, createReport(results, options))
@@ -275,6 +268,15 @@ test.describe('single report', () => {
             await expect(
                 testsOverview.getTestsItem(imageAltResultID).locator
             ).toBeHidden()
+        })
+
+        test('screenshot', async ({ page }) => {
+            await page.goto(sourcePath)
+            const screenshot = await page.screenshot()
+
+            await openReportWithOptions(page, {
+                screenshot: { data: screenshot, mimeType: 'image/png' }
+            })
         })
     })
 
