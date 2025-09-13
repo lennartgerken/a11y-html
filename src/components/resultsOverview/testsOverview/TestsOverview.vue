@@ -25,7 +25,11 @@ const screenshotIsOpen = ref(false)
             v-if="screenshot"
             class="grid grid-cols-[max-content_1fr] gap-2 pt-2 pb-5"
         >
-            <OpenButton v-model="screenshotIsOpen" title="screenshot" />
+            <OpenButton
+                v-model="screenshotIsOpen"
+                title="screenshot"
+                testid="open-screenshot"
+            />
             <div>
                 <button
                     class="flex gap-1"
@@ -41,6 +45,7 @@ const screenshotIsOpen = ref(false)
                 <img
                     class="w-full max-w-3xl border border-light-gray"
                     :src="`data:${screenshot.mimeType};base64,${screenshot.data}`"
+                    alt="Screenshot"
                 />
             </div>
         </div>

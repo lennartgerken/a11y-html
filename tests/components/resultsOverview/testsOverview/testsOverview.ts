@@ -6,6 +6,8 @@ import { TestItem } from './testItem/testItem.js'
 
 export class TestsOverview extends BaseComponent {
     readonly infoBar: InfoBar
+    readonly openScreenshotButton: Locator
+    readonly screenshotImg: Locator
     readonly navBar: NavBar
     readonly allItemDivs: Locator
 
@@ -13,6 +15,8 @@ export class TestsOverview extends BaseComponent {
         super(locator)
 
         this.infoBar = new InfoBar(locator.getByTestId('info-bar'))
+        this.openScreenshotButton = locator.getByTestId('open-screenshot')
+        this.screenshotImg = locator.getByAltText('Screenshot')
         this.navBar = new NavBar(locator.getByTestId('tests-nav'))
         this.allItemDivs = locator.getByTestId(/test-item/)
     }

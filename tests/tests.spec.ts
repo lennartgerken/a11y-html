@@ -273,10 +273,17 @@ test.describe('single report', () => {
         test('screenshot', async ({ page }) => {
             await page.goto(sourcePath)
             const screenshot = await page.screenshot()
+            const mimeType = 'image/png'
 
             await openReportWithOptions(page, {
-                screenshot: { data: screenshot, mimeType: 'image/png' }
+                screenshot: { data: screenshot, mimeType }
             })
+
+            await testsOverview.openScreenshotButton.click()
+            expect(testsOverview.screenshotImg).toHaveAttribute(
+                'src',
+                `data:${mimeType};base64,${screenshot.toString('base64')}`
+            )
         })
     })
 
