@@ -280,7 +280,7 @@ test.describe('single report', () => {
             })
 
             await testsOverview.openScreenshotButton.click()
-            expect(testsOverview.screenshotImg).toHaveAttribute(
+            await expect(testsOverview.screenshotImg).toHaveAttribute(
                 'src',
                 `data:${mimeType};base64,${screenshot.toString('base64')}`
             )
