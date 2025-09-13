@@ -23,6 +23,11 @@ import Dependency from './Dependency.vue'
                     copyright="Copyright (c) 2018-present, Yuxi (Evan) You"
                     repo="https://github.com/vuejs/core"
                 />
+                <Dependency
+                    title="@tabler/icons-vue"
+                    copyright="Copyright (c) 2020-2025 Paweł Kuna"
+                    repo="https://github.com/tabler/tabler-icons"
+                />
             </div>
         </div>
         <div>

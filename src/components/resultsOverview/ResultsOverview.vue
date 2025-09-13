@@ -5,6 +5,7 @@ import TestsOverview from '@/components/resultsOverview/testsOverview/TestsOverv
 import Timestamp from '@/components/resultsOverview/Timestamp.vue'
 import { ResultType, resultTypeOrder, type A11yResult } from '@/result'
 import { computed, ref, watch } from 'vue'
+import { IconArrowBackUp } from '@tabler/icons-vue'
 
 const props = defineProps<{
     results: A11yResult[]
@@ -97,9 +98,18 @@ watch(resultFilter, filter)
             </div>
         </div>
         <div v-if="openResult">
-            <button v-if="results.length > 1" @click="openResult = undefined">
-                Back to overview
-            </button>
+            <div class="pt-2 pb-2">
+                <button
+                    v-if="results.length > 1"
+                    class="flex gap-1"
+                    @click="openResult = undefined"
+                >
+                    <div class="flex items-center">
+                        <IconArrowBackUp />
+                    </div>
+                    <span>Back to overview</span>
+                </button>
+            </div>
             <TestsOverview
                 :tests="openResult.tests"
                 :url="openResult.url"

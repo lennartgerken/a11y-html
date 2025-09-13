@@ -6,6 +6,7 @@ import Tooltip from '@/components/Tag.vue'
 import type { CheckResult } from 'axe-core'
 import { TagType } from '@/components/tagType'
 import { RuleType } from '@/result'
+import { IconRuler3 } from '@tabler/icons-vue'
 
 const props = defineProps<{
     showImpact: boolean
@@ -26,25 +27,37 @@ const ruleTypeTooltip = computed(() => {
 </script>
 
 <template>
-    <div v-for="rule in rules" :key="rule.id" :data-testid="'rule-' + rule.id">
-        <div class="flex gap-1.5">
-            <div data-testid="rule-header" class="text-xl">{{ rule.id }}</div>
-            <div data-testid="rule-type">
-                <Tag
-                    :tag-type="TagType.INFO"
-                    :text="ruleType"
-                    :tooltip="ruleTypeTooltip"
-                />
-            </div>
-            <div data-testid="rule-impact">
-                <ImpactTag v-if="showImpact" :impact="rule.impact" />
-                <Tooltip
-                    v-if="!showImpact"
-                    :tag-type="TagType.INACTIVE"
-                    :text="rule.impact"
-                />
-            </div>
+    <div
+        v-for="rule in rules"
+        :key="rule.id"
+        :data-testid="'rule-' + rule.id"
+        class="flex gap-1"
+    >
+        <div class="flex items-center text-2xl">
+            <IconRuler3 class="rotate-90" />
         </div>
-        <div data-testid="rule-description">{{ rule.message }}</div>
+        <div>
+            <div class="flex gap-1.5">
+                <div data-testid="rule-header" class="text-xl">
+                    {{ rule.id }}
+                </div>
+                <div data-testid="rule-type">
+                    <Tag
+                        :tag-type="TagType.INFO"
+                        :text="ruleType"
+                        :tooltip="ruleTypeTooltip"
+                    />
+                </div>
+                <div data-testid="rule-impact">
+                    <ImpactTag v-if="showImpact" :impact="rule.impact" />
+                    <Tooltip
+                        v-if="!showImpact"
+                        :tag-type="TagType.INACTIVE"
+                        :text="rule.impact"
+                    />
+                </div>
+            </div>
+            <div data-testid="rule-description">{{ rule.message }}</div>
+        </div>
     </div>
 </template>

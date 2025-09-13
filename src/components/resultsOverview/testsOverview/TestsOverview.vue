@@ -5,6 +5,7 @@ import Tests from './tests/Tests.vue'
 import type { ReportScreenshot } from '@options'
 import { ref } from 'vue'
 import OpenButton from '@/components/OpenButton.vue'
+import { IconPhoto } from '@tabler/icons-vue'
 
 defineProps<{
     tests: ModResultEntry[]
@@ -26,8 +27,14 @@ const screenshotIsOpen = ref(false)
         >
             <OpenButton v-model="screenshotIsOpen" title="screenshot" />
             <div>
-                <button @click="screenshotIsOpen = !screenshotIsOpen">
-                    {{ `${screenshotIsOpen ? 'Hide' : 'Show'} screenshot` }}
+                <button
+                    class="flex gap-1"
+                    @click="screenshotIsOpen = !screenshotIsOpen"
+                >
+                    <div class="flex items-center"><IconPhoto /></div>
+                    <div>
+                        {{ `${screenshotIsOpen ? 'Hide' : 'Show'} screenshot` }}
+                    </div>
                 </button>
             </div>
             <div v-if="screenshotIsOpen" class="col-2">

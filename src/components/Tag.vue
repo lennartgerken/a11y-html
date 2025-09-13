@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { TagType } from './tagType'
+import { IconCircleFilled } from '@tabler/icons-vue'
 
 defineProps<{
     text: string
@@ -14,8 +15,8 @@ defineProps<{
         class="flex gap-0.5 h-fit w-fit p-1 text-xs"
         :title="tooltip"
     >
-        <div>
-            <div :class="[tagType, 'cirlce']"></div>
+        <div class="flex items-center">
+            <div :class="[tagType]"><IconCircleFilled /></div>
         </div>
         <div>{{ text }}</div>
     </span>
@@ -23,22 +24,22 @@ defineProps<{
 
 <style scoped>
 .error {
-    background-color: var(--color-red);
+    color: var(--color-red);
 }
 
 .success {
-    background-color: var(--color-green);
+    color: var(--color-green);
 }
 
 .warn {
-    background-color: var(--color-orange);
+    color: var(--color-orange);
 }
 
 .info {
-    background-color: var(--color-blue);
+    color: var(--color-blue);
 }
 
 .inactive {
-    background-color: var(--color-gray);
+    color: var(--color-gray);
 }
 </style>

@@ -6,6 +6,7 @@ import Dependencies from './components/dependencies/Dependencies.vue'
 import ResultsOverview from '@/components/resultsOverview/ResultsOverview.vue'
 import type { BaseOptions, ReportResultsEntry } from '@options'
 import { isAxeResults } from '@options'
+import { IconCode, IconArrowBackUp } from '@tabler/icons-vue'
 
 declare global {
     interface Window {
@@ -98,9 +99,13 @@ if (window.axeResults) setA11yResult(JSON.parse(decode(window.axeResults)))
         <header class="mb-2">
             <div class="flex justify-end">
                 <button
-                    class="text-lg"
+                    class="text-lg flex gap-1"
                     @click="showDependencies = !showDependencies"
                 >
+                    <div class="flex items-center">
+                        <IconCode v-if="!showDependencies" />
+                        <IconArrowBackUp v-else />
+                    </div>
                     {{ showDependencies ? 'Back' : 'Dependencies' }}
                 </button>
             </div>

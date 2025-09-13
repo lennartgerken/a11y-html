@@ -8,6 +8,7 @@ import {
     useTemplateRef,
     watch
 } from 'vue'
+import { IconCircleFilled } from '@tabler/icons-vue'
 
 const props = defineProps<{ name: string; options: string[] }>()
 const sortedOptions = ref<string[]>([])
@@ -48,8 +49,8 @@ const activateAllOptions = () => {
 }
 
 const circleColor = computed(() => {
-    if (!allActive()) return 'bg-blue'
-    else return 'bg-gray'
+    if (!allActive()) return 'text-blue'
+    else return 'text-gray'
 })
 
 const updateDropdownPositon = () => {
@@ -87,9 +88,16 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
 <template>
     <div data-testid="multi-select" class="w-fit">
         <div class="relative border-b border-light-gray p-1.5 box-border h-10">
-            <button data-testid="open" type="button" @click="toggleDropdown">
-                <span :class="['cirlce', circleColor]"></span>
-                <span class="pl-1 text-base">{{ name }}</span>
+            <button
+                data-testid="open"
+                type="button"
+                class="flex"
+                @click="toggleDropdown"
+            >
+                <div :class="['flex items-center text-xs', circleColor]">
+                    <IconCircleFilled />
+                </div>
+                <div class="pl-1 text-base">{{ name }}</div>
             </button>
             <div
                 v-if="isOpen"

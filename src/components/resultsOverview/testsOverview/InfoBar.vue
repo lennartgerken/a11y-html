@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Timestamp from '@/components/resultsOverview/Timestamp.vue'
+import { IconLink, IconInfoCircle } from '@tabler/icons-vue'
 defineProps<{
     url: string
     info?: string
@@ -9,15 +10,24 @@ defineProps<{
 
 <template>
     <div data-testid="info-bar">
-        <div
-            data-testid="url"
-            :title="url"
-            class="text-2xl whitespace-nowrap overflow-hidden text-ellipsis"
-        >
-            {{ url }}
+        <div :title="url" class="flex gap-1 text-2xl">
+            <div class="flex flex-col justify-center">
+                <IconLink />
+            </div>
+            <div
+                data-testid="url"
+                class="whitespace-nowrap overflow-hidden text-ellipsis"
+            >
+                {{ url }}
+            </div>
         </div>
-        <div v-if="info" data-testid="info" class="text-lg text-dark-gray">
-            {{ info }}
+        <div
+            v-if="info"
+            data-testid="info"
+            class="flex gap-1 text-lg text-dark-gray"
+        >
+            <div class="flex items-center"><IconInfoCircle /></div>
+            <div>{{ info }}</div>
         </div>
         <timestamp data-testid="timestamp" :timestamp="timestamp" />
     </div>

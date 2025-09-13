@@ -2,7 +2,6 @@
 defineProps<{
     title: string
     copyright?: string
-    usage?: string
     repo: string
 }>()
 </script>
@@ -11,9 +10,7 @@ defineProps<{
     <div>
         <div class="text-xl">{{ title }}</div>
         <div v-if="copyright">{{ copyright }}</div>
-        <div v-if="usage" class="font-bold">Usage:</div>
-        <div v-if="usage">{{ usage }}</div>
-        <div class="font-bold">Repository:</div>
+        <span>Repository: </span>
         <a :href="repo" target="_blank">{{ repo }}</a>
     </div>
 </template>
