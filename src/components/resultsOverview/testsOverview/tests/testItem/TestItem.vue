@@ -3,6 +3,7 @@ import ResultTag from '@/components/ResultTag.vue'
 import TestDetails from './testDetails/TestDetails.vue'
 import { ref } from 'vue'
 import type { ModResultEntry } from '@/result'
+import OpenButton from '@/components/OpenButton.vue'
 
 defineProps<{ test: ModResultEntry }>()
 
@@ -13,20 +14,11 @@ const isOpen = ref(false)
     <div :data-testid="'test-item-' + test.id" class="mt-5">
         <div class="mb-5">
             <div class="grid grid-cols-[max-content_1fr] gap-2">
-                <div class="flex justify-center items-center font-bold pr-1">
-                    <button
-                        data-testid="item-open"
-                        :title="'open ' + test.id"
-                        type="button"
-                        :class="[
-                            'transition duration-300',
-                            { 'rotate-90': isOpen }
-                        ]"
-                        @click="isOpen = !isOpen"
-                    >
-                        &#11208;
-                    </button>
-                </div>
+                <OpenButton
+                    v-model="isOpen"
+                    testid="item-open"
+                    :title="test.id"
+                />
                 <div class="flex gap-2">
                     <div
                         data-testid="item-result"

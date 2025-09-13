@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ title: string }>()
+defineProps<{ title: string; testid?: string }>()
 
 const isOpen = defineModel<boolean>({ required: true })
 </script>
@@ -7,7 +7,7 @@ const isOpen = defineModel<boolean>({ required: true })
 <template>
     <div class="flex justify-center items-center font-bold pr-1">
         <button
-            data-testid="item-open"
+            :data-testid="testid"
             :title="'open ' + title"
             type="button"
             :class="['transition duration-300', { 'rotate-90': isOpen }]"
