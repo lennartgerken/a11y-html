@@ -3,6 +3,8 @@ import type { ModResultEntry } from '@/result'
 import InfoBar from './InfoBar.vue'
 import Tests from './tests/Tests.vue'
 import type { ReportScreenshot } from '@options'
+import { ref } from 'vue'
+import OpenButton from '@/components/OpenButton.vue'
 
 defineProps<{
     tests: ModResultEntry[]
@@ -11,15 +13,30 @@ defineProps<{
     info?: string
     screenshot?: ReportScreenshot
 }>()
+
+const screenshotIsOpen = ref(false)
 </script>
 
 <template>
     <div data-testid="tests-overview">
         <InfoBar :url="url" :info="info" :timestamp="timestamp" />
-        <img
+        <div
             v-if="screenshot"
-            :src="`data:${screenshot.mimeType};base64,${screenshot.data}`"
-        />
+            class="grid grid-cols-[max-content_1fr] gap-2 pt-2 pb-5"
+        >
+            <OpenButton v-model="screenshotIsOpen" title="screenshot" />
+            <div>
+                <button @click="screenshotIsOpen = !screenshotIsOpen">
+                    {{ `${screenshotIsOpen ? 'Hide' : 'Show'} screenshot` }}
+                </button>
+            </div>
+            <div v-if="screenshotIsOpen" class="col-2">
+                <img
+                    class="w-full max-w-3xl border border-light-gray"
+                    :src="`data:${screenshot.mimeType};base64,${screenshot.data}`"
+                />
+            </div>
+        </div>
         <Tests :tests="tests" />
     </div>
 </template>
