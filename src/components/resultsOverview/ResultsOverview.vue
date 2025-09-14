@@ -98,18 +98,16 @@ watch(resultFilter, filter)
             </div>
         </div>
         <div v-if="openResult">
-            <div class="pt-2 pb-2">
-                <button
-                    v-if="results.length > 1"
-                    class="flex gap-1"
-                    @click="openResult = undefined"
-                >
-                    <div class="flex items-center">
-                        <IconArrowBackUp />
-                    </div>
-                    <span>Back to overview</span>
-                </button>
-            </div>
+            <button
+                v-if="results.length > 1"
+                class="flex gap-1 pt-2 pb-2"
+                @click="openResult = undefined"
+            >
+                <div class="flex items-center">
+                    <IconArrowBackUp />
+                </div>
+                <span>Back to overview</span>
+            </button>
             <TestsOverview
                 :tests="openResult.tests"
                 :url="openResult.url"
