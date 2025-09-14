@@ -6,7 +6,7 @@ import type {
     ReportResultsEntry,
     ReportScreenshot
 } from './reportOptions'
-import { isAxeResults } from './reportOptions'
+import { ALLOWED_MIME_TYPE, isAxeResults } from './reportOptions'
 
 /**
  * Takes axe-core results and creates an html report.
@@ -41,7 +41,11 @@ export function createMergedReport(
     const reportResults: ReportResultsEntry[] = results.map((current) => {
         if (isAxeResults(current)) return current
         const { screenshot: screenshotBase, ...reportResultEntry } = current
-        if (!screenshotBase) return reportResultEntry
+        if (
+            !screenshotBase ||
+            !ALLOWED_MIME_TYPE.includes(screenshotBase.mimeType)
+        )
+            return reportResultEntry
         const screenshot: ReportScreenshot = {
             data: screenshotBase.data.toString('base64'),
             mimeType: screenshotBase.mimeType

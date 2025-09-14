@@ -39,6 +39,7 @@ You can pass additional options to customize the html report:
 | title            | Sets the html title.                      |
 | heading          | Sets the heading of the report.           |
 | info             | Sets an additional info under the url.    |
+| screenshot       | Displays an image in the report.          |
 | hideInapplicable | Hides all results of type "inapplicable". |
 
 ## Merged Report

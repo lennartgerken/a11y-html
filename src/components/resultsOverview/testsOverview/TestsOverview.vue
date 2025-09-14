@@ -2,7 +2,7 @@
 import type { ModResultEntry } from '@/result'
 import InfoBar from './InfoBar.vue'
 import Tests from './tests/Tests.vue'
-import type { ReportScreenshot } from '@options'
+import { ALLOWED_MIME_TYPE, type ReportScreenshot } from '@options'
 import { ref } from 'vue'
 import OpenButton from '@/components/OpenButton.vue'
 import { IconPhoto } from '@tabler/icons-vue'
@@ -22,7 +22,7 @@ const screenshotIsOpen = ref(false)
     <div data-testid="tests-overview">
         <InfoBar :url="url" :info="info" :timestamp="timestamp" />
         <div
-            v-if="screenshot"
+            v-if="screenshot && ALLOWED_MIME_TYPE.includes(screenshot.mimeType)"
             class="grid grid-cols-[max-content_1fr] gap-2 pt-2 pb-5"
         >
             <OpenButton
