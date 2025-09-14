@@ -2,24 +2,21 @@ import { Browser, expect, type Page, test } from '@playwright/test'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { createReport, createMergedReport } from '@createReport'
+import type { CreateReportOptions } from '@options'
 import { writeFileSync } from 'fs'
 import AxeBuilder from '@axe-core/playwright'
 import type axe from 'axe-core'
-import { A11yPage } from '@/a11yPage.js'
-import { CreateReportOptions } from '@options'
-import { TestsOverview } from './components/resultsOverview/testsOverview/testsOverview.js'
-import { ResultsOverview } from './components/resultsOverview/resultsOverview.js'
-import { ResultItem } from './components/resultsOverview/resultItem.js'
+import { A11yPage } from '@/a11yPage'
+import { TestsOverview } from './components/resultsOverview/testsOverview/testsOverview'
+import { ResultsOverview } from './components/resultsOverview/resultsOverview'
+import { ResultItem } from './components/resultsOverview/resultItem'
 
-let currentPath: string
+const currentPath = dirname(fileURLToPath(import.meta.url))
+const sourcePath = 'file:///' + join(currentPath, 'index1.html')
 let results: axe.AxeResults
 
 test.beforeAll(async ({ browser }) => {
-    currentPath = dirname(fileURLToPath(import.meta.url))
-    results = await getAxeResults(
-        browser,
-        'file:///' + join(currentPath, 'index1.html')
-    )
+    results = await getAxeResults(browser, sourcePath)
 })
 
 let a11yPage: A11yPage
@@ -230,7 +227,7 @@ test.describe('single report', () => {
 
         const openReportWithOptions = async (
             page: Page,
-            options?: CreateReportOptions
+            options: CreateReportOptions = {}
         ) => {
             const outputPath = test.info().outputPath('a11y-html.html')
 
@@ -275,6 +272,22 @@ test.describe('single report', () => {
             await expect(
                 testsOverview.getTestsItem(imageAltResultID).locator
             ).toBeHidden()
+        })
+
+        test('screenshot', async ({ page }) => {
+            await page.goto(sourcePath)
+            const screenshot = await page.screenshot()
+            const mimeType = 'image/png'
+
+            await openReportWithOptions(page, {
+                screenshot: { data: screenshot, mimeType }
+            })
+
+            await testsOverview.openScreenshotButton.click()
+            await expect(testsOverview.screenshotImg).toHaveAttribute(
+                'src',
+                `data:${mimeType};base64,${screenshot.toString('base64')}`
+            )
         })
     })
 

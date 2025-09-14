@@ -5,6 +5,7 @@ import HTMLElement from '@/components/resultsOverview/testsOverview/tests/testIt
 import type { ModResultEntry } from '@/result'
 import { TagType } from '@/components/tagType'
 import { ResultType } from '@/result'
+import { IconHelp } from '@tabler/icons-vue'
 
 defineProps<{ test: ModResultEntry }>()
 </script>
@@ -38,9 +39,15 @@ defineProps<{ test: ModResultEntry }>()
                 <br />
                 <span data-testid="details-help">{{ test.help }}</span>
             </div>
-            <a data-testid="details-url" :href="test.helpUrl" target="_blank">{{
-                test.helpUrl
-            }}</a>
+            <div class="flex gap-1">
+                <div class="flex items-center"><IconHelp /></div>
+                <a
+                    data-testid="details-url"
+                    :href="test.helpUrl"
+                    target="_blank"
+                    >{{ test.helpUrl }}</a
+                >
+            </div>
         </div>
         <div class="flex flex-col gap-4">
             <HTMLElement

@@ -3,6 +3,8 @@ import { RuleType } from '@/result'
 import Rules from './Rules.vue'
 import type { CheckResult } from 'axe-core'
 import { ref } from 'vue'
+import OpenButton from '@/components/OpenButton.vue'
+import { IconFileTypeHtml } from '@tabler/icons-vue'
 
 const props = defineProps<{
     showImpact: boolean
@@ -19,21 +21,13 @@ const isOpen = ref(props.defaultOpen)
 <template>
     <div data-testid="html-element">
         <div class="grid grid-cols-[max-content_1fr] gap-2">
-            <div class="flex justify-center items-center font-bold pr-1">
-                <button
-                    data-testid="html-open"
-                    :title="'open ' + html"
-                    type="button"
-                    :class="[
-                        'transition duration-300',
-                        { 'rotate-90': isOpen }
-                    ]"
-                    @click="isOpen = !isOpen"
-                >
-                    &#11208;
-                </button>
+            <div class="flex">
+                <OpenButton v-model="isOpen" testid="html-open" :title="html" />
+                <div class="flex items-center text-2xl">
+                    <IconFileTypeHtml />
+                </div>
             </div>
-            <div class="bg-gray-200 p-2 wrap-anywhere mb-1.5 grow">
+            <div class="bg-gray-200 p-2 wrap-anywhere grow">
                 <code data-testid="html"
                     ><button @click="isOpen = !isOpen">
                         {{ html }}

@@ -1,6 +1,12 @@
-import type { AxeResults } from 'axe-core'
 import report from './html/index.html?raw'
-import type { BaseOptions, CreateReportOptions, ResultsEntry } from './options'
+import type { AxeResults } from 'axe-core'
+import type { CreateReportOptions, ResultsEntry } from './options'
+import type {
+    BaseOptions,
+    ReportResultsEntry,
+    ReportScreenshot
+} from './reportOptions'
+import { isAxeResults } from './reportOptions'
 
 /**
  * Takes axe-core results and creates an html report.
@@ -13,8 +19,12 @@ export function createReport(
     options: CreateReportOptions = {}
 ) {
     return createMergedReport(
-        [options.info ? { results, info: options.info } : results],
-        options
+        [{ results, info: options.info, screenshot: options.screenshot }],
+        {
+            title: options.title,
+            heading: options.heading,
+            hideInapplicable: options.hideInapplicable
+        }
     )
 }
 
@@ -26,6 +36,23 @@ export function createReport(
  */
 export function createMergedReport(
     results: ResultsEntry[],
+    options: BaseOptions = {}
+) {
+    const reportResults: ReportResultsEntry[] = results.map((current) => {
+        if (isAxeResults(current)) return current
+        const { screenshot: screenshotBase, ...reportResultEntry } = current
+        if (!screenshotBase) return reportResultEntry
+        const screenshot: ReportScreenshot = {
+            data: screenshotBase.data.toString('base64'),
+            mimeType: screenshotBase.mimeType
+        }
+        return { ...reportResultEntry, screenshot }
+    })
+    return writeResultsToReport(reportResults, options)
+}
+
+function writeResultsToReport(
+    results: ReportResultsEntry[],
     options: BaseOptions = {}
 ) {
     return `

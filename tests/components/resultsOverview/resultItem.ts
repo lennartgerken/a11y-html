@@ -1,5 +1,5 @@
 import { Locator } from '@playwright/test'
-import { BaseComponent } from '../baseComponent.js'
+import { BaseComponent } from '../baseComponent'
 
 export class ResultItem extends BaseComponent {
     readonly urlButton: Locator

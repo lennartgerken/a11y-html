@@ -13,10 +13,10 @@ const selectedTags = defineModel<string[]>('selected-tags')
 
 <template>
     <nav class="flex gap-1.5 flex-col md:flex-row lg:justify-end">
-        <div class="md:flex md:flex-col md:justify-center">
+        <div class="md:flex md:flex-col md:justify-end">
             <input v-model="search" name="search" placeholder="search" />
         </div>
-        <div class="md:flex md:flex-col md:justify-center">
+        <div class="md:flex md:flex-col md:justify-end">
             <select v-model="resultFilter" name="filter" title="filter">
                 <option :value="undefined">all</option>
                 <option :value="ResultType.PASSED">passes</option>
@@ -27,7 +27,7 @@ const selectedTags = defineModel<string[]>('selected-tags')
         </div>
         <div
             v-if="tags && selectedTags"
-            class="md:flex md:flex-col md:justify-center"
+            class="md:flex md:flex-col md:justify-end"
         >
             <MultiSelect v-model="selectedTags" name="Tags" :options="tags" />
         </div>

@@ -1,5 +1,5 @@
 import { Locator, Page } from '@playwright/test'
-import { ResultsOverview } from './components/resultsOverview/resultsOverview.js'
+import { ResultsOverview } from './components/resultsOverview/resultsOverview'
 
 export class A11yPage {
     readonly headingH1: Locator

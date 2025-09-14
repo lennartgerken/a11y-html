@@ -1,24 +1,27 @@
 import type { AxeResults } from 'axe-core'
+import type {
+    BaseOptions,
+    ReportScreenshot,
+    ReportSingleOptions
+} from './reportOptions'
 
-export type BaseOptions = {
-    /** Sets the html title.  */
-    title?: string
-    /** Sets the heading of the report.  */
-    heading?: string
-    /** Hides all results of type "inapplicable". */
-    hideInapplicable?: boolean
+type Replace<T, K extends keyof T, New> = Omit<T, K> & {
+    [P in K]: T[P] extends T[P] ? New : never
 }
 
-export type CreateReportOptions = BaseOptions & {
-    /** Sets an additional info under the url. */
-    info?: string
-}
+export type Screenshot = Replace<ReportScreenshot, 'data', Buffer>
+
+export type SingleOptions = Replace<
+    ReportSingleOptions,
+    'screenshot',
+    Screenshot
+>
+
+export type CreateReportOptions = BaseOptions & SingleOptions
 
 export type ResultsEntry =
-    | {
+    | ({
           /** axe-core results. */
           results: AxeResults
-          /** Sets an additional info under the url. */
-          info: string
-      }
+      } & SingleOptions)
     | AxeResults

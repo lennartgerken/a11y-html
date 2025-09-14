@@ -1,5 +1,5 @@
 import { Locator } from '@playwright/test'
-import { BaseComponent } from '@/components/baseComponent.js'
+import { BaseComponent } from '@/components/baseComponent'
 
 export class Dropdown extends BaseComponent {
     readonly allButton: Locator

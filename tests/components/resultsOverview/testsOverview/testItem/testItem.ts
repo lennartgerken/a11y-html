@@ -1,6 +1,6 @@
 import { Locator } from '@playwright/test'
-import { TestDetails } from './testDetails/testDetails.js'
-import { BaseComponent } from '@/components/baseComponent.js'
+import { TestDetails } from './testDetails/testDetails'
+import { BaseComponent } from '@/components/baseComponent'
 
 export class TestItem extends BaseComponent {
     readonly headerDiv: Locator

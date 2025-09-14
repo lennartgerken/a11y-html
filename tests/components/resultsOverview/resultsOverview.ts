@@ -1,8 +1,8 @@
 import { Locator } from '@playwright/test'
-import { BaseComponent } from '../baseComponent.js'
-import { TestsOverview } from './testsOverview/testsOverview.js'
-import { NavBar } from './navBar.js'
-import { ResultItem } from './resultItem.js'
+import { BaseComponent } from '../baseComponent'
+import { TestsOverview } from './testsOverview/testsOverview'
+import { NavBar } from './navBar'
+import { ResultItem } from './resultItem'
 
 export class ResultsOverview extends BaseComponent {
     readonly backButton: Locator

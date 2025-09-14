@@ -10,73 +10,49 @@
     --color-orange: var(--color-amber-400);
 }
 
-a {
-    color: var(--color-blue);
+@layer base {
+    a {
+        @apply text-blue;
+    }
+    button {
+        @apply text-base text-left bg-none border-none m-0 p-0;
+    }
+    button:hover {
+        @apply text-blue;
+    }
+    input[type='file'] {
+        @apply border-none;
+    }
+    label {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    input {
+        @apply bg-white border-b border-solid border-light-gray p-1.5 h-10 text-base box-border;
+    }
+    input::file-selector-button {
+        @apply border-b border-solid border-light-gray;
+    }
+    input::file-selector-button:hover {
+        @apply text-blue;
+    }
+    select {
+        @apply bg-white border-b border-solid border-light-gray p-1.5 text-base box-border;
+    }
+    svg.tabler-icon {
+        width: 1em;
+        height: 1em;
+    }
 }
 
-button {
-    font-size: 1rem;
-    text-align: left;
-    background: none;
-    border: none;
-    margin: 0;
-    padding: 0;
-}
-
-input[type='file'] {
-    border: none;
-}
-
-input::file-selector-button {
-    border-bottom: 1px solid var(--color-light-gray);
-}
-
-input::file-selector-button:hover {
-    color: var(--color-blue);
-}
-
-select {
-    border-bottom: 1px solid var(--color-light-gray);
-    background: white;
-    padding: 0.375rem;
-    height: 2.5rem;
-    font-size: 1rem;
-    box-sizing: border-box;
-}
-
-input {
-    border-bottom: 1px solid var(--color-light-gray);
-    background: white;
-    padding: 0.375rem;
-    height: 2.5rem;
-    font-size: 1rem;
-    box-sizing: border-box;
-}
-
-label {
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-button:hover {
-    color: var(--color-blue);
-}
-
-.line {
-    border-left: 1px solid var(--color-light-gray);
-    margin-left: 0.375rem;
-    margin-right: 0.375rem;
-}
-
-.line-h {
-    border-bottom: 1px solid var(--color-light-gray);
-    margin-top: 0.625rem;
-    margin-bottom: 0.625rem;
-}
-
-.cirlce {
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
-    display: inline-block;
+@layer components {
+    .cirlce {
+        @apply h-2 w-2 rounded-full inline-block;
+    }
+    .line {
+        @apply border-l border-solid border-light-gray ml-1.5 mr-1.5;
+    }
+    .line-h {
+        @apply border-b border-solid border-light-gray mb-2.5 mr-2.5;
+    }
 }
