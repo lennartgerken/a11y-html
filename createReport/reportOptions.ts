@@ -15,9 +15,18 @@ export type BaseOptions = {
     hideInapplicable?: boolean
 }
 
+export const ALLOWED_MIME_TYPE = [
+    'image/png',
+    'image/jpeg',
+    'image/gif',
+    'image/webp'
+] as const
+
+export type MimeType = (typeof ALLOWED_MIME_TYPE)[number]
+
 export type ReportScreenshot = {
     data: string
-    mimeType: string
+    mimeType: MimeType
 }
 
 export type ReportSingleOptions = {
