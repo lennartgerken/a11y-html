@@ -6,6 +6,7 @@ import type { ModResultEntry } from '@/result'
 import { TagType } from '@/components/tagType'
 import { ResultType } from '@/result'
 import { IconHelp } from '@tabler/icons-vue'
+import { sanitizeUrl } from '@braintree/sanitize-url'
 
 defineProps<{ test: ModResultEntry }>()
 </script>
@@ -43,7 +44,7 @@ defineProps<{ test: ModResultEntry }>()
                 <div class="flex items-center"><IconHelp /></div>
                 <a
                     data-testid="details-url"
-                    :href="test.helpUrl"
+                    :href="sanitizeUrl(test.helpUrl)"
                     target="_blank"
                     >{{ test.helpUrl }}</a
                 >
