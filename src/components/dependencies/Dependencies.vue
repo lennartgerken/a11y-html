@@ -24,6 +24,11 @@ import Dependency from './Dependency.vue'
                     repo="https://github.com/vuejs/core"
                 />
                 <Dependency
+                    title="@braintree/sanitize-url"
+                    copyright="Copyright (c) 2017 Braintree"
+                    repo="https://github.com/braintree/sanitize-url"
+                />
+                <Dependency
                     title="@tabler/icons-vue"
                     copyright="Copyright (c) 2020-2025 Paweł Kuna"
                     repo="https://github.com/tabler/tabler-icons"
