@@ -2,12 +2,13 @@
     "compilerOptions": {
         "resolveJsonModule": true,
         "esModuleInterop": true,
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "target": "es2020",
         "paths": {
             "@/*": ["./*"],
-            "@options": ["../createReport/options.js"],
-            "@createReport": ["../createReport/dist/a11y-html.js"]
+            "@options": ["../createReport/options"],
+            "@createReport": ["../createReport/dist/a11y-html"]
         }
     }
 }

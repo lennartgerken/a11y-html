@@ -1,6 +1,6 @@
 import { Locator } from '@playwright/test'
-import { Rule } from './rule.js'
-import { BaseComponent } from '@/components/baseComponent.js'
+import { Rule } from './rule'
+import { BaseComponent } from '@/components/baseComponent'
 
 export class HTMLElement extends BaseComponent {
     readonly openButton: Locator

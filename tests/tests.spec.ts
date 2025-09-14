@@ -2,13 +2,14 @@ import { Browser, expect, type Page, test } from '@playwright/test'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { createReport, createMergedReport } from '@createReport'
+import type { CreateReportOptions } from '@options'
 import { writeFileSync } from 'fs'
 import AxeBuilder from '@axe-core/playwright'
 import type axe from 'axe-core'
-import { A11yPage } from '@/a11yPage.js'
-import { TestsOverview } from './components/resultsOverview/testsOverview/testsOverview.js'
-import { ResultsOverview } from './components/resultsOverview/resultsOverview.js'
-import { ResultItem } from './components/resultsOverview/resultItem.js'
+import { A11yPage } from '@/a11yPage'
+import { TestsOverview } from './components/resultsOverview/testsOverview/testsOverview'
+import { ResultsOverview } from './components/resultsOverview/resultsOverview'
+import { ResultItem } from './components/resultsOverview/resultItem'
 
 const currentPath = dirname(fileURLToPath(import.meta.url))
 const sourcePath = 'file:///' + join(currentPath, 'index1.html')
@@ -224,7 +225,10 @@ test.describe('single report', () => {
     test.describe('options', async () => {
         const imageAltResultID = 'image-alt'
 
-        const openReportWithOptions = async (page: Page, options = {}) => {
+        const openReportWithOptions = async (
+            page: Page,
+            options: CreateReportOptions = {}
+        ) => {
             const outputPath = test.info().outputPath('a11y-html.html')
 
             writeFileSync(outputPath, createReport(results, options))

@@ -1,8 +1,8 @@
-import { BaseComponent } from '@/components/baseComponent.js'
-import { InfoBar } from '@/components/resultsOverview/testsOverview/infoBar.js'
-import { NavBar } from '../navBar.js'
+import { BaseComponent } from '@/components/baseComponent'
+import { InfoBar } from '@/components/resultsOverview/testsOverview/infoBar'
+import { NavBar } from '../navBar'
 import { Locator } from '@playwright/test'
-import { TestItem } from './testItem/testItem.js'
+import { TestItem } from './testItem/testItem'
 
 export class TestsOverview extends BaseComponent {
     readonly infoBar: InfoBar
