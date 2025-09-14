@@ -6,7 +6,7 @@ on:
 
 jobs:
     verify-pr:
-        timeout-minutes: 2
+        timeout-minutes: 3
         runs-on: ubuntu-latest
         container:
             image: mcr.microsoft.com/playwright:v1.55.0-noble
