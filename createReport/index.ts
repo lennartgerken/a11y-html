@@ -18,7 +18,14 @@ export function createReport(
     results: AxeResults,
     options: CreateReportOptions = {}
 ) {
-    return createMergedReport([{ results, ...options }], options)
+    return createMergedReport(
+        [{ results, info: options.info, screenshot: options.screenshot }],
+        {
+            title: options.title,
+            heading: options.heading,
+            hideInapplicable: options.hideInapplicable
+        }
+    )
 }
 
 /**
