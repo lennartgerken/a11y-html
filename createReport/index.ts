@@ -18,13 +18,10 @@ export function createReport(
     results: AxeResults,
     options: CreateReportOptions = {}
 ) {
+    const { info, switchInfo, screenshot, ...baseOptions } = options
     return createMergedReport(
-        [{ results, info: options.info, screenshot: options.screenshot }],
-        {
-            title: options.title,
-            heading: options.heading,
-            hideInapplicable: options.hideInapplicable
-        }
+        [{ results, info, switchInfo, screenshot }],
+        baseOptions
     )
 }
 

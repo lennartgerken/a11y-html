@@ -108,13 +108,7 @@ watch(resultFilter, filter)
                 </div>
                 <span>Back to overview</span>
             </button>
-            <TestsOverview
-                :tests="openResult.tests"
-                :url="openResult.url"
-                :timestamp="openResult.timestamp"
-                :info="openResult.info"
-                :screenshot="openResult.screenshot"
-            />
+            <TestsOverview :result="openResult" />
         </div>
     </div>
 </template>
