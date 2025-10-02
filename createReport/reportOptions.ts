@@ -32,7 +32,7 @@ export type ReportScreenshot = {
 export type ReportSingleOptions = {
     /** Sets an additional info under the url. */
     info?: string
-    /** Switch the position of info and url, if info is provided. */
+    /** Swaps the position of info and url, if info is provided. */
     switchInfo?: boolean
     /** Displays an image in the report. */
     screenshot?: ReportScreenshot
