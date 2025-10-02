@@ -4,7 +4,11 @@ import type { AxeResults, Result } from 'axe-core'
 import { ResultType, type A11yResult } from './result'
 import Dependencies from './components/dependencies/Dependencies.vue'
 import ResultsOverview from '@/components/resultsOverview/ResultsOverview.vue'
-import type { BaseOptions, ReportResultsEntry } from '@options'
+import type {
+    BaseOptions,
+    ReportResultsEntry,
+    ReportSingleOptions
+} from '@options'
 import { isAxeResults } from '@options'
 import { IconCode, IconArrowBackUp } from '@tabler/icons-vue'
 
@@ -34,9 +38,11 @@ const setA11yResult = (axeResults: ReportResultsEntry[]) => {
     }
 
     a11yResults.value = axeResults.map((entry, index) => {
-        const currentAxeResults = isAxeResults(entry) ? entry : entry.results
-        const info = isAxeResults(entry) ? undefined : entry.info
-        const screenshot = isAxeResults(entry) ? undefined : entry.screenshot
+        let currentAxeResults: AxeResults
+        let currentOptions: ReportSingleOptions = {}
+
+        if (isAxeResults(entry)) currentAxeResults = entry
+        else ({ results: currentAxeResults, ...currentOptions } = entry)
 
         const tests = [
             ...setResultType(
@@ -72,8 +78,7 @@ const setA11yResult = (axeResults: ReportResultsEntry[]) => {
             timestamp: currentAxeResults.timestamp,
             resultType,
             id: index,
-            info,
-            screenshot
+            ...currentOptions
         }
     })
 }

@@ -2,13 +2,13 @@ import { Locator } from '@playwright/test'
 import { BaseComponent } from '../baseComponent'
 
 export class ResultItem extends BaseComponent {
-    readonly urlButton: Locator
-    readonly infoDiv: Locator
+    readonly url: Locator
+    readonly info: Locator
 
     constructor(locator: Locator) {
         super(locator)
 
-        this.urlButton = locator.getByTestId('url')
-        this.infoDiv = locator.getByTestId('info')
+        this.url = locator.getByTestId('url')
+        this.info = locator.getByTestId('info')
     }
 }

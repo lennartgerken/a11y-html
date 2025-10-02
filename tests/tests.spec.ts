@@ -2,7 +2,7 @@ import { Browser, expect, type Page, test } from '@playwright/test'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { createReport, createMergedReport } from '@createReport'
-import type { CreateReportOptions } from '@options'
+import type { CreateReportOptions, SingleOptions } from '@options'
 import { writeFileSync } from 'fs'
 import AxeBuilder from '@axe-core/playwright'
 import type axe from 'axe-core'
@@ -267,6 +267,28 @@ test.describe('single report', () => {
             await expect(testsOverview.infoBar.infoDiv).toHaveText(info)
         })
 
+        test('switch info', async ({ page }) => {
+            const info = 'Test Info'
+
+            await openReportWithOptions(page, { info, switchInfo: true })
+
+            await expect(testsOverview.infoBar.infoDiv).toHaveText(info)
+            await expect(testsOverview.infoBar.urlDiv).toHaveText(results.url)
+            await expect(
+                testsOverview.infoBar.infoDiv
+                    .or(testsOverview.infoBar.urlDiv)
+                    .first()
+            ).toHaveAttribute('data-testid', 'info')
+
+            await openReportWithOptions(page, { info })
+
+            await expect(
+                testsOverview.infoBar.infoDiv
+                    .or(testsOverview.infoBar.urlDiv)
+                    .first()
+            ).toHaveAttribute('data-testid', 'url')
+        })
+
         test('hide inapplicable', async ({ page }) => {
             await openReportWithOptions(page, { hideInapplicable: true })
             await expect(
@@ -313,19 +335,11 @@ test.describe('single report', () => {
 
 test.describe('merged report', () => {
     let results2: axe.AxeResults
-    let outputPathMergedReport: string
-    const info = 'Test Info'
 
-    test.beforeAll(async ({ browser }, testInfo) => {
+    test.beforeAll(async ({ browser }) => {
         results2 = await getAxeResults(
             browser,
             'file:///' + join(currentPath, 'index2.html')
-        )
-
-        outputPathMergedReport = testInfo.outputPath('a11y-html-merged.html')
-        writeFileSync(
-            outputPathMergedReport,
-            createMergedReport([results, { results: results2, info }])
         )
     })
 
@@ -333,59 +347,124 @@ test.describe('merged report', () => {
     let resultItem1: ResultItem
     let resultItem2: ResultItem
 
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async () => {
         resultsOverview = a11yPage.resultsOverview
         resultItem1 = resultsOverview.getResultItem(results.url)
         resultItem2 = resultsOverview.getResultItem(results2.url)
-        await page.goto('file:///' + outputPathMergedReport)
     })
 
-    test.describe('filter', () => {
-        test.describe('search', () => {
-            test('url', async () => {
-                await resultsOverview.navBar.searchInput.fill(results.url)
+    test.describe(() => {
+        let outputPathMergedReport: string
+
+        // eslint-disable-next-line no-empty-pattern
+        test.beforeAll(async ({}, testInfo) => {
+            outputPathMergedReport = testInfo.outputPath(
+                'a11y-html-merged.html'
+            )
+            writeFileSync(
+                outputPathMergedReport,
+                createMergedReport([results, results2])
+            )
+        })
+
+        test.beforeEach(async ({ page }) => {
+            await page.goto('file:///' + outputPathMergedReport)
+        })
+
+        test.describe('filter', () => {
+            test.describe('search', () => {
+                test('url', async () => {
+                    await resultsOverview.navBar.searchInput.fill(results.url)
+                    await expect(resultItem1.locator).toBeVisible()
+                    await expect(resultItem2.locator).toBeHidden()
+                })
+            })
+            test('result', async () => {
+                await resultsOverview.navBar.filterSelect.selectOption(
+                    'violations'
+                )
                 await expect(resultItem1.locator).toBeVisible()
                 await expect(resultItem2.locator).toBeHidden()
             })
-            test('info', async () => {
-                await resultsOverview.navBar.searchInput.fill(info)
-                await expect(resultItem2.locator).toBeVisible()
-                await expect(resultItem1.locator).toBeHidden()
+        })
+
+        test('open and close entry', async () => {
+            const testItem = testsOverview.getTestsItem('html-has-lang')
+
+            await resultItem1.url.click()
+            await expect(testItem.locator).toBeVisible()
+            await expect(resultItem1.locator).toBeHidden()
+            await resultsOverview.backButton.click()
+            await expect(testItem.locator).toBeHidden()
+            await expect(resultItem1.locator).toBeVisible()
+        })
+
+        test('a11y', async ({ page }, testInfo) => {
+            const results = await new AxeBuilder({ page })
+                .disableRules('label-title-only')
+                .analyze()
+
+            await testInfo.attach('a11y-html.html', {
+                body: createReport(results),
+                contentType: 'application/octet-stream'
+            })
+            expect(results.violations).toStrictEqual([])
+        })
+    })
+
+    test.describe('options', () => {
+        const openReportWithOptions = async (
+            page: Page,
+            optionsEntry2: SingleOptions = {}
+        ) => {
+            const outputPath = test.info().outputPath('a11y-html.html')
+
+            writeFileSync(
+                outputPath,
+                createMergedReport([
+                    results,
+                    { results: results2, ...optionsEntry2 }
+                ])
+            )
+            await page.goto('file:///' + outputPath)
+        }
+
+        test.describe('info', () => {
+            const info = 'Test Info'
+
+            test.describe(() => {
+                test.beforeEach(async ({ page }) => {
+                    await openReportWithOptions(page, { info })
+                })
+
+                test('show', async () => {
+                    await expect(resultItem1.info).toBeHidden()
+                    await expect(resultItem2.info).toHaveText(info)
+                })
+
+                test('search', async () => {
+                    await resultsOverview.navBar.searchInput.fill(info)
+                    await expect(resultItem2.locator).toBeVisible()
+                    await expect(resultItem1.locator).toBeHidden()
+                })
+            })
+
+            test('switch', async ({ page }) => {
+                await openReportWithOptions(page, { info, switchInfo: true })
+
+                await expect(resultItem2.info).toHaveText(info)
+                await expect(resultItem2.url).toHaveText(results2.url)
+                await expect(
+                    resultItem2.info.or(resultItem2.url).first()
+                ).toHaveAttribute('data-testid', 'info')
+
+                await openReportWithOptions(page, { info })
+
+                await expect(
+                    resultItem2.info.or(resultItem2.url).first()
+                ).toHaveAttribute('data-testid', 'url')
             })
         })
-        test('result', async () => {
-            await resultsOverview.navBar.filterSelect.selectOption('violations')
-            await expect(resultItem1.locator).toBeVisible()
-            await expect(resultItem2.locator).toBeHidden()
-        })
-    })
-
-    test('open and close entry', async () => {
-        const testItem = testsOverview.getTestsItem('html-has-lang')
-
-        await resultItem1.urlButton.click()
-        await expect(testItem.locator).toBeVisible()
-        await expect(resultItem1.locator).toBeHidden()
-        await resultsOverview.backButton.click()
-        await expect(testItem.locator).toBeHidden()
-        await expect(resultItem1.locator).toBeVisible()
-    })
-
-    test('show info', async () => {
-        await expect(resultItem1.infoDiv).toBeHidden()
-        await expect(resultItem2.infoDiv).toHaveText(info)
-    })
-
-    test('a11y', async ({ page }, testInfo) => {
-        const results = await new AxeBuilder({ page })
-            .disableRules('label-title-only')
-            .analyze()
-
-        await testInfo.attach('a11y-html.html', {
-            body: createReport(results),
-            contentType: 'application/octet-stream'
-        })
-        expect(results.violations).toStrictEqual([])
     })
 })
 

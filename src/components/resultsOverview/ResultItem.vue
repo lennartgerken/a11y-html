@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import ResultTag from '@/components/ResultTag.vue'
 import type { A11yResult } from '@/result'
+import { computed } from 'vue'
 
-defineProps<{ result: A11yResult }>()
+const props = defineProps<{ result: A11yResult }>()
 
 const emit = defineEmits<{
     open: [id: number]
 }>()
+
+const infoAndSwitch = computed(
+    () => !!props.result.info && !!props.result.switchInfo
+)
 </script>
 
 <template>
@@ -19,15 +24,18 @@ const emit = defineEmits<{
                 <div class="line"></div>
                 <div class="flex flex-col overflow-hidden">
                     <button
-                        data-testid="url"
+                        :data-testid="infoAndSwitch ? 'info' : 'url'"
                         type="button"
                         class="text-lg whitespace-nowrap overflow-hidden text-ellipsis"
                         @click="emit('open', result.id)"
                     >
-                        {{ result.url }}
+                        {{ infoAndSwitch ? result.info : result.url }}
                     </button>
-                    <div class="text-sm text-dark-gray" data-testid="info">
-                        {{ result.info }}
+                    <div
+                        class="text-sm text-dark-gray"
+                        :data-testid="infoAndSwitch ? 'url' : 'info'"
+                    >
+                        {{ infoAndSwitch ? result.url : result.info }}
                     </div>
                 </div>
             </div>

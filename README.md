@@ -34,13 +34,14 @@ test('analyze accessibility', async ({ page }, testInfo) => {
 
 You can pass additional options to customize the html report:
 
-| Option           | Usage                                     |
-| ---------------- | ----------------------------------------- |
-| title            | Sets the html title.                      |
-| heading          | Sets the heading of the report.           |
-| info             | Sets an additional info under the url.    |
-| screenshot       | Displays an image in the report.          |
-| hideInapplicable | Hides all results of type "inapplicable". |
+| Option           | Usage                                                    |
+| ---------------- | -------------------------------------------------------- |
+| title            | Sets the html title.                                     |
+| heading          | Sets the heading of the report.                          |
+| info             | Sets an additional info under the url.                   |
+| switchInfo       | Swaps the position of info and url, if info is provided. |
+| screenshot       | Displays an image in the report.                         |
+| hideInapplicable | Hides all results of type `"inapplicable"`.              |
 
 ## Merged Report
 
