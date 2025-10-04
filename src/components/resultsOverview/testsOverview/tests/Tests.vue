@@ -78,7 +78,7 @@ watch(selectedTags, filter)
                 />
                 <div
                     v-if="filteredTests.length === 0"
-                    class="text-dark-gray text-center"
+                    class="text-color-gray text-center"
                 >
                     No entries found
                 </div>

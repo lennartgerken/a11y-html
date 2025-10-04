@@ -29,7 +29,7 @@ const infoAndSwitch = computed(() => !!props.info && !!props.switchInfo)
         <div
             v-if="info"
             :data-testid="infoAndSwitch ? 'url' : 'info'"
-            class="flex gap-1 text-lg text-dark-gray"
+            class="flex gap-1 text-lg text-color-gray"
         >
             <div class="flex items-center">
                 <IconLink v-if="infoAndSwitch" /> <IconInfoCircle v-else />

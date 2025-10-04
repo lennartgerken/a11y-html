@@ -11,6 +11,8 @@ import { TestsOverview } from './components/resultsOverview/testsOverview/testsO
 import { ResultsOverview } from './components/resultsOverview/resultsOverview'
 import { ResultItem } from './components/resultsOverview/resultItem'
 
+const colorSchemes = ['light', 'dark'] as const
+
 const currentPath = dirname(fileURLToPath(import.meta.url))
 const sourcePath = 'file:///' + join(currentPath, 'index1.html')
 let results: axe.AxeResults
@@ -204,22 +206,32 @@ test.describe('single report', () => {
             })
         })
 
-        test('a11y', async ({ page }, testInfo) => {
-            const labelResultID = 'label'
+        for (const colorScheme of colorSchemes) {
+            test.describe(() => {
+                test.use({ colorScheme })
 
-            await testsOverview.getTestsItem(labelResultID).openButton.click()
-            await testsOverview.navBar.tags.openButton.click()
+                test(`a11y (${colorScheme} mode)`, async ({
+                    page
+                }, testInfo) => {
+                    const labelResultID = 'label'
 
-            const results = await new AxeBuilder({ page })
-                .disableRules('label-title-only')
-                .analyze()
+                    await testsOverview
+                        .getTestsItem(labelResultID)
+                        .openButton.click()
+                    await testsOverview.navBar.tags.openButton.click()
 
-            await testInfo.attach('a11y-html.html', {
-                body: createReport(results),
-                contentType: 'application/octet-stream'
+                    const results = await new AxeBuilder({ page })
+                        .disableRules('label-title-only')
+                        .analyze()
+
+                    await testInfo.attach('a11y-html.html', {
+                        body: createReport(results),
+                        contentType: 'application/octet-stream'
+                    })
+                    expect(results.violations).toStrictEqual([])
+                })
             })
-            expect(results.violations).toStrictEqual([])
-        })
+        }
     })
 
     test.describe('options', async () => {
@@ -399,17 +411,25 @@ test.describe('merged report', () => {
             await expect(resultItem1.locator).toBeVisible()
         })
 
-        test('a11y', async ({ page }, testInfo) => {
-            const results = await new AxeBuilder({ page })
-                .disableRules('label-title-only')
-                .analyze()
+        for (const colorScheme of colorSchemes) {
+            test.describe(() => {
+                test.use({ colorScheme })
 
-            await testInfo.attach('a11y-html.html', {
-                body: createReport(results),
-                contentType: 'application/octet-stream'
+                test(`a11y (${colorScheme} mode)`, async ({
+                    page
+                }, testInfo) => {
+                    const results = await new AxeBuilder({ page })
+                        .disableRules('label-title-only')
+                        .analyze()
+
+                    await testInfo.attach('a11y-html.html', {
+                        body: createReport(results),
+                        contentType: 'application/octet-stream'
+                    })
+                    expect(results.violations).toStrictEqual([])
+                })
             })
-            expect(results.violations).toStrictEqual([])
-        })
+        }
     })
 
     test.describe('options', () => {

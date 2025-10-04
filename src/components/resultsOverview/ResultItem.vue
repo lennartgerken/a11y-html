@@ -32,7 +32,7 @@ const infoAndSwitch = computed(
                         {{ infoAndSwitch ? result.info : result.url }}
                     </button>
                     <div
-                        class="text-sm text-dark-gray"
+                        class="text-sm text-color-gray"
                         :data-testid="infoAndSwitch ? 'url' : 'info'"
                     >
                         {{ infoAndSwitch ? result.url : result.info }}

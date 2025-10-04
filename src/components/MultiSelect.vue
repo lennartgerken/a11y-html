@@ -49,7 +49,7 @@ const activateAllOptions = () => {
 }
 
 const circleColor = computed(() => {
-    if (!allActive()) return 'text-blue'
+    if (!allActive()) return 'text-color-blue'
     else return 'text-gray'
 })
 
@@ -87,7 +87,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
 
 <template>
     <div data-testid="multi-select" class="w-fit">
-        <div class="relative border-b border-light-gray p-1.5 box-border h-10">
+        <div class="relative border-b border-color p-1.5 box-border h-10">
             <button
                 data-testid="open"
                 type="button"
@@ -105,7 +105,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
                 v-click-other="closeDropdown"
                 data-testid="dropdown"
                 :class="[
-                    'whitespace-nowrap p-2 absolute max-h-80 overflow-y-scroll bg-white border border-light-gray z-10',
+                    'whitespace-nowrap p-2 absolute max-h-80 overflow-y-scroll bg-color border border-color z-10',
                     dropdownPosition
                 ]"
             >

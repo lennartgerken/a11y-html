@@ -92,7 +92,7 @@ watch(resultFilter, filter)
             />
             <div
                 v-if="filteredResults.length === 0"
-                class="text-dark-gray text-center"
+                class="text-color-gray text-center"
             >
                 No entries found
             </div>
