@@ -1,17 +1,16 @@
 import eslint from '@eslint/js'
+import { defineConfig } from 'eslint/config'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import eslintPluginVue from 'eslint-plugin-vue'
 import globals from 'globals'
 import typescriptEslint from 'typescript-eslint'
 
-export default typescriptEslint.config(
+export default defineConfig(
+    eslint.configs.recommended,
+    typescriptEslint.configs.recommended,
+    eslintPluginVue.configs['flat/recommended'],
     { ignores: ['*.d.ts', '**/coverage', '**/dist'] },
     {
-        extends: [
-            eslint.configs.recommended,
-            ...typescriptEslint.configs.recommended,
-            ...eslintPluginVue.configs['flat/recommended']
-        ],
         files: ['**/*.{ts,vue}'],
         languageOptions: {
             ecmaVersion: 'latest',

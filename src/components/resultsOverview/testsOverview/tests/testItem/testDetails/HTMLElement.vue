@@ -27,7 +27,7 @@ const isOpen = ref(props.defaultOpen)
                     <IconFileTypeHtml />
                 </div>
             </div>
-            <div class="bg-gray-200 p-2 wrap-anywhere grow">
+            <div class="bg-gray-200 dark:bg-gray-700 p-2 wrap-anywhere grow">
                 <code data-testid="html"
                     ><button @click="isOpen = !isOpen">
                         {{ html }}

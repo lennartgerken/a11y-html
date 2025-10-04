@@ -38,7 +38,7 @@ const isOpen = ref(false)
                         </button>
                         <div
                             data-testid="item-description"
-                            class="text-sm text-dark-gray"
+                            class="text-sm text-color-gray"
                         >
                             {{ test.description }}
                         </div>

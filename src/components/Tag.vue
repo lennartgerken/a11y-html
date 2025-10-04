@@ -1,12 +1,28 @@
 <script setup lang="ts">
-import type { TagType } from './tagType'
+import { computed } from 'vue'
+import { TagType } from './tagType'
 import { IconCircleFilled } from '@tabler/icons-vue'
 
-defineProps<{
+const props = defineProps<{
     text: string
     tagType: TagType
     tooltip?: string
 }>()
+
+const colorClass = computed(() => {
+    switch (props.tagType) {
+        case TagType.SUCCESS:
+            return 'text-green'
+        case TagType.INFO:
+            return 'text-color-blue'
+        case TagType.WARN:
+            return 'text-orange'
+        case TagType.ERROR:
+            return 'text-red'
+        default:
+            return 'text-gray'
+    }
+})
 </script>
 
 <template>
@@ -16,30 +32,8 @@ defineProps<{
         :title="tooltip"
     >
         <div class="flex items-center">
-            <div :class="[tagType]"><IconCircleFilled /></div>
+            <div :class="colorClass"><IconCircleFilled /></div>
         </div>
         <div>{{ text }}</div>
     </span>
 </template>
-
-<style scoped>
-.error {
-    color: var(--color-red);
-}
-
-.success {
-    color: var(--color-green);
-}
-
-.warn {
-    color: var(--color-orange);
-}
-
-.info {
-    color: var(--color-blue);
-}
-
-.inactive {
-    color: var(--color-gray);
-}
-</style>

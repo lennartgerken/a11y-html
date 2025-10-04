@@ -5,20 +5,34 @@
     --color-gray: var(--color-gray-400);
     --color-dark-gray: var(--color-gray-500);
     --color-blue: var(--color-blue-700);
+    --color-light-blue: var(--color-blue-400);
     --color-green: var(--color-green-600);
     --color-red: var(--color-red-600);
     --color-orange: var(--color-amber-400);
 }
 
+@utility bg-color {
+    @apply bg-white dark:bg-gray-900;
+}
+@utility text-color-blue {
+    @apply text-blue dark:text-light-blue;
+}
+@utility text-color-gray {
+    @apply text-dark-gray dark:text-light-gray;
+}
+@utility border-color {
+    @apply border-light-gray dark:border-dark-gray;
+}
+
 @layer base {
     a {
-        @apply text-blue;
+        @apply bg-color text-color-blue;
     }
     button {
         @apply text-base text-left bg-none border-none m-0 p-0;
     }
     button:hover {
-        @apply text-blue;
+        @apply text-color-blue;
     }
     input[type='file'] {
         @apply border-none;
@@ -28,16 +42,19 @@
         user-select: none;
     }
     input {
-        @apply bg-white border-b border-solid border-light-gray p-1.5 h-10 text-base box-border;
-    }
-    input::file-selector-button {
-        @apply border-b border-solid border-light-gray;
+        @apply h-10;
     }
     input::file-selector-button:hover {
-        @apply text-blue;
+        @apply text-color-blue;
     }
-    select {
-        @apply bg-white border-b border-solid border-light-gray p-1.5 text-base box-border;
+    select,
+    input {
+        @apply bg-color p-1.5 text-base box-border;
+    }
+    select,
+    input,
+    input::file-selector-button {
+        @apply border-b border-solid border-color;
     }
     svg.tabler-icon {
         width: 1em;
@@ -46,13 +63,14 @@
 }
 
 @layer components {
-    .cirlce {
-        @apply h-2 w-2 rounded-full inline-block;
-    }
     .line {
-        @apply border-l border-solid border-light-gray ml-1.5 mr-1.5;
+        @apply border-l;
     }
     .line-h {
-        @apply border-b border-solid border-light-gray mb-2.5 mr-2.5;
+        @apply border-b;
+    }
+    .line,
+    .line-h {
+        @apply border-solid border-color ml-1.5 mr-1.5;
     }
 }

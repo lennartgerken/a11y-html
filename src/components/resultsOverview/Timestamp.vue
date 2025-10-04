@@ -13,7 +13,7 @@ const timestampFormated = computed(() => {
 </script>
 
 <template>
-    <div class="text-lg text-dark-gray flex gap-1">
+    <div class="text-lg text-color-gray flex gap-1">
         <div class="flex items-center"><IconClock /></div>
         <div>{{ timestampFormated }}</div>
     </div>

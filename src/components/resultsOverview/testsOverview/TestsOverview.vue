@@ -47,7 +47,7 @@ const screenshotIsOpen = ref(false)
             </div>
             <div v-if="screenshotIsOpen" class="col-2">
                 <img
-                    class="w-full max-w-3xl border border-light-gray"
+                    class="w-full max-w-3xl border border-color"
                     :src="`data:${result.screenshot.mimeType};base64,${result.screenshot.data}`"
                     alt="Screenshot"
                 />
