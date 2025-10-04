@@ -124,7 +124,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
                         @change="setOption(option)"
                     />
                     <div class="flex flex-col justify-center">
-                        <span class="w-fit h-fit">{{ option }}</span>
+                        <span class="w-fit h-fit bg-color">{{ option }}</span>
                     </div>
                 </label>
             </div>

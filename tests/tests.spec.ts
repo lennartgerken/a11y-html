@@ -11,7 +11,10 @@ import { TestsOverview } from './components/resultsOverview/testsOverview/testsO
 import { ResultsOverview } from './components/resultsOverview/resultsOverview'
 import { ResultItem } from './components/resultsOverview/resultItem'
 
-const colorSchemes = ['light', 'dark'] as const
+const a11yTestData: { colorScheme: 'light' | 'dark'; withRules: string[] }[] = [
+    { colorScheme: 'light', withRules: [] },
+    { colorScheme: 'dark', withRules: ['color-contrast'] }
+]
 
 const currentPath = dirname(fileURLToPath(import.meta.url))
 const sourcePath = 'file:///' + join(currentPath, 'index1.html')
@@ -206,7 +209,7 @@ test.describe('single report', () => {
             })
         })
 
-        for (const colorScheme of colorSchemes) {
+        for (const { colorScheme, withRules } of a11yTestData) {
             test.describe(() => {
                 test.use({ colorScheme })
 
@@ -220,15 +223,18 @@ test.describe('single report', () => {
                         .openButton.click()
                     await testsOverview.navBar.tags.openButton.click()
 
-                    const results = await new AxeBuilder({ page })
-                        .disableRules('label-title-only')
-                        .analyze()
+                    const axeBuilder = new AxeBuilder({ page })
+                    axeBuilder.disableRules('label-title-only')
+                    if (withRules.length > 0) axeBuilder.withRules(withRules)
+
+                    const results = await axeBuilder.analyze()
 
                     await testInfo.attach('a11y-html.html', {
                         body: createReport(results),
                         contentType: 'application/octet-stream'
                     })
                     expect(results.violations).toStrictEqual([])
+                    expect(results.incomplete).toStrictEqual([])
                 })
             })
         }
@@ -411,22 +417,25 @@ test.describe('merged report', () => {
             await expect(resultItem1.locator).toBeVisible()
         })
 
-        for (const colorScheme of colorSchemes) {
+        for (const { colorScheme, withRules } of a11yTestData) {
             test.describe(() => {
                 test.use({ colorScheme })
 
                 test(`a11y (${colorScheme} mode)`, async ({
                     page
                 }, testInfo) => {
-                    const results = await new AxeBuilder({ page })
-                        .disableRules('label-title-only')
-                        .analyze()
+                    const axeBuilder = new AxeBuilder({ page })
+                    axeBuilder.disableRules('label-title-only')
+                    if (withRules.length > 0) axeBuilder.withRules(withRules)
+
+                    const results = await axeBuilder.analyze()
 
                     await testInfo.attach('a11y-html.html', {
                         body: createReport(results),
                         contentType: 'application/octet-stream'
                     })
                     expect(results.violations).toStrictEqual([])
+                    expect(results.incomplete).toStrictEqual([])
                 })
             })
         }
