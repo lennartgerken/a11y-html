@@ -47,6 +47,9 @@
     input::file-selector-button:hover {
         @apply text-color-blue;
     }
+    select {
+        appearance: none;
+    }
     select,
     input {
         @apply bg-color p-1.5 text-base box-border;
