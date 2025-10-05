@@ -25,14 +25,16 @@ const infoAndSwitch = computed(
                 <div class="flex flex-col overflow-hidden">
                     <button
                         :data-testid="infoAndSwitch ? 'info' : 'url'"
+                        :title="infoAndSwitch ? result.info : result.url"
                         type="button"
-                        class="text-lg whitespace-nowrap overflow-hidden text-ellipsis"
+                        class="text-lg wrap-long-text"
                         @click="emit('open', result.id)"
                     >
                         {{ infoAndSwitch ? result.info : result.url }}
                     </button>
                     <div
-                        class="text-sm text-color-gray"
+                        :title="infoAndSwitch ? result.url : result.info"
+                        class="text-sm text-color-gray wrap-long-text"
                         :data-testid="infoAndSwitch ? 'url' : 'info'"
                     >
                         {{ infoAndSwitch ? result.url : result.info }}

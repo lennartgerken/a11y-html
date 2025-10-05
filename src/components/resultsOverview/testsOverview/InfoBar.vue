@@ -14,27 +14,32 @@ const infoAndSwitch = computed(() => !!props.info && !!props.switchInfo)
 
 <template>
     <div data-testid="info-bar">
-        <div :title="url" class="flex gap-1 text-2xl">
+        <div :title="infoAndSwitch ? info : url" class="flex gap-1 text-2xl">
             <div class="flex flex-col justify-center">
                 <IconInfoCircle v-if="infoAndSwitch" />
                 <IconLink v-else />
             </div>
             <div
                 :data-testid="infoAndSwitch ? 'info' : 'url'"
-                class="whitespace-nowrap overflow-hidden text-ellipsis"
+                class="wrap-long-text"
             >
                 {{ infoAndSwitch ? info : url }}
             </div>
         </div>
         <div
             v-if="info"
-            :data-testid="infoAndSwitch ? 'url' : 'info'"
+            :title="infoAndSwitch ? url : info"
             class="flex gap-1 text-lg text-color-gray"
         >
             <div class="flex items-center">
                 <IconLink v-if="infoAndSwitch" /> <IconInfoCircle v-else />
             </div>
-            <div>{{ infoAndSwitch ? url : info }}</div>
+            <div
+                :data-testid="infoAndSwitch ? 'url' : 'info'"
+                class="wrap-long-text"
+            >
+                {{ infoAndSwitch ? url : info }}
+            </div>
         </div>
         <timestamp data-testid="timestamp" :timestamp="timestamp" />
     </div>

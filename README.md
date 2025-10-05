@@ -45,7 +45,7 @@ You can pass additional options to customize the html report:
 
 ## Merged Report
 
-Multiple results can be merged into one report using `createMergedReport`. Each result can be passed with an info string that is displayed on the overview page:
+Multiple results can be merged into a single report using `createMergedReport`. Each result can optionally include an info string and a screenshot. The info string is displayed on the overview page and within the result details:
 
 ```
 createMergedReport([
