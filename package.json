@@ -19,9 +19,9 @@
         "url": "https://github.com/lennartgerken/a11y-html/issues"
     },
     "type": "module",
-    "types": "./createReport/dist/index.d.ts",
+    "types": "./createReport/dist/a11y-html.d.ts",
     "exports": {
-        "types": "./createReport/dist/index.d.ts",
+        "types": "./createReport/dist/a11y-html.d.ts",
         "import": "./createReport/dist/a11y-html.js",
         "require": "./createReport/dist/a11y-html.cjs"
     },
