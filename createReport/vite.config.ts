@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
     build: {
         lib: {
-            entry: './index.ts',
+            entry: './a11y-html.ts',
             formats: ['es', 'cjs']
         },
         minify: false,

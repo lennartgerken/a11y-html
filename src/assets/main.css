@@ -23,9 +23,6 @@
 @utility border-color {
     @apply border-light-gray dark:border-dark-gray;
 }
-@utility wrap-long-text {
-    @apply whitespace-nowrap overflow-hidden text-ellipsis;
-}
 
 @layer base {
     a {

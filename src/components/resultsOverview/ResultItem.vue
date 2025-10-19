@@ -2,6 +2,8 @@
 import ResultTag from '@/components/ResultTag.vue'
 import type { A11yResult } from '@/result'
 import { computed } from 'vue'
+import SingleLineButton from '../singleLine/SingleLineButton.vue'
+import SingleLineText from '../singleLine/SingleLineText.vue'
 
 const props = defineProps<{ result: A11yResult }>()
 
@@ -22,22 +24,23 @@ const infoAndSwitch = computed(
                     <ResultTag :result-type="result.resultType" />
                 </div>
                 <div class="line"></div>
-                <div class="flex flex-col overflow-hidden">
-                    <button
+                <div class="flex flex-col min-w-0">
+                    <SingleLineButton
+                        :text="String(infoAndSwitch ? result.info : result.url)"
                         :data-testid="infoAndSwitch ? 'info' : 'url'"
-                        :title="infoAndSwitch ? result.info : result.url"
-                        type="button"
-                        class="text-lg wrap-long-text"
+                        class="text-lg"
                         @click="emit('open', result.id)"
-                    >
-                        {{ infoAndSwitch ? result.info : result.url }}
-                    </button>
+                    />
                     <div
-                        :title="infoAndSwitch ? result.url : result.info"
-                        class="text-sm text-color-gray wrap-long-text"
+                        v-if="result.info"
+                        class="text-sm text-color-gray"
                         :data-testid="infoAndSwitch ? 'url' : 'info'"
                     >
-                        {{ infoAndSwitch ? result.url : result.info }}
+                        <SingleLineText
+                            :text="
+                                String(infoAndSwitch ? result.url : result.info)
+                            "
+                        />
                     </div>
                 </div>
             </div>
