@@ -56,6 +56,7 @@ defineProps<{ test: ModResultEntry }>()
                 :key="node.target.join('')"
                 :show-impact="test.resultType !== ResultType.PASSED"
                 :html="node.html"
+                :target="node.target"
                 :any="node.any"
                 :all="node.all"
                 :none="node.none"
