@@ -53,7 +53,7 @@ const targetText = computed(() => {
                     <div class="flex items-center">
                         <IconTargetArrow />
                     </div>
-                    <span>{{ targetText }}</span>
+                    <span class="wrap-anywhere">{{ targetText }}</span>
                 </div>
                 <Rules
                     :show-impact="showImpact"
