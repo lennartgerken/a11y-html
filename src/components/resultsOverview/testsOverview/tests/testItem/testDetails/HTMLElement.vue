@@ -28,7 +28,7 @@ const targetText = computed(() => {
         return []
     }
 
-    return flattenTarget(props.target).join(' > ')
+    return flattenTarget(props.target).join(' / ')
 })
 </script>
 

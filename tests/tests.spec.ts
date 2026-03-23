@@ -130,7 +130,7 @@ test.describe('single report', () => {
 
                         const target = flattenTarget(
                             currentNodeResult.target
-                        ).join(' > ')
+                        ).join(' / ')
 
                         await expect(currentElement.targetSpan).toHaveText(
                             target
