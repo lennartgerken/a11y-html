@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ResultTag from '@/components/ResultTag.vue'
 import Tag from '@/components/Tag.vue'
-import HTMLElement from '@/components/resultsOverview/testsOverview/tests/testItem/testDetails/HTMLElement.vue'
+import HTMLElement from '@/components/resultsOverview/testsOverview/tests/testItem/testDetails/htmlElement/HTMLElement.vue'
 import type { ModResultEntry } from '@/result'
 import { TagType } from '@/components/tagType'
 import { ResultType } from '@/result'
