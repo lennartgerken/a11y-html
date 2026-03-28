@@ -2,10 +2,15 @@
 import { RuleType } from '@/result'
 import Rules from './Rules.vue'
 import type { CheckResult } from 'axe-core'
-import { computed, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, useTemplateRef } from 'vue'
 import OpenButton from '@/components/OpenButton.vue'
-import { IconFileTypeHtml, IconTargetArrow } from '@tabler/icons-vue'
+import {
+    IconFileTypeHtml,
+    IconTargetArrow,
+    IconWindowMaximize
+} from '@tabler/icons-vue'
 import type { UnlabelledFrameSelector } from 'axe-core'
+import Modal from '@/components/modal.vue'
 
 const props = defineProps<{
     showImpact: boolean
@@ -18,6 +23,7 @@ const props = defineProps<{
 }>()
 
 const isOpen = ref(props.defaultOpen)
+
 const targetText = computed(() => {
     if (props.target.length === 0) return 'No target'
 
@@ -29,6 +35,25 @@ const targetText = computed(() => {
     }
 
     return flattenTarget(props.target).join(' / ')
+})
+
+const fullTargetOpen = ref(false)
+const targetTextRef = useTemplateRef('targetText')
+const targetOverflows = ref(false)
+
+const handleResize = () => {
+    if (targetTextRef.value) {
+        targetOverflows.value =
+            targetTextRef.value.scrollWidth > targetTextRef.value.clientWidth
+    }
+}
+
+onMounted(() => {
+    window.addEventListener('resize', handleResize)
+    handleResize()
+})
+onUnmounted(() => {
+    window.removeEventListener('resize', handleResize)
 })
 </script>
 
@@ -48,14 +73,34 @@ const targetText = computed(() => {
                     </button></code
                 >
             </div>
-            <div v-if="isOpen" class="col-2 flex flex-col gap-1.5">
+            <div v-if="isOpen" class="col-2 flex min-w-0 flex-col gap-1.5">
                 <div class="flex gap-1">
                     <div class="flex items-center">
                         <IconTargetArrow />
                     </div>
-                    <span data-testid="target" class="wrap-anywhere">{{
-                        targetText
-                    }}</span>
+                    <div class="flex min-w-0 items-center gap-1.5">
+                        <span
+                            ref="targetText"
+                            data-testid="target"
+                            class="truncate pointer-events-none"
+                            >{{ targetText }}</span
+                        >
+
+                        <button
+                            v-if="targetOverflows"
+                            class="whitespace-nowrap flex items-center gap-1"
+                            @click="fullTargetOpen = true"
+                        >
+                            <IconWindowMaximize />
+                            <span>Full Target</span>
+                        </button>
+                        <Modal v-model="fullTargetOpen" title="Full Target">
+                            <pre
+                                class="whitespace-pre-wrap break-words overflow-auto"
+                                >{{ targetText }}</pre
+                            >
+                        </Modal>
+                    </div>
                 </div>
                 <Rules
                     :show-impact="showImpact"

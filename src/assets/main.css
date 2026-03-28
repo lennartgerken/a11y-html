@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+body:has(.no-body-scroll) {
+    overflow: hidden;
+}
+
 @theme inline {
     --color-light-gray: var(--color-gray-300);
     --color-gray: var(--color-gray-400);
