@@ -49,7 +49,7 @@ onUnmounted(() => {
         >
         <button
             v-if="targetOverflows"
-            class="whitespace-nowrap flex items-center gap-1"
+            class="whitespace-nowrap flex items-center gap-1 bg-color"
             @click="fullTargetOpen = true"
         >
             <IconWindowMaximize />
