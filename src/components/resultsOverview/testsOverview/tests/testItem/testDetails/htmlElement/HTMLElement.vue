@@ -4,11 +4,14 @@ import Rules from './Rules.vue'
 import type { CheckResult } from 'axe-core'
 import { ref } from 'vue'
 import OpenButton from '@/components/OpenButton.vue'
-import { IconFileTypeHtml } from '@tabler/icons-vue'
+import { IconFileTypeHtml, IconTargetArrow } from '@tabler/icons-vue'
+import type { UnlabelledFrameSelector } from 'axe-core'
+import Target from './Target.vue'
 
 const props = defineProps<{
     showImpact: boolean
     html: string
+    target: UnlabelledFrameSelector
     any: CheckResult[]
     all: CheckResult[]
     none: CheckResult[]
@@ -34,7 +37,13 @@ const isOpen = ref(props.defaultOpen)
                     </button></code
                 >
             </div>
-            <div v-if="isOpen" class="col-2 flex flex-col gap-1.5">
+            <div v-if="isOpen" class="col-2 flex min-w-0 flex-col gap-1.5">
+                <div class="flex gap-1">
+                    <div class="flex items-center">
+                        <IconTargetArrow />
+                    </div>
+                    <Target :target="target" />
+                </div>
                 <Rules
                     :show-impact="showImpact"
                     :rules="any"
