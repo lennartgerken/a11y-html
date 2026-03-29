@@ -20,8 +20,19 @@ const currentPath = dirname(fileURLToPath(import.meta.url))
 const sourcePath = 'file:///' + join(currentPath, 'index1.html')
 let results: axe.AxeResults
 
+const labelResultID = 'label'
+let labelResults: axe.Result
+
 test.beforeAll(async ({ browser }) => {
     results = await getAxeResults(browser, sourcePath)
+
+    labelResults = results.violations.find(({ id }) => id === labelResultID)
+    labelResults.nodes[0].target = [
+        'this is a very long target to test the target modal.'.repeat(10),
+        'second',
+        ['inner1', 'inner2']
+    ]
+    labelResults.nodes[1].target = ['short target']
 })
 
 let a11yPage: A11yPage
@@ -65,10 +76,6 @@ test.describe('single report', () => {
         })
 
         test('show details', async () => {
-            const labelResultID = 'label'
-            const labelResults = results.violations.find(
-                ({ id }) => id === labelResultID
-            )
             const labelItem = testsOverview.getTestsItem(labelResultID)
 
             await test.step('row', async () => {
@@ -119,21 +126,8 @@ test.describe('single report', () => {
                         )
                         if (index > 0) currentElement.openButton.click()
 
-                        const flattenTarget = (value: unknown): string[] => {
-                            if (typeof value === 'string') return [value]
-                            if (Array.isArray(value))
-                                return value.flatMap((item) =>
-                                    flattenTarget(item)
-                                )
-                            return []
-                        }
-
-                        const target = flattenTarget(
-                            currentNodeResult.target
-                        ).join(' / ')
-
                         await expect(currentElement.targetSpan).toHaveText(
-                            target
+                            flattenTarget(currentNodeResult.target)
                         )
 
                         await test.step('rules', async () => {
@@ -167,6 +161,39 @@ test.describe('single report', () => {
                     )
                 })
             })
+        })
+
+        test('show full target', async () => {
+            const node = labelResults.nodes[0]
+
+            const labelItem = testsOverview.getTestsItem(labelResultID)
+            const details = labelItem.details
+            const htmlElement = details.getHTMLElement(node.html)
+
+            await labelItem.openButton.click()
+            await htmlElement.fullTargetButton.click()
+            await expect(a11yPage.targetModal.fullTargetPre).toHaveText(
+                flattenTarget(node.target)
+            )
+
+            await a11yPage.targetModal.closeButton.click()
+            await expect(a11yPage.targetModal.locator).toBeHidden()
+            await htmlElement.fullTargetButton.click({ trial: true })
+        })
+
+        test('hide full target button', async () => {
+            const labelItem = testsOverview.getTestsItem(labelResultID)
+            const details = labelItem.details
+            const htmlElement = details.getHTMLElement(
+                labelResults.nodes[1].html
+            )
+
+            await labelItem.openButton.click()
+            await htmlElement.openButton.click()
+            await expect(
+                details.getHTMLElement(labelResults.nodes[1].html)
+                    .fullTargetButton
+            ).toBeHidden()
         })
 
         test.describe('filter', () => {
@@ -232,8 +259,6 @@ test.describe('single report', () => {
                 test(`a11y (${colorScheme} mode)`, async ({
                     page
                 }, testInfo) => {
-                    const labelResultID = 'label'
-
                     await testsOverview
                         .getTestsItem(labelResultID)
                         .openButton.click()
@@ -523,4 +548,13 @@ const getAxeResults = async (browser: Browser, path: string) => {
     await context.close()
 
     return results
+}
+
+const flattenTarget = (target: axe.UnlabelledFrameSelector) => {
+    const flatten = (value: unknown): string[] => {
+        if (typeof value === 'string') return [value]
+        if (Array.isArray(value)) return value.flatMap((item) => flatten(item))
+        return []
+    }
+    return flatten(target).join(' / ')
 }

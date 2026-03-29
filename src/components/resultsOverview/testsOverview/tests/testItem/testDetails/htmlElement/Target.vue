@@ -53,12 +53,14 @@ onUnmounted(() => {
             @click="fullTargetOpen = true"
         >
             <IconWindowMaximize />
-            <span>Full Target</span>
+            <span>Full target</span>
         </button>
         <Modal v-model="fullTargetOpen" title="Full Target">
-            <pre class="whitespace-pre-wrap break-words overflow-auto">{{
-                targetText
-            }}</pre>
+            <pre
+                data-testid="full-target"
+                class="whitespace-pre-wrap break-words overflow-auto"
+                >{{ targetText }}</pre
+            >
         </Modal>
     </div>
 </template>
