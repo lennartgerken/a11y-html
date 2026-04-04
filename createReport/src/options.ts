@@ -6,7 +6,7 @@ import type {
 } from './reportOptions'
 
 export type Screenshot = Omit<ReportScreenshot, 'data'> & {
-    data: Buffer
+    data: Uint8Array
 }
 
 export type SingleOptions = Omit<ReportSingleOptions, 'screenshot'> & {

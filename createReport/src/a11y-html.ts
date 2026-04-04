@@ -52,7 +52,7 @@ export function createMergedReport(
         )
             return reportResultEntry
         const screenshot: ReportScreenshot = {
-            data: screenshotBase.data.toString('base64'),
+            data: Buffer.from(screenshotBase.data).toString('base64'),
             mimeType: screenshotBase.mimeType
         }
         return { ...reportResultEntry, screenshot }
