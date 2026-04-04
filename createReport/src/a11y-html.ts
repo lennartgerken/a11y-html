@@ -1,4 +1,4 @@
-import report from './html/index.html?raw'
+import report from '../html/index.html?raw'
 import type { AxeResults } from 'axe-core'
 import type { CreateReportOptions, ResultsEntry } from './options'
 import type {
@@ -7,6 +7,14 @@ import type {
     ReportScreenshot
 } from './reportOptions'
 import { ALLOWED_MIME_TYPE, isAxeResults } from './reportOptions'
+
+export type {
+    CreateReportOptions,
+    ResultsEntry,
+    Screenshot,
+    SingleOptions
+} from './options'
+export type { BaseOptions } from './reportOptions'
 
 /**
  * Takes axe-core results and creates an html report.
@@ -44,7 +52,7 @@ export function createMergedReport(
         )
             return reportResultEntry
         const screenshot: ReportScreenshot = {
-            data: screenshotBase.data.toString('base64'),
+            data: Buffer.from(screenshotBase.data).toString('base64'),
             mimeType: screenshotBase.mimeType
         }
         return { ...reportResultEntry, screenshot }

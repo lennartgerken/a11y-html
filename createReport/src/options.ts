@@ -5,17 +5,13 @@ import type {
     ReportSingleOptions
 } from './reportOptions'
 
-type Replace<T, K extends keyof T, New> = Omit<T, K> & {
-    [P in K]: T[P] extends T[P] ? New : never
+export type Screenshot = Omit<ReportScreenshot, 'data'> & {
+    data: Uint8Array
 }
 
-export type Screenshot = Replace<ReportScreenshot, 'data', Buffer>
-
-export type SingleOptions = Replace<
-    ReportSingleOptions,
-    'screenshot',
-    Screenshot
->
+export type SingleOptions = Omit<ReportSingleOptions, 'screenshot'> & {
+    screenshot?: Screenshot
+}
 
 export type CreateReportOptions = BaseOptions & SingleOptions
 

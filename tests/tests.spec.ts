@@ -1,8 +1,7 @@
 import { Browser, expect, type Page, test } from '@playwright/test'
-import { join, dirname } from 'path'
-import { fileURLToPath } from 'url'
+import { join } from 'path'
 import { createReport, createMergedReport } from '@createReport'
-import type { CreateReportOptions, SingleOptions } from '@options'
+import type { CreateReportOptions, SingleOptions } from '@createReport'
 import { writeFileSync } from 'fs'
 import AxeBuilder from '@axe-core/playwright'
 import type axe from 'axe-core'
@@ -16,7 +15,7 @@ const a11yTestData: { colorScheme: 'light' | 'dark'; withRules: string[] }[] = [
     { colorScheme: 'dark', withRules: ['color-contrast'] }
 ]
 
-const currentPath = dirname(fileURLToPath(import.meta.url))
+const currentPath = __dirname
 const sourcePath = 'file:///' + join(currentPath, 'index1.html')
 let results: axe.AxeResults
 
@@ -26,7 +25,7 @@ let labelResults: axe.Result
 test.beforeAll(async ({ browser }) => {
     results = await getAxeResults(browser, sourcePath)
 
-    labelResults = results.violations.find(({ id }) => id === labelResultID)
+    labelResults = results.violations.find(({ id }) => id === labelResultID)!
     labelResults.nodes[0].target = [
         'this is a very long target to test the target modal.'.repeat(10),
         'second',
