@@ -2,12 +2,12 @@
     "compilerOptions": {
         "resolveJsonModule": true,
         "esModuleInterop": true,
-        "module": "esnext",
-        "moduleResolution": "node",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
         "target": "es2020",
+        "types": ["node"],
         "paths": {
             "@/*": ["./*"],
-            "@options": ["../createReport/options"],
             "@createReport": ["../createReport/dist/a11y-html"]
         }
     }

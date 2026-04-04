@@ -1,0 +1,16 @@
+{
+    "include": [
+        "vite.config.*",
+        "playwright.config.*",
+        "createReport/vite.config.*"
+    ],
+    "compilerOptions": {
+        "module": "preserve",
+        "moduleResolution": "bundler",
+        "noEmit": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo"
+    }
+}

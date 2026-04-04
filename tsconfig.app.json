@@ -1,0 +1,18 @@
+{
+    "files": [],
+    "extends": "@vue/tsconfig/tsconfig.dom.json",
+    "include": [
+        "env.d.ts",
+        "src/**/*",
+        "src/**/*.vue",
+        "createReport/src/reportOptions.ts"
+    ],
+    "exclude": ["src/**/__tests__/*"],
+    "compilerOptions": {
+        "paths": {
+            "@/*": ["./src/*"],
+            "@options": ["./createReport/src/reportOptions.ts"]
+        },
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
+    }
+}

@@ -19,7 +19,7 @@ export default defineConfig({
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url)),
             '@options': fileURLToPath(
-                new URL('./createReport/reportOptions.ts', import.meta.url)
+                new URL('./createReport/src/reportOptions.ts', import.meta.url)
             )
         }
     }
