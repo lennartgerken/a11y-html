@@ -11,5 +11,6 @@
         "strict": true,
         "skipLibCheck": true
     },
-    "include": ["src", "./env.d.ts"]
+    "include": ["src", "./env.d.ts"],
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.createReport.tsbuildinfo"
 }
