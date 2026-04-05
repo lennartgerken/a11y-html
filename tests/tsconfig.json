@@ -9,6 +9,7 @@
         "paths": {
             "@/*": ["./*"],
             "@createReport": ["../createReport/dist/a11y-html"]
-        }
+        },
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tests.tsbuildinfo"
     }
 }

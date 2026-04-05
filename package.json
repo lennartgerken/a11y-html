@@ -42,7 +42,12 @@
         "pretty": "prettier . --write",
         "pretty-check": "prettier . --check",
         "lint": "eslint",
-        "build-vue": "vue-tsc --build && vite build",
+        "type-check": "vue-tsc -b --noEmit",
+        "type-check-config": "tsc -p ./tsconfig.node.json --noEmit",
+        "type-check-vue": "vue-tsc -p ./tsconfig.app.json --noEmit",
+        "type-check-create-report": "tsc -p ./createReport/tsconfig.json --noEmit",
+        "type-check-tests": "tsc -p ./tests/tsconfig.json --noEmit",
+        "build-vue": "npm run type-check-vue && vite build",
         "preview-vue": "vite preview",
         "watch-vue": "vue-tsc --watch",
         "build-create-report": "vite build ./createReport && tsc -p ./createReport  --emitDeclarationOnly true && rollup -c ./createReport/rollup.config.js"

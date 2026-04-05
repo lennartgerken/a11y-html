@@ -6,6 +6,12 @@
         },
         {
             "path": "./tsconfig.app.json"
+        },
+        {
+            "path": "./tests/tsconfig.json"
+        },
+        {
+            "path": "./createReport/tsconfig.json"
         }
     ]
 }
