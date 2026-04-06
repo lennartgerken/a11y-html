@@ -30,7 +30,7 @@ import Dependency from './Dependency.vue'
                 />
                 <Dependency
                     title="@tabler/icons-vue"
-                    copyright="Copyright (c) 2020-2025 Paweł Kuna"
+                    copyright="Copyright (c) 2020-2026 Paweł Kuna"
                     repo="https://github.com/tabler/tabler-icons"
                 />
             </div>
