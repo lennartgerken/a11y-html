@@ -1,5 +1,5 @@
-import { BaseComponent } from '@/components/baseComponent'
-import { InfoBar } from '@/components/resultsOverview/testsOverview/infoBar'
+import { BaseComponent } from '@tests/components/baseComponent'
+import { InfoBar } from '@tests/components/resultsOverview/testsOverview/infoBar'
 import { NavBar } from '../navBar'
 import { Locator } from '@playwright/test'
 import { TestItem } from './testItem/testItem'

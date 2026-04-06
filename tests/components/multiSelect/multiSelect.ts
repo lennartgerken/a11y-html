@@ -1,6 +1,6 @@
 import { Locator } from '@playwright/test'
-import { BaseComponent } from '@/components/baseComponent'
-import { Dropdown } from '@/components/multiSelect/dropdown'
+import { BaseComponent } from '@tests/components/baseComponent'
+import { Dropdown } from '@tests/components/multiSelect/dropdown'
 
 export class MultiSelect extends BaseComponent {
     readonly openButton: Locator

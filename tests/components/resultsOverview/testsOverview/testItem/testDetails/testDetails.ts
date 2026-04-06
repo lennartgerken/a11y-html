@@ -1,5 +1,5 @@
 import { Locator } from '@playwright/test'
-import { BaseComponent } from '@/components/baseComponent'
+import { BaseComponent } from '@tests/components/baseComponent'
 import { HTMLElement } from './htmlElement/htmlElement'
 
 export class TestDetails extends BaseComponent {

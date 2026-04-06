@@ -2,15 +2,23 @@
     "include": [
         "vite.config.*",
         "playwright.config.*",
-        "createReport/vite.config.*"
+        "createReport/vite.config.*",
+        "tests/**/*.ts"
     ],
     "compilerOptions": {
-        "module": "preserve",
-        "moduleResolution": "bundler",
+        "target": "es2020",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
         "noEmit": true,
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "types": ["node"],
+        "paths": {
+            "@tests/*": ["./tests/*"],
+            "@createReport": ["./createReport/dist/a11y-html"]
+        },
         "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo"
     }
 }
