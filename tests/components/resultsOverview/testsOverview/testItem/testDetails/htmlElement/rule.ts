@@ -1,4 +1,4 @@
-import { BaseComponent } from '@/components/baseComponent'
+import { BaseComponent } from '@tests/components/baseComponent'
 import { Locator } from '@playwright/test'
 
 export class Rule extends BaseComponent {

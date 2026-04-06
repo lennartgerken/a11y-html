@@ -1,6 +1,6 @@
 import { Locator } from '@playwright/test'
-import { BaseComponent } from '@/components/baseComponent'
-import { MultiSelect } from '@/components/multiSelect/multiSelect'
+import { BaseComponent } from '@tests/components/baseComponent'
+import { MultiSelect } from '@tests/components/multiSelect/multiSelect'
 
 export class NavBar extends BaseComponent {
     readonly searchInput: Locator
