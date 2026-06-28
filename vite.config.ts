@@ -6,6 +6,9 @@ import tailwindcss from '@tailwindcss/vite'
 import { viteSingleFile } from 'vite-plugin-singlefile'
 
 export default defineConfig({
+    server: {
+        host: true
+    },
     build: {
         modulePreload: false,
         outDir: './createReport/html',

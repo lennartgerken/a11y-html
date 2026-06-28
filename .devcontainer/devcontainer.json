@@ -1,0 +1,14 @@
+{
+    "name": "a11y-html",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "bradlc.vscode-tailwindcss",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "vue.volar"
+            ]
+        }
+    }
+}
