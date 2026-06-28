@@ -39,6 +39,7 @@
         "build": "npm run build-vue && npm run build-create-report",
         "dev": "vite",
         "test": "playwright test",
+        "report": "npx playwright show-report --host 0.0.0.0",
         "pretty": "prettier . --write",
         "pretty-check": "prettier . --check",
         "lint": "eslint",
