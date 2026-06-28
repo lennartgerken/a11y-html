@@ -10,7 +10,7 @@ npm i -D a11y-html
 
 ## Example Usage in Playwright
 
-```
+```ts
 import AxeBuilder from '@axe-core/playwright'
 import test from '@playwright/test'
 import { createReport } from 'a11y-html'
@@ -47,7 +47,7 @@ You can pass additional options to customize the html report:
 
 Multiple results can be merged into a single report using `createMergedReport`. Each result can optionally include an info string and a screenshot. The info string is displayed on the overview page and within the result details:
 
-```
+```ts
 createMergedReport([
     { results: results1, info: 'Info 1' },
     { results: results2, info: 'Info 2' },
